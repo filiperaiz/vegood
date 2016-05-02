@@ -1,0 +1,23 @@
+<ion-tabs class="tabs-icon-only  tabs-color-active-positive tabs-background-light">
+
+    <!-- Timeline Tab -->
+    <ion-tab title="Timeline" icon="ion-ios-home" href="#/tab/timeline">
+        <ion-nav-view name="tab-timeline"></ion-nav-view>
+    </ion-tab>
+
+    <!-- Categorias Tab -->
+    <ion-tab title="Category" icon="ion-navicon-round" href="#/tab/category">
+        <ion-nav-view name="tab-category"></ion-nav-view>
+    </ion-tab>
+
+    <!-- Adicionar Receita Tab -->
+    <ion-tab title="Send recipe" icon="ion-android-restaurant" href="#/tab/send-recipe">
+        <ion-nav-view name="tab-send-recipe"></ion-nav-view>
+    </ion-tab>
+
+    <!-- Perfil Tab -->
+    <ion-tab title="Profile" icon="ion-more" href="#/tab/profile/{{usuario_logado_id}}">
+        <ion-nav-view name="tab-profile"></ion-nav-view>
+
+    </ion-tab>
+</ion-tabs>

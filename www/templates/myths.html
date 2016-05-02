@@ -1,0 +1,14 @@
+
+<ion-view view-title="Mitos e verdades">
+  <ion-content class="bg-gray padding">
+
+      <div class="item-radius card" ng-repeat="mito in mitos">
+        <div class="item item-divider no-ws">
+         {{mito.title}}
+        </div>
+        <div class="item item-text-wrap">
+          <p>{{mito.info}}</p>
+        </div>
+      </div>
+  </ion-content>
+</ion-view>

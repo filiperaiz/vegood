@@ -1,0 +1,34 @@
+<ion-view view-title="Comentários">
+    <ion-content class="bg-gray box-coments">
+
+      <div class="list list-comentarios">
+          
+        <div class="item item-avatar" ng-repeat="comment in comments">
+            <img src="{{comment.recipe_user.imagem}}">
+            <h2>{{comment.recipe_user.author}}</h2>
+            <p class="no-ws">{{comment.texto}}</p>
+        </div>
+
+      </div>
+
+
+      <ion-infinite-scroll
+          immediate-check="false"
+          on-infinite="loadMore()"
+          distance="10%">
+        </ion-infinite-scroll>
+
+
+    </ion-content>
+
+    <form action="" class="send-coments">
+        <div class="item item-input-inset">
+            <label class="item-input-wrapper">
+                <input type="text" placeholder="Adicione um comentário..." ng-model="texto_comment" ng-focus="habilitaBotao()" ng-blur="habilitaBotao2()">
+            </label>
+            <button type="button" class="button button-small button-positive" ng-click="enviarComentario({{receita_comments_id}}, {{usuario_logado_id}})" ng-disabled="buttonHab">
+                Enviar
+            </button>
+        </div>
+    </form>
+</ion-view>

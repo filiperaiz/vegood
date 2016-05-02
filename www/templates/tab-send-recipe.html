@@ -1,0 +1,77 @@
+<ion-view view-title="Enviar Receita">
+    <ion-content class="padding bg-gray">
+        <form action="" class="form-app">
+            <div class="list input-form box-add-item">
+                <div class="box-title">
+                    <h1 class="title">Adicionar foto</h1>
+                </div>
+
+                <div class="take-pic">
+                  <img ng-show="imgURI !== undefined" class="img-view-result" ng-src="{{imgURI}}">
+                  <img ng-show="imgURI === undefined" class="img-view" ng-src="img/icon/icon-camera-upload.svg">
+                  <button class="button button-positive" ng-click="takePicture()">
+                      <i class="ion-ios-camera"></i>
+                  </button>
+
+                </div>
+            </div>
+            <hr>
+            <div class="list input-form">
+                <div class="box-title">
+                    <h1 class="title">Informações</h1>
+                </div>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Nome da receita</span>
+                    <input type="text" ng-model="receita.nome" placeholder="">
+                </label>
+                <ul class="list-categorias">
+                    <li class="item item-checkbox" ng-repeat="categoria in categorias">
+                        <label class="checkbox">
+                            <input type="checkbox" checklist-model="receita.categorias" checklist-value="categoria.id">
+                        </label>
+                        {{categoria.text}}
+                    </li>
+                </ul>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Tempo de preparo</span>
+                    <input type="tel" ng-model="receita.tempo_preparo" placeholder="em minutos">
+                </label>
+
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Rendimento</span>
+                    <input type="tel" ng-model="receita.quantidade_porcao" placeholder="Quantidade de porções">
+                </label>
+
+            </div>
+            <hr>
+            <div class="list input-form box-add-item">
+                <div class="box-title">
+                    <h1 class="title">Ingredientes</h1>
+                </div>
+                <label class="item item-input" ng-repeat="ingrediente in receita.ingredientes">
+                    <input type="text" ng-model="receita.ingredientes[$index]" placeholder="{{ingrediente}}">
+                </label>
+
+                <button class="button button-positive" ng-click="maisIngrediente()">
+                    <i class="ion-ios-plus-empty"></i>
+                </button>
+            </div>
+            <hr>
+            <div class="list input-form box-add-item">
+                <div class="box-title">
+                    <h1 class="title">Modo de preparo</h1>
+                </div>
+                <label class="item item-input" ng-repeat="modo_preparo in receita.modo_preparos">
+                    <textarea name="" id="" cols="30" rows="2" placeholder="{{modo_preparo}}"></textarea>
+                </label>
+
+                <button class="button button-positive" ng-click="maisModoPreparo()">
+                    <i class="ion-ios-plus-empty"></i>
+                </button>
+            </div>
+            <hr>
+
+            <button class="button button-positive" ng-click="enviarReceita()">Enviar</button>
+        </form>
+    </ion-content>
+</ion-view>

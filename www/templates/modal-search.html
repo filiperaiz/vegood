@@ -1,0 +1,27 @@
+<ion-modal-view class="bg-gray" ng-controller="RecipeCtrl">
+
+    <ion-header-bar class="bar bar-header bar-positive item-input-inset">
+        <label class="item-input-wrapper">
+          <i class="icon ion-ios-search placeholder-icon"></i>
+          <input type="search" placeholder="Pesquisar receita">
+        </label>
+        <button class="button button-clear  button-icon ion-ios-close-empty" ng-click="closePesquisa()"></button>
+    </ion-header-bar>
+
+
+    <ion-content class="padding">
+        <div class="box-title">
+            <h1 class="title"><span class="numero">4</span>receitas encontradas</h1>
+        </div>
+        <ion-list>
+              <ion-item class="item-avatar item-icon-right item-recipe-small" ng-click="closePesquisa()" ng-repeat="recipe in recipes" type="item-text-wrap" href="#/tab/home/{{recipe.id}}">
+                <img class="image-recipe" ng-src="{{recipe.recipe_image}}">
+                <h2 class="recipe-name">{{recipe.recipe_name}}</h2>
+                <h5 class="recipe-author">Por: {{recipe.recipe_author}}</h5>
+                <span class="categoria">{{recipe.recipe_category}}</span>
+
+                <i class="icon ion-chevron-right icon-accessory"></i>
+              </ion-item>
+            </ion-list>
+    </ion-content>
+</ion-modal-view>

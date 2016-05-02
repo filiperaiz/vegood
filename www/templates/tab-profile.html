@@ -1,0 +1,27 @@
+<ion-view view-title="Mais">
+    <ion-nav-title>
+        <img class="logo-title" src="img/icon/logo-vegood-plate.png">
+    </ion-nav-title>
+
+    <ion-header-bar class="bar-subheader header-tab-info" ng-if="flag_user_conf">
+        <ion-item class="tabs tabs-icon-only ">
+            <a class="tab-item" ng-click="main.show_list = 'perfil';" ng-class="{'active': main.show_list === 'perfil'}">
+                <i class="icon" ng-class="main.show_list === 'perfil' ? 'ion-ios-person' : 'ion-ios-person'"></i> Perfil
+            </a>
+            <a class="tab-item" ng-click="main.show_list = 'favoritos';" ng-class="{'active': main.show_list === 'favoritos'}">
+                <i class="icon" ng-class="main.show_list === 'favoritos' ? 'ion-ios-star' : 'ion-ios-star'"></i> favoritos
+            </a>
+            <a class="tab-item" ng-click="main.show_list = 'more';" ng-class="{'active': main.show_list === 'more'}">
+                <i class="icon" ng-class="main.show_list === 'more' ? 'ion-ios-information' : 'ion-ios-information'"></i> more
+            </a>
+            <a class="tab-item" ng-click="main.show_list = 'config';" ng-class="{'active': main.show_list === 'config'}">
+                <i class="icon" ng-class="main.show_list === 'config' ? 'ion-ios-gear' : 'ion-ios-gear'"></i> Configurações
+            </a>
+        </ion-item>
+    </ion-header-bar>
+
+    <div ng-if="main.show_list == 'perfil' || main.show_list == 'perfis'" ng-include="'templates/perfil.html'"></div>
+    <div ng-if="main.show_list == 'favoritos'" ng-include="'templates/favoritos.html'"></div>
+    <div ng-if="main.show_list == 'more'" ng-include="'templates/more.html'"></div>
+    <div ng-if="main.show_list == 'config'" ng-include="'templates/config.html'"></div>
+</ion-view>

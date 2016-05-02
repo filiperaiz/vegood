@@ -1,0 +1,32 @@
+<ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">Novo usuário</h1>
+        <button class="button button-clear  button-icon ion-ios-close-empty" ng-click="closeCreateAccount()"></button>
+    </ion-header-bar>
+    <ion-content class=" bg-gray padding">
+        <form action="" class="form-app">
+            <div class="box-error">
+                <p>dados errados</p>
+            </div>
+            <div class="list input-form">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Nome</span>
+                    <input type="text" ng-model="userCadastro.nome" placeholder="Nome">
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Email</span>
+                    <input type="email" ng-model="userCadastro.email" placeholder="Email">
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Senha</span>
+                    <input type="password" ng-model="userCadastro.password" placeholder="Senha">
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Confirmar senha</span>
+                    <input type="password" ng-model="userCadastro.password_confirmation" placeholder="Confirmação de Senha">
+                </label>
+            </div>
+            <button type="button" class="button button-positive" ng-click="startNewUser()">Cadastrar</button>
+        </form>
+    </ion-content>
+</ion-modal-view>

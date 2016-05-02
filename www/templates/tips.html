@@ -1,0 +1,14 @@
+
+<ion-view view-title="Dicas">
+  <ion-content class="bg-gray padding">
+
+      <div class="item-radius card" ng-repeat="dica in dicas">
+        <div class="item item-divider no-ws">
+         {{dica.title}}
+        </div>
+        <div class="item item-text-wrap">
+          <p>{{dica.info}}</p>
+        </div>
+      </div>
+  </ion-content>
+</ion-view>

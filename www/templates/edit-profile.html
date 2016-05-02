@@ -1,0 +1,41 @@
+<ion-view view-title="Enviar Receita">
+    <ion-content class="padding bg-gray">
+        <form action="" class="form-app">
+            <div class="list input-form box-add-item">
+                <div class="box-title">
+                    <h1 class="title">Trocar foto</h1>
+                </div>
+
+                <div class="take-pic">
+                  <img ng-show="imgURI !== undefined" class="img-view-result" ng-src="{{imgURI}}">
+                  <img ng-show="imgURI === undefined" class="img-view" ng-src="img/icon/icon-camera-upload.svg">
+                  <button class="button button-positive" ng-click="takePicture()">
+                      <i class="ion-ios-camera"></i>
+                  </button>
+
+                </div>
+            </div>
+            <hr>
+            <div class="list input-form">
+                <div class="box-title">
+                    <h1 class="title">Dados basicos</h1>
+                </div>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Nome</span>
+                    <input type="text" ng-model="receita.nome" placeholder="">
+                </label>
+
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Senha</span>
+                    <input type="password" ng-model="receita.tempo_preparo" placeholder="senha atual">
+                </label>
+
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Nova senha</span>
+                    <input type="password" ng-model="receita.tempo_preparo" placeholder="digite sua nova senha">
+                </label>
+
+            <button type="button" class="button button-positive" ng-click="enviarReceita()">Salvar</button>
+        </form>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,81 @@
+<ion-view view-title="">
+    <ion-nav-title>
+        <img class="logo-title" src="img/icon/logo-vegood-plate.png">
+    </ion-nav-title>
+    <!-- nav header button -->
+    <ion-nav-buttons side="right">
+        <!-- <button class="button button-icon button-clear ion-ios-list" ng-click="popover.show($event)"></button> -->
+        <button class="button button-icon button-clear ion-ios-search-strong" ng-click="openPesquisa()"></button>
+    </ion-nav-buttons>
+    <!-- nav header button -->
+    <ion-content class="bg-gray padding">
+        <!-- Refresh  -->
+        <ion-refresher pulling-text="Atualizando..." on-refresh="doRefresh()">
+        </ion-refresher>
+
+        <div class="item-recipe-big card" ng-repeat="recipe in recipes track by $index">
+            <a class="link-item" ng-href="#/tab/{{el_link}}perfil/{{recipe.recipe_user.id}}">
+                <div class="item item-avatar">
+                    <img class="pic-user" src="{{recipe.recipe_user.imagem}}">
+                    <h2 class="recipe-author">{{recipe.recipe_user.author}}</h2>
+                </div>
+            </a>
+
+            <a class="link-item" ng-href="#/tab/home/recipe/{{recipe.id}}">
+                <div class="item item-image">
+                    <img class="image-recipe" ng-src="{{recipe.recipe_image}}">
+                    <span class="categoria"><span ng-repeat=" category in recipe.recipe_category">{{category.item}}</span></span>
+                </div>
+                <div class="item">
+                    <h2 class="recipe-name">{{recipe.recipe_name}}</h2>
+                </div>
+            </a>
+            <div class="info-number item">
+                <ul>
+                    <li class="item-info-recipe">
+                        <a id="like_dislike-{{recipe.id}}" class="action" ng-click="interact_recive({{usuario_logado_id}}, {{recipe.id}}, 'like_dislike')">
+                            <p class="valor">
+                                <i class="ion-ios-heart{{recipe.recipe_likedislike}}"></i>{{recipe.recipe_quant_likedislike}}
+                            </p>
+                        </a>
+                    </li>
+                    <li class="item-info-recipe">
+                        <a id="favorito_desfavorito-{{recipe.id}}" class="action" ng-click="interact_recive({{usuario_logado_id}}, {{recipe.id}}, 'favorito_desfavorito')">
+                            <p class="valor">
+                                <i class="ion-ios-star{{recipe.recipe_favorito}}"></i>{{recipe.recipe_quant_favorito}}
+                            </p>
+                        </a>
+                    </li>
+                    <li class="item-info-recipe">
+                        <a ng-href="#/tab/home/comentarios/{{recipe.id}}" class="action">
+                            <p class="valor"><i class="ion-ios-chatbubble{{recipe.recipe_comentario}}"></i> {{recipe.recipe_quant_comentarios}}</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <ion-infinite-scroll
+            immediate-check="false"
+            on-infinite="loadMore()"
+            distance="10%">
+        </ion-infinite-scroll>
+
+        <script id="templates/popover.html" type="text/ng-template">
+            <ion-popover-view>
+                <ion-content>
+                    <div class="list">
+                        <a class="item" href="">
+                      Principais receitas
+                    </a>
+                        <a class="item" href="">
+                      Mais Recentes
+                    </a>
+                        <a class="item" href="">
+                      Amigos
+                    </a>
+                    </div>
+                </ion-content>
+            </ion-popover-view>
+        </script>
+</ion-view>

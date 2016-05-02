@@ -1,0 +1,102 @@
+<ion-view view-title="Receita">
+    <ion-nav-title>
+        <img class="logo-title" src="img/icon/logo-vegood-plate.png">
+    </ion-nav-title>
+    <!-- nav header button -->
+    <ion-nav-buttons side="right">
+        <a class="button button-icon button-clear ion-ios-upload-outline" ng-click="shareRecipe()"></a>
+    </ion-nav-buttons>
+    <!-- nav header button -->
+    <ion-content class="bg-gray padding">
+        <div class="item-recipe-big card">
+            <a class="link-item" ng-href="#/tab/{{el_link}}perfil/{{recipe.recipe_user.id}}">
+                <div class="item item-avatar">
+                    <img class="pic-user" src="{{recipe.recipe_user.imagem}}">
+                    <h2 class="recipe-author">{{recipe.recipe_user.author}}</h2>
+                </div>
+            </a>
+            <div class="item item-image">
+                <img class="image-recipe" ng-src="{{recipe.recipe_image}}">
+                <span class="categoria"><span ng-repeat=" category in recipe.category">{{category.item}}</span></span>
+            </div>
+            <div class="item">
+                <h2 class="recipe-name">{{recipe.recipe_name}}</h2>
+            </div>
+            <div class="info-number item">
+                <ul>
+                    <li class="item-info-recipe">
+                        <a id="like_dislike-{{recipe.id}}" class="action" ng-click="interact_recive({{usuario_logado_id}}, recipe.id, 'like_dislike')">
+                            <p class="valor">
+                                <i class="ion-ios-heart{{recipe.recipe_likedislike}}"></i>{{recipe.recipe_quant_likedislike}}
+                            </p>
+                        </a>
+                    </li>
+                    <li class="item-info-recipe">
+                        <a id="favorito_desfavorito-{{recipe.id}}" class="action" ng-click="interact_recive({{usuario_logado_id}}, recipe.id, 'favorito_desfavorito')">
+                            <p class="valor">
+                                <i class="ion-ios-star{{recipe.recipe_favorito}}"></i>{{recipe.recipe_quant_favorito}}
+                            </p>
+                        </a>
+                    </li>
+                    <li class="item-info-recipe">
+                        <a ng-href="#/tab/{{el_link}}comentarios/{{recipe.id}}" class="action">
+                            <p class="valor"><i class="ion-ios-chatbubble{{recipe.recipe_comentario}}"></i> {{recipe.recipe_quant_comentarios}}</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+
+        <div class="info-recipe card item-radius">
+            <ul>
+                <li class="item-info-recipe">
+                    <i class="ion-ios-time"></i>
+                    <span class="titulo">Preparo</span>
+                    <p class="valor">{{recipe.recipe_preparo}}</p>
+                </li>
+                <li class="item-info-recipe">
+                    <i class="ion-ios-flame"></i>
+                    <span class="titulo">cozimento</span>
+                    <p class="valor">{{recipe.recipe_cozimento}}</p>
+                </li>
+                <li class="item-info-recipe">
+                    <i class="ion-ios-gear"></i>
+                    <span class="titulo">Dificuldade</span>
+                    <p class="valor">{{recipe.recipe_dificuldade}}</p>
+                </li>
+                <li class="item-info-recipe">
+                    <i class="ion-ios-person"></i>
+                    <span class="titulo">Rendimento</span>
+                    <p class="valor">{{recipe.recipe_rendimento}}</p>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="item-radius card">
+            <div class="item item-divider">
+                Ingredientes
+            </div>
+            <div class="item item-text-wrap">
+                <ul class="lista-ingredientes lista-info-recipe" ng-repeat="ingrediente in recipe.recipe_ingredientes">
+                    <li><p>{{ ingrediente.item }}</p></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="item-radius card">
+            <div class="item item-divider">
+                Instruções de preparo
+            </div>
+            <div class="item item-text-wrap">
+                <ul class="lista-preparo lista-info-recipe">
+                    <li ng-repeat="preparo in recipe.recipe_modo"><p>{{ preparo.item }}</p></li>
+                </ul>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
+

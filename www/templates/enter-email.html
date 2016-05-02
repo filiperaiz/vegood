@@ -1,0 +1,25 @@
+<ion-modal-view>
+  <ion-header-bar class="bar bar-header bar-positive">
+      <h1 class="title">Entrar</h1>
+      <button class="button button-clear  button-icon ion-ios-close-empty" ng-click="closeEnterEmail()"></button>
+  </ion-header-bar>
+  <ion-content class="padding bg-gray">
+      <form action="" class="form-app">
+          <div class="list input-form">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Email</span>
+                <input type="email" ng-model="userLogin.email" placeholder="Entre com seu email" />
+            </label>
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">Senha</span>
+                <input type="password" ng-model="userLogin.password" placeholder="Entre com sua senha">
+            </label>
+          </div>
+          <button type="button" class="button button-positive" ng-click="startLoginApp(emailLogin, passwordLogin)">Entrar</button>
+      </form>
+
+      <div class="forgot-password">
+          <button type="button" class="button button-positive" ng-click="forgotPassword()">Esqueceu sua senha? </button>
+      </div>
+  </ion-content>
+</ion-modal-view>

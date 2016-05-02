@@ -1,0 +1,20 @@
+<ion-view view-title="Seguidores">
+    <ion-content class="bg-gray">
+        <ion-list>
+            <div class="item item-avatar item-icon-right" ng-repeat="perfil in perfis">
+                <img src="{{perfil.recipe_user.imagem}}">
+                <h2>{{perfil.recipe_user.author}}</h2>
+                <p class="no-ws">{{perfil.descricao}}</p>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+
+            <ion-infinite-scroll
+            immediate-check="false"
+            on-infinite="loadMore()"
+            distance="10%">
+        </ion-infinite-scroll>
+
+
+        </ion-list>
+    </ion-content>
+</ion-view>
