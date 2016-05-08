@@ -1,19 +1,19 @@
-<ion-view view-title="Comentários">
+<ion-view view-title="Comentários" ng-controller="RecipeCommentsCtrl">
     <ion-content class="bg-gray box-coments">
 
       <div class="list list-comentarios">
           
-        <div class="item item-avatar" ng-repeat="comment in comments">
-            <img src="{{comment.recipe_user.imagem}}">
-            <h2>{{comment.recipe_user.author}}</h2>
-            <p class="no-ws">{{comment.texto}}</p>
+        <div class="item item-avatar" ng-repeat="comment in list_comments">
+            <img src="{{comment.client.image}}">
+            <h2>{{comment.client.name}}</h2>
+            <p class="no-ws">{{comment.text}}</p>
         </div>
 
       </div>
 
 
       <ion-infinite-scroll
-          immediate-check="false"
+          ng-if="hasMoreData"
           on-infinite="loadMore()"
           distance="10%">
         </ion-infinite-scroll>
@@ -24,9 +24,9 @@
     <form action="" class="send-coments">
         <div class="item item-input-inset">
             <label class="item-input-wrapper">
-                <input type="text" placeholder="Adicione um comentário..." ng-model="texto_comment" ng-focus="habilitaBotao()" ng-blur="habilitaBotao2()">
+                <input type="text" placeholder="Adicione um comentário..." ng-model="text_comment" ng-focus="enabledButton()" ng-blur="disableButton()">
             </label>
-            <button type="button" class="button button-small button-positive" ng-click="enviarComentario({{receita_comments_id}}, {{usuario_logado_id}})" ng-disabled="buttonHab">
+            <button type="button" class="button button-small button-positive" ng-click="sendComment()" ng-disabled="flagButton">
                 Enviar
             </button>
         </div>

@@ -175,9 +175,9 @@ angular.module('starter.controllers', [])
     var client = $window.localStorage['client'];
     $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
     if (!Util.emptyVal(client)) {
-
-        $scope.page = 1;
-        client    = JSON.parse(client);
+        $scope.hasMoreData  = true;
+        $scope.page         = 1;
+        client              = JSON.parse(client);
         
         var parameters = {
             token_client:client.token,
@@ -219,6 +219,9 @@ angular.module('starter.controllers', [])
             $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes.json', config)
             .success(function(data, status, headers, config) {
                 if(data.client_logged.flag){
+                    if(data.list_recipes.length==0){
+                        $scope.hasMoreData  = false;
+                    }
                     for (i = 0; i < data.list_recipes.length; i++) {
                         $scope.list_recipes.push(data.list_recipes[i]);
                     }
@@ -335,6 +338,7 @@ angular.module('starter.controllers', [])
         /*                  FUNCTIONS                   */
         /************************************************/
         $scope.like_func = function(recipe_id){
+            alert(recipe_id)
             var parameters = {
                 token_client:client.token,
                 client_id:client.id, 
@@ -371,20 +375,20 @@ angular.module('starter.controllers', [])
                 params: parameters
             };
 
+            if($('#favorite-'+recipe_id+' i').attr('class')=='ion-ios-star-outline'){
+                $('#favorite-'+recipe_id+' i').removeClass('ion-ios-star-outline');
+                $('#favorite-'+recipe_id+' i').addClass('ion-ios-star');
+                val = parseInt($('#favorite-'+recipe_id+ ' t').html());
+                $('#favorite-'+recipe_id+ ' t').html(val+1);
+            }else{
+                $('#favorite-'+recipe_id+' i').removeClass('ion-ios-star');
+                $('#favorite-'+recipe_id+' i').addClass('ion-ios-star-outline');
+                val = parseInt($('#favorite-'+recipe_id+ ' t').html());
+                $('#favorite-'+recipe_id+ ' t').html(val-1);
+            }
+
             $http.get('http://www.vegood.com.br/api/v1/vegood/favorite_recipe.json', config)
-            .success(function(data, status, headers, config) {
-                if(data.option_favorite.flag){
-                    $('#favorite-'+recipe_id+' i').removeClass('ion-ios-star-outline');
-                    $('#favorite-'+recipe_id+' i').addClass('ion-ios-star');
-                    val = parseInt($('#favorite-'+recipe_id+ ' t').html());
-                    $('#favorite-'+recipe_id+ ' t').html(val+1);
-                }else{
-                    $('#favorite-'+recipe_id+' i').removeClass('ion-ios-star');
-                    $('#favorite-'+recipe_id+' i').addClass('ion-ios-star-outline');
-                    val = parseInt($('#favorite-'+recipe_id+ ' t').html());
-                    $('#favorite-'+recipe_id+ ' t').html(val-1);
-                }
-            });
+            .success(function(data, status, headers, config) {});
         }
 
     }else{
@@ -418,7 +422,13 @@ angular.module('starter.controllers', [])
 
         $http.get('http://www.vegood.com.br/api/v1/vegood/get_perfil.json', config)
         .success(function(data, status, headers, config) {
-            $scope.perfil = data.perfil;
+            if(data.client_logged.flag){
+                $scope.perfil = data.perfil;
+            }else{
+                $window.localStorage.removeItem('client');
+                $ionicLoading.hide();
+                $state.go('login');
+            }
         });
 
 
@@ -465,6 +475,9 @@ angular.module('starter.controllers', [])
             $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes.json', config)
             .success(function(data, status, headers, config) {
                 if(data.client_logged.flag){
+                    if(data.list_recipes.length==0){
+                        $scope.hasMoreData  = false;
+                    }
                     for (i = 0; i < data.list_recipes.length; i++) {
                         $scope.list_recipes.push(data.list_recipes[i]);
                     }
@@ -553,94 +566,120 @@ angular.module('starter.controllers', [])
 
 
 // RECIPE COMMENTS CONTROLLER
-.controller('RecipeCommentsCtrl', function($scope, $stateParams, Recipes, $timeout, $cordovaSocialSharing, $http, Ultil, $state, $window, $rootScope) {
-    $scope.comments = [];
-    $scope.pageComents = 1;
-    $scope.texto_comment = '';
-    $scope.receita_comments_id = $stateParams.recipeId;
-    $scope.buttonHab = true;
+.controller('RecipeCommentsCtrl', function($scope, $stateParams, $http, Util, $state, $window, $ionicLoading) {
+    var client = $window.localStorage['client'];
+    $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+    if (!Util.emptyVal(client)) {
 
+        $scope.text_comment = '';
+        $scope.list_comments = Array();
 
-    var user = $window.localStorage['token_user'];
-    if (user != null && user != undefined && user != 'undefined' && user != '') {
-        //user = JSON.parse(user);
-        //var data = JSON.stringify({token:user.token,user_id:user.id});
-        //$http.post('https://vegood.filiperaiz.com.br/api/v1/home/tab/verifica_user.json', data)
-        //    .success(function(data, status, headers, config) {
-        //       if (data.user !== null && data.user !== undefined && data.user !== 'undefined' && data.user !== '') {
-        //          $window.localStorage['token_user'] = JSON.stringify(data.user);
+        $scope.page = 1;
 
-        //DADOS USUARIO LOGADO
-        user = JSON.parse(user);
-        $rootScope.usuario_logado_id = user.id
+        client    = JSON.parse(client);
 
+        $scope.recipe_id = $stateParams.recipeId;
 
+        var parameters = {
+            token_client:client.token,
+            client_id:client.id, 
+            recipe_id:$scope.recipe_id
+        };
 
-        $http.get('http://vegood.filiperaiz.com.br/api/v1/home/tab/receita/comments/' + $stateParams.recipeId + '/pg/' + $scope.pageComents + '.json')
-            .success(function(response) {
-                for (i = 0; i < response.lista_comentarios.length; i++) {
-                    $scope.comments.push(response.lista_comentarios[i]);
-                }
-                $scope.comments = Ultil.emptyDataAvatarUser($scope.comments);
-            })
+        var config = {
+            params: parameters
+        };
+
+        $http.get('http://www.vegood.com.br/api/v1/vegood/list_comments.json', config)
+        .success(function(data, status, headers, config) {
+            if(data.client_logged.flag){
+                $scope.list_comments = data.list_comments;
+                $ionicLoading.hide();
+            }else{
+                $window.localStorage.removeItem('client');
+                $ionicLoading.hide();
+                $state.go('login');
+            }
+        });
 
 
         $scope.loadMore = function() {
-            $scope.pageComents += 1;
-            $http.get('http://vegood.filiperaiz.com.br/api/v1/home/tab/receita/comments/' + $stateParams.recipeId + '/pg/' + $scope.pageComents + '.json').success(function(response) {
-                    for (i = 0; i < response.lista_comentarios.length; i++) {
-                        $scope.comments.push(response.lista_comentarios[i]);
-                    }
-                    $scope.comments = Ultil.emptyDataAvatarUser($scope.comments);
-                })
-                .finally(function() {
-                    $scope.$broadcast('scroll.infiniteScrollComplete');
-                });
-        };
+            //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+            $scope.page += 1;
+            
+            var parameters = {
+                token_client:client.token,
+                client_id:client.id, 
+                recipe_id:$stateParams.recipeId
+            };
 
-        $scope.enviarComentario = function(recive_id, user_id) {
-            var data = JSON.stringify({
-                texto_comentario: $scope.texto_comment,
-                recive_id: recive_id,
-                user_id: user_id
-            });
-            $http.post("http://vegood.filiperaiz.com.br/api/v1/home/tab/receita/send_comment.json", data)
-                .success(function(data, status) {
-                    if (data.comment_status.flag) {
-                        $scope.texto_comment = '';
-                        $scope.buttonHab = true;
-                        $scope.comments.unshift(data.comment);
-                        $scope.comments = Ultil.emptyDataAvatarUser($scope.comments);
-                    } else {
-                        console.log('Erro');
+            var config = {
+                params: parameters
+            };
+
+            $http.get('http://www.vegood.com.br/api/v1/vegood/list_comments.json', config)
+            .success(function(data, status, headers, config) {
+                if(data.client_logged.flag){
+                    if(data.list_comments.length==0){
+                        $scope.hasMoreData  = false;
                     }
-                });
-            return false;
-        }
+                    for (i = 0; i < data.list_comments.length; i++) {
+                        $scope.list_comments.push(data.list_comments[i]);
+                    }
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                }else{
+                    $window.localStorage.removeItem('client');
+                    $ionicLoading.hide();
+                    $state.go('login');
+                }
+                //$ionicLoading.hide();
+            })
+        };
 
         $scope.$on('$stateChangeSuccess', function() {
             $scope.loadMore();
         });
 
-        $scope.habilitaBotao = function() {
-            $scope.buttonHab = false;
+
+
+        $scope.flagButton = true;
+        $scope.enabledButton = function(){
+            $scope.flagButton = false;
         }
-        $scope.habilitaBotao2 = function() {
-            if ($scope.texto_comment !== undefined && $scope.texto_comment !== '' && $scope.texto_comment.length > 0) {
-                $scope.buttonHab = false;
-            } else {
-                $scope.buttonHab = true;
-            }
+        $scope.disableButton = function(){
+            $scope.flagButton = true;
         }
 
-        //} else {
-        //    $state.go('login');
-        //}
-        //})
-        //.error(function(data, status, header, config) {
-        //    $state.go('login');
-        //});
-    } else {
+        $scope.sendComment = function(){
+            $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+            var parameters = {
+                token_client:client.token,
+                client_id:client.id, 
+                recipe_id:$scope.recipe_id,
+                text:$scope.text_comment
+            };
+
+            var config = {
+                params: parameters
+            };
+
+            $http.get('http://www.vegood.com.br/api/v1/vegood/send_comment.json', config)
+            .success(function(data, status, headers, config) {
+                if(data.client_logged.flag){
+                    $scope.list_comments.unshift(data.comment);
+                    $scope.text_comment = '';
+                    $ionicLoading.hide();    
+                }else{
+                    $window.localStorage.removeItem('client');
+                    $ionicLoading.hide();
+                    $state.go('login');
+                }
+            })
+        }
+
+    }else{
+        $window.localStorage.removeItem('client');
+        $ionicLoading.hide();
         $state.go('login');
     }
 })

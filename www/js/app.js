@@ -104,8 +104,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         url: '/timeline/comments/:recipeId',
         views: {
             'tab-timeline': {
-                templateUrl: 'templates/comments.html',
-                controller: 'RecipeCommentsCtrl'
+                templateUrl: 'templates/comments.html'
             }
         }
     })

@@ -79,7 +79,7 @@
                             </a>
                         </li>
                         <li class="item-info-recipe">
-                            <a ng-href="#/tab/home/comentarios/{{recipe.id}}" class="action">
+                            <a ng-href="#/tab/timeline/comments/{{recipe.id}}" class="action">
                                 <p class="valor">
                                     <i class="ion-ios-chatbubble{{recipe.class_comment}}"></i> 
                                     {{recipe.size_comments}}
@@ -91,7 +91,7 @@
             </div>
 
             <ion-infinite-scroll
-            immediate-check="false"
+            ng-if="hasMoreData"
           on-infinite="loadMore()"
           distance="10%">
         </ion-infinite-scroll>
