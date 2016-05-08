@@ -30,15 +30,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
     // DEVISE
     AuthProvider.loginMethod('POST');
-    AuthProvider.loginPath('http://vegood.filiperaiz.com.br/users/sign_in.json');
+    AuthProvider.loginPath('http://www.vegood.com.br/clients/sign_in.json');
 
     // Customize logout
     AuthProvider.logoutMethod('DELETE');
-    AuthProvider.logoutPath('http://vegood.filiperaiz.com.br/users/sign_out.json');
+    AuthProvider.logoutPath('http://www.vegood.com.br/clients/sign_out.json');
 
     // Customize register
     AuthProvider.registerMethod('POST');
-    AuthProvider.registerPath('http://vegood.filiperaiz.com.br/users.json');
+    AuthProvider.registerPath('http://www.vegood.com.br/clients.json');
+
+    AuthProvider.resourceName('client');
 
     // Intercept 401 Unauthorized everywhere
     // Enables `devise:unauthorized` interceptor
@@ -50,14 +52,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
     .state('login', {
         url: '/login',
-        templateUrl: 'templates/login.html',
-        controller: 'loginCtrl'
+        templateUrl: 'templates/login.html'
     })
 
     .state('forgot-password', {
         url: '/forgot-password',
-        templateUrl: 'templates/forgot-password.html',
-        controller: 'loginCtrl'
+        templateUrl: 'templates/forgot-password.html'
     })
 
     .state('tab', {
@@ -74,8 +74,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         url: '/timeline',
         views: {
             'tab-timeline': {
-                templateUrl: 'templates/tab-timeline.html',
-                controller: 'RecipeCtrl'
+                templateUrl: 'templates/tab-timeline.html'
             }
         }
     })
@@ -85,19 +84,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         url: '/timeline/recipe/:recipeId',
         views: {
             'tab-timeline': {
-                templateUrl: 'templates/recipe-detail.html',
-                controller: 'RecipeDetailCtrl'
+                templateUrl: 'templates/recipe-detail.html'
             }
         }
     })
 
     // timeline > perfil
     .state('tab.timeline-profile', {
-        url: '/timeline/profile/:userId',
+        url: '/timeline/profile/:clientId',
         views: {
             'tab-timeline': {
-                templateUrl: 'templates/profile.html',
-                controller: 'ProfileCtrl'
+                templateUrl: 'templates/profile.html'
             }
         }
     })

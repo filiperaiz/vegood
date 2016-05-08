@@ -1,38 +1,43 @@
-<ion-view view-title="{{perfil.recipe_user.author}}">
+<ion-view view-title="{{perfil.name}}" ng-controller="ProfileCtrl">
     <ion-content>
         <div class="info-user card">
             <div class="row">
                 <div class="col">
                     <div class="pic">
                         <div class="img">
-                            <img ng-src="{{perfil.recipe_user.imagem}}" alt="">
+                            <img ng-src="{{perfil.image}}" alt="{{perfil.name}}">
                         </div>
                     </div>
                 </div>
                 <div class="col col-75">
                     <div class="info-number">
                         <div class="item-profile produtos">
-                            <strong>{{perfil.quant_receitas}}</strong>
+                            <strong>{{perfil.size_recipe}}</strong>
                             <span>receitas</span>
                         </div>
-                        <a class="item-profile seguindo" href="#/tab/{{el_link}}seguindo/{{userId_params}}">
-                            <strong>{{perfil.quant_seguindo}}</strong>
+                        <a class="item-profile seguindo" href="#/tab/seguindo/{{perfil.id}}">
+                            <strong>{{perfil.size_followers}}</strong>
                             <span>seguindo</span>
                         </a>
-                        <a class="item-profile seguidores" href="#/tab/{{el_link}}seguidores/{{userId_params}}">
-                            <strong>{{perfil.quant_seguidores}}</strong>
-                            <span ng-if="perfil.quant_seguidores>1">seguidores</span>
-                            <span ng-if="perfil.quant_seguidores<=1">seguidor</span>
+                        <a class="item-profile seguidores" href="#/tab/seguidores/{{perfil.id}}">
+                            <strong>{{perfil.size_following}}</strong>
+                            <span ng-if="perfil.size_following>1">seguidores</span>
+                            <span ng-if="perfil.size_following<=1">seguidor</span>
                         </a>
                     </div>
                     
-                    <a ng-if="flag_user_edt_seguir"  ng-href="" class="button edit-perfil">Editar perfil</a>
-                    <a ng-if="!flag_user_edt_seguir" ng-click="seguir(1, {{usuario_logado_id}})" ng-href="" class="button edit-perfil"><span ng-if="flag_seguindo">Seguindo</span><span ng-if="!flag_seguindo">Seguir</span></a>
+                    <a ng-if="flag_edit" ng-href="#" class="button edit-perfil">
+                        Editar perfil
+                    </a>
+                    <a ng-click="" ng-href="follow_func()" class="button edit-perfil">
+                        <span ng-if="flag_seguindo">Seguindo</span>
+                        <span ng-if="!flag_seguindo">Seguir</span>
+                    </a>
 
                 </div>
             </div>
             <div class="dados">
-                <h2 class="nome">{{perfil.recipe_user.author}}</h2>
+                <h2 class="nome">{{perfil.name}}</h2>
                 <p class="email">{{perfil.email}}</p>
 
             </div>
@@ -41,35 +46,44 @@
 
 
         <div class="padding">
-            <div class="item-recipe-big card" ng-repeat="recipe in recipes">
-                <a class="link-item" ng-href="#/tab/{{el_link}}recipe/{{recipe.id}}">
+            <div class="item-recipe-big card" ng-repeat="recipe in list_recipes">
+                <a class="link-item" ng-href="#/tab/timeline/recipe/{{recipe.id}}">
                     <div class="item item-image">
-                        <img class="image-recipe" ng-src="{{recipe.recipe_image}}">
-                        <span class="categoria"><span ng-repeat=" category in recipe.recipe_category">{{category.item}}</span>
+                        <img class="image-recipe" ng-src="{{recipe.image}}">
+                        <span class="categoria">
+                            <span ng-repeat=" category in recipe.categories">
+                                {{category.name}}
+                            </span>
+                        </span>
                     </div>
                     <div class="item">
-                        <h2 class="recipe-name">{{recipe.recipe_name}}</h2>
+                        <h2 class="recipe-name">{{recipe.title}}</h2>
                     </div>
                 </a>
                 <div class="info-number item">
                     <ul>
                         <li class="item-info-recipe">
-                            <a id="like_dislike-{{recipe.id}}" class="action" ng-click="interact_recive({{usuario_logado_id}}, {{recipe.id}}, 'like_dislike')">
+                            <a id="like-{{recipe.id}}" class="action" ng-click="like_func({{recipe.id}})">
                                 <p class="valor">
-                                    <i class="ion-ios-heart{{recipe.recipe_likedislike}}"></i>{{recipe.recipe_quant_likedislike}}
+                                    <i class="ion-ios-heart{{recipe.class_like}}"></i>
+                                    <t>{{recipe.size_likes}}</t>
                                 </p>
                             </a>
                         </li>
                         <li class="item-info-recipe">
-                            <a id="favorito_desfavorito-{{recipe.id}}" class="action" ng-click="interact_recive({{usuario_logado_id}}, {{recipe.id}}, 'favorito_desfavorito')">
+                            <a id="favorite-{{recipe.id}}" class="action" ng-click="favorite_func({{recipe.id}})">
                                 <p class="valor">
-                                    <i class="ion-ios-star{{recipe.recipe_favorito}}"></i>{{recipe.recipe_quant_favorito}}
+                                    <i class="ion-ios-star{{recipe.class_favorite}}"></i>
+                                    <t>{{recipe.size_favorites}}</t>
                                 </p>
                             </a>
                         </li>
                         <li class="item-info-recipe">
                             <a ng-href="#/tab/home/comentarios/{{recipe.id}}" class="action">
-                                <p class="valor"><i class="ion-ios-chatbubble{{recipe.recipe_comentario}}"></i> {{recipe.recipe_quant_comentarios}}</p>
+                                <p class="valor">
+                                    <i class="ion-ios-chatbubble{{recipe.class_comment}}"></i> 
+                                    {{recipe.size_comments}}
+                                </p>
                             </a>
                         </li>
                     </ul>
