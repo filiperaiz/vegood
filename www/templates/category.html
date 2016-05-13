@@ -4,23 +4,23 @@
   </ion-nav-title>
   <ion-content class="bg-gray padding">
       <div class="box-title">
-          <h1 class="title"><span class="numero">{{quantidade}}</span>receitas encontradas</h1>
+          <h1 class="title"><span class="numero">{{size_recipe.quant}}</span>receitas encontradas</h1>
       </div>
       <ion-list>
 
-          <ion-item class="item-avatar item-icon-right item-recipe-small" ng-repeat="recipe in recipes" type="item-text-wrap" href="#/tab/categorias/recipe/{{recipe.id}}">
-                <img class="image-recipe" ng-src="{{recipe.recipe_image}}">
-                <h2 class="recipe-name">{{recipe.recipe_name}}</h2>
-                <h5 class="recipe-author">Por: {{recipe.recipe_user.author}}</h5>
-                <span class="categoria" ng-repeat="cat in recipe.recipe_category">{{cat.item}}</span>
-                <i class="icon ion-chevron-right icon-accessory"></i>
-            </ion-item>
+          <ion-item class="item-avatar item-icon-right item-recipe-small" ng-repeat="recipe in list_recipes" type="item-text-wrap" href="#/tab/category/recipe/{{recipe.id}}">
+            <img class="image-recipe" ng-src="{{recipe.image}}">
+            <h2 class="recipe-name">{{recipe.title}}</h2>
+            <h5 class="recipe-author">Por: {{recipe.client.name}}</h5>
+            <span class="categoria" ng-repeat="cat in recipe.categories">{{cat.name}}</span>
+            <i class="icon ion-chevron-right icon-accessory"></i>
+          </ion-item>
 
-            <ion-infinite-scroll
-            immediate-check="false"
-          on-infinite="loadMore()"
-          distance="10%">
-        </ion-infinite-scroll>
+          <ion-infinite-scroll
+            ng-if="hasMoreData"
+            on-infinite="loadMore()"
+            distance="10%">
+          </ion-infinite-scroll>
 
       </ion-list>
   </ion-content>

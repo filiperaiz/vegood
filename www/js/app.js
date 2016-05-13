@@ -159,8 +159,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         url: '/category/recipe/:recipeId',
         views: {
             'tab-category': {
-                templateUrl: 'templates/recipe-detail.html',
-                controller: 'RecipeDetailCtrl'
+                templateUrl: 'templates/recipe-detail.html'
             }
         }
     })
