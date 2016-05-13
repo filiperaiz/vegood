@@ -139,8 +139,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         url: '/category',
         views: {
             'tab-category': {
-                templateUrl: 'templates/tab-category.html',
-                controller: 'CategoryCtrl'
+                templateUrl: 'templates/tab-category.html'
             }
         }
     })
@@ -150,8 +149,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         url: '/category/:categoryId',
         views: {
             'tab-category': {
-                templateUrl: 'templates/category.html',
-                controller: 'CategoryItemsCtrl'
+                templateUrl: 'templates/category.html'
             }
         }
     })

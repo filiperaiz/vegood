@@ -168,12 +168,10 @@ angular.module('starter.controllers', [])
 })
 
 
-
-
 // TIMELINE CONTROLLER
 .controller('timeLineCtrl', function($state, $scope, $ionicModal, $http, $window, $ionicLoading, Util) {
     var client = $window.localStorage['client'];
-    $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+    //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
     if (!Util.emptyVal(client)) {
         $scope.hasMoreData  = true;
         $scope.page         = 1;
@@ -193,7 +191,7 @@ angular.module('starter.controllers', [])
         .success(function(data, status, headers, config) {
             if(data.client_logged.flag){
                 $scope.list_recipes = data.list_recipes;
-                $ionicLoading.hide();
+                //$ionicLoading.hide();
             }else{
                 $window.localStorage.removeItem('client');
                 $ionicLoading.hide();
@@ -403,9 +401,10 @@ angular.module('starter.controllers', [])
 // PROFILE CONTROLLER
 .controller('ProfileCtrl', function($scope, $stateParams, $http, Util, $window, $state, $ionicLoading) {
     var client = $window.localStorage['client'];
-    $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
-    if (!Util.emptyVal(client)) {
 
+    //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+    if (!Util.emptyVal(client)) {
+        $scope.hasMoreData  = true;
         $scope.page = 1;
 
         client    = JSON.parse(client);
@@ -426,7 +425,7 @@ angular.module('starter.controllers', [])
                 $scope.perfil = data.perfil;
             }else{
                 $window.localStorage.removeItem('client');
-                $ionicLoading.hide();
+                //$ionicLoading.hide();
                 $state.go('login');
             }
         });
@@ -451,7 +450,7 @@ angular.module('starter.controllers', [])
                 $ionicLoading.hide();
             }else{
                 $window.localStorage.removeItem('client');
-                $ionicLoading.hide();
+                //$ionicLoading.hide();
                 $state.go('login');
             }
         });
@@ -484,7 +483,7 @@ angular.module('starter.controllers', [])
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 }else{
                     $window.localStorage.removeItem('client');
-                    $ionicLoading.hide();
+                    //$ionicLoading.hide();
                     $state.go('login');
                 }
                 //$ionicLoading.hide();
@@ -571,6 +570,7 @@ angular.module('starter.controllers', [])
     $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
     if (!Util.emptyVal(client)) {
 
+        $scope.hasMoreData  = true;
         $scope.text_comment = '';
         $scope.list_comments = Array();
 
@@ -684,8 +684,58 @@ angular.module('starter.controllers', [])
     }
 })
 
+
 // CATEGORY CONTROLLER
-.controller('CategoryCtrl', function($scope) {})
+.controller('CategoryCtrl', function($scope, $stateParams, $http, Util, $state, $window, $ionicLoading) {
+    var client = $window.localStorage['client'];
+    $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+    if (!Util.emptyVal(client)) {
+
+        client    = JSON.parse(client);
+
+        var parameters = {
+            token_client:client.token,
+            client_id:client.id 
+        };
+
+        var config = {
+            params: parameters
+        };
+
+        $http.get('http://www.vegood.com.br/api/v1/vegood/list_categories.json', config)
+        .success(function(data, status, headers, config) {
+            if(data.client_logged.flag){
+                $scope.list_categories = data.list_categories;
+                $ionicLoading.hide();
+            }else{
+                $window.localStorage.removeItem('client');
+                $ionicLoading.hide();
+                $state.go('login');
+            }
+        });
+    }else{
+        $window.localStorage.removeItem('client');
+        $ionicLoading.hide();
+        $state.go('login');
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // CATEGORY ITEMS CONTROLLER
