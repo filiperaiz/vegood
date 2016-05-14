@@ -8,19 +8,19 @@
             <div class="list input-form">
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Nome</span>
-                    <input type="text" ng-model="userCadastro.nome" placeholder="Nome">
+                    <input type="text" ng-model="client.name" placeholder="Nome">
                 </label>
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Email</span>
-                    <input type="email" ng-model="userCadastro.email" placeholder="Email">
+                    <input type="email" ng-model="client.email" placeholder="Email">
                 </label>
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Senha</span>
-                    <input type="password" ng-model="userCadastro.password" placeholder="Senha">
+                    <input type="password" ng-model="client.password" placeholder="Senha">
                 </label>
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Confirmar senha</span>
-                    <input type="password" ng-model="userCadastro.password_confirmation" placeholder="Confirmação de Senha">
+                    <input type="password" ng-model="client.password_confirmation" placeholder="Confirmação de Senha">
                 </label>
             </div>
             <button type="button" class="button button-positive" ng-click="startNewUser()">Cadastrar</button>

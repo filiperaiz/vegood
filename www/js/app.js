@@ -28,7 +28,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     $httpProvider.defaults.withCredentials = true;
 
 
-    // DEVISE
+    // DEVISE - www.vegood.com.br
     AuthProvider.loginMethod('POST');
     AuthProvider.loginPath('http://www.vegood.com.br/clients/sign_in.json');
 

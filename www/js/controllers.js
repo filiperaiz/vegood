@@ -4,9 +4,8 @@ angular.module('starter.controllers', [])
 // LOGIN CONTROLLER
 .controller('loginCtrl', function($scope, $state, $stateParams, $ionicModal, Auth, $window, $ionicLoading, $http, $ionicPopup) {
     
-    $scope.userLogin = {};
-    $scope.userCadastro = {};
-
+    $scope.client = {};
+    
     // MODAL CRIAÇÃO DE CONTA
     $ionicModal.fromTemplateUrl('templates/create-account.html', {
         scope: $scope,
@@ -32,10 +31,12 @@ angular.module('starter.controllers', [])
     });
 
     $scope.openEnterEmail = function() {
+        $scope.client = {};
         $scope.modalEnterEmail.show();
     };
 
     $scope.closeEnterEmail = function() {
+        $scope.client = {};
         $scope.modalEnterEmail.hide();
     };
 
@@ -48,8 +49,8 @@ angular.module('starter.controllers', [])
         });
 
         var credentials = {
-            email: $scope.userLogin.email,
-            password: $scope.userLogin.password
+            email: $scope.client.email,
+            password: $scope.client.password
         };
 
         var config = {
@@ -81,12 +82,17 @@ angular.module('starter.controllers', [])
 
     //CRIANO USUARIO
     $scope.startNewUser = function() {
+
+        $ionicLoading.show({
+            template: 'Aguarde...'
+        });
+
         var credentials = {
-            nome: $scope.userCadastro.nome,
-            email: $scope.userCadastro.email,
+            name: $scope.client.name,
+            email: $scope.client.email,
             statu_id: 1,
-            password: $scope.userCadastro.password,
-            password_confirmation: $scope.userCadastro.password
+            password: $scope.client.password,
+            password_confirmation: $scope.client.password_confirmation
         };
 
         var config = {
@@ -96,19 +102,26 @@ angular.module('starter.controllers', [])
         };
 
         Auth.register(credentials, config).then(function(registeredUser) {}, function(error) {
-            message = '';
+            console.log(error);
+            /*message = '';
             if (typeof error.data.errors.email != 'undefined') {
                 message += '<li>Email: ' + error.data.errors.email + '</li>'
             }
             if (typeof error.data.errors.password != 'undefined') {
                 message += '<li>Senha: ' + error.data.errors.password + '</li>'
-            }
+            }*/
+            $ionicLoading.hide();
         });
 
         $scope.$on('devise:new-registration', function(event, user) {
-            $window.localStorage['token_user'] = JSON.stringify(user);
+            $scope.modalEnterEmail.hide();
+            $ionicLoading.hide();
             $scope.modalCreateAccount.hide();
-            $state.go('inicio');
+            $scope.client = {};
+            $ionicPopup.alert({
+                title: 'Cadastro',
+                template: 'Cadastro Realizado. Faça seu Login!!'
+            });
         });
     };
 
