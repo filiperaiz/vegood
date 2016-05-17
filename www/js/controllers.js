@@ -95,6 +95,8 @@ angular.module('starter.controllers', [])
             password_confirmation: $scope.client.password_confirmation
         };
 
+        console.log(credentials)
+
         var config = {
             headers: {
                 'X-HTTP-Method-Override': 'POST'
@@ -103,13 +105,20 @@ angular.module('starter.controllers', [])
 
         Auth.register(credentials, config).then(function(registeredUser) {}, function(error) {
             console.log(error);
-            /*message = '';
+            message = '';
+            if (typeof error.data.errors.name != 'undefined') {
+                message += '<li>Email: ' + error.data.errors.name + '</li>'
+            }
             if (typeof error.data.errors.email != 'undefined') {
                 message += '<li>Email: ' + error.data.errors.email + '</li>'
             }
             if (typeof error.data.errors.password != 'undefined') {
                 message += '<li>Senha: ' + error.data.errors.password + '</li>'
-            }*/
+            }
+            $ionicPopup.alert({
+                title: 'Erro!!',
+                template: message
+            });
             $ionicLoading.hide();
         });
 
