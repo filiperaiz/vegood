@@ -1,4 +1,4 @@
-<ion-view view-title="Enviar Receita">
+<ion-view view-title="Enviar Receita" ng-controller="SendRecipeCtrl">
     <ion-content class="padding bg-gray">
         <form action="" class="form-app">
             <div class="list input-form box-add-item">
@@ -8,10 +8,10 @@
 
                 <div class="take-pic">
                   <img ng-show="imgURI !== undefined" class="img-view-result" ng-src="{{imgURI}}">
-                  <img ng-show="imgURI === undefined" class="img-view" ng-src="img/icon/icon-camera-upload.svg">
-                  <button class="button button-positive" ng-click="takePicture()">
+                  <img ng-show="imgURI === undefined" class="img-view" ng-src="{{recipe.image}}">
+                  <a class="button button-positive" ng-click="takePicture()">
                       <i class="ion-ios-camera"></i>
-                  </button>
+                  </a>
 
                 </div>
             </div>
@@ -22,24 +22,31 @@
                 </div>
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Nome da receita</span>
-                    <input type="text" ng-model="receita.nome" placeholder="">
+                    <input type="text" ng-model="recipe.name" placeholder="">
                 </label>
-                <ul class="list-categorias">
-                    <li class="item item-checkbox" ng-repeat="categoria in categorias">
-                        <label class="checkbox">
-                            <input type="checkbox" checklist-model="receita.categorias" checklist-value="categoria.id">
-                        </label>
-                        {{categoria.text}}
-                    </li>
-                </ul>
+
+                <ion-checkbox ng-repeat="item in list_categories"
+                  ng-model="item.checked" 
+                  ng-checked="item.checked">
+                    {{ item.name }}
+                </ion-checkbox>
+                
+                <label class="item item-input item-select">
+                    <span class="input-label">Dificuldade</span>
+                    <select ng-model="recipe.dificulty">
+                        <option>Fácil</option>
+                        <option>Difícil</option>
+                    </select>
+                </label>
+
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Tempo de preparo</span>
-                    <input type="tel" ng-model="receita.tempo_preparo" placeholder="em minutos">
+                    <input type="number" ng-model="recipe.preparation_time" placeholder="em minutos">
                 </label>
 
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Rendimento</span>
-                    <input type="tel" ng-model="receita.quantidade_porcao" placeholder="Quantidade de porções">
+                    <input type="number" ng-model="recipe.portion" placeholder="Quantidade de porções">
                 </label>
 
             </div>
@@ -48,30 +55,30 @@
                 <div class="box-title">
                     <h1 class="title">Ingredientes</h1>
                 </div>
-                <label class="item item-input" ng-repeat="ingrediente in receita.ingredientes">
-                    <input type="text" ng-model="receita.ingredientes[$index]" placeholder="{{ingrediente}}">
+                <label class="item item-input" ng-repeat="ingredient in recipe.element_ingredient">
+                    <input type="text" ng-model="recipe.ingredients[$index]" placeholder="{{ingredient}}">
                 </label>
 
-                <button class="button button-positive" ng-click="maisIngrediente()">
+                <a class="button button-positive" ng-click="moreIngredient()">
                     <i class="ion-ios-plus-empty"></i>
-                </button>
+                </a>
             </div>
             <hr>
             <div class="list input-form box-add-item">
                 <div class="box-title">
                     <h1 class="title">Modo de preparo</h1>
                 </div>
-                <label class="item item-input" ng-repeat="modo_preparo in receita.modo_preparos">
-                    <textarea name="" id="" cols="30" rows="2" placeholder="{{modo_preparo}}"></textarea>
+                <label class="item item-input" ng-repeat="preparation in recipe.element_preparation">
+                    <textarea name="" id="" ng-model="recipe.preparations[$index]" cols="30" rows="2" placeholder="{{preparation}}"></textarea>
                 </label>
 
-                <button class="button button-positive" ng-click="maisModoPreparo()">
+                <a class="button button-positive" ng-click="morePreparation()">
                     <i class="ion-ios-plus-empty"></i>
-                </button>
+                </a>
             </div>
             <hr>
 
-            <button class="button button-positive" ng-click="enviarReceita()">Enviar</button>
+            <button class="button button-positive" ng-click="sendRecive()">Enviar</button>
         </form>
     </ion-content>
 </ion-view>

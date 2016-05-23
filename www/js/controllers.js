@@ -2,8 +2,15 @@ angular.module('starter.controllers', [])
 
 
 // LOGIN CONTROLLER
-.controller('loginCtrl', function($scope, $state, $stateParams, $ionicModal, Auth, $window, $ionicLoading, $http, $ionicPopup) {
+.controller('loginCtrl', function($scope, $state, $stateParams, $ionicModal, Auth, $window, $ionicLoading, $http, $ionicPopup, Util) {
     
+    var client = $window.localStorage['client'];
+    if (!Util.emptyVal(client)) {
+        $state.go('tab.timeline');
+    }
+
+
+
     $scope.client = {};
     
     // MODAL CRIAÇÃO DE CONTA
@@ -131,6 +138,22 @@ angular.module('starter.controllers', [])
                 title: 'Cadastro',
                 template: 'Cadastro Realizado. Faça seu Login!!'
             });
+
+
+            var config = {
+                headers: {
+                    'X-HTTP-Method-Override': 'DELETE'
+                }
+            };
+            Auth.logout(config).then(function(oldUser) {
+                // alert(oldUser.name + "you're signed out now.");
+            }, function(error) {
+                // An error occurred logging out.
+            });
+            $scope.$on('devise:logout', function(event, oldCurrentUser) {
+                // ...
+            });
+
         });
     };
 
@@ -827,78 +850,94 @@ angular.module('starter.controllers', [])
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // SEND RECIPE CONTROLLER
-.controller('SendRecipeCtrl', function($scope, $cordovaCamera, $window, $rootScope, $http, $state) {
+.controller('SendRecipeCtrl', function($scope, $cordovaCamera, $window, $http, $state, Util, $ionicLoading) {
+    var client = $window.localStorage['client'];
+    if (!Util.emptyVal(client)) {
 
-    var user = $window.localStorage['token_user'];
-    if (user != null && user != undefined && user != 'undefined' && user != '') {
+        $scope.recipe                       = {};
+        $scope.recipe.image                 = 'img/icon/icon-camera-upload.svg';
+        $scope.recipe.element_ingredient    = ['Ingrediente 1'];
+        $scope.recipe.element_preparation   = ['Modo de preparo 1'];
+        $scope.recipe.ingredients           = new Array();
+        $scope.recipe.preparations          = new Array();
+        
+    
+        client              = JSON.parse(client);
 
-        //DADOS USUARIO LOGADO
-        user = JSON.parse(user);
-        $rootScope.usuario_logado_id = user.id;
-
-
-        $scope.categorias = [
-            { id: 1, text: 'Café da manhã' },
-            { id: 2, text: 'Almoço' },
-            { id: 3, text: 'Lanche' },
-            { id: 4, text: 'Janta' }
-        ];
-
-
-        $scope.receita = {
-            categorias: [],
-            user_id: $rootScope.usuario_logado_id
+        var parameters = {
+            token_client:client.token,
+            client_id:client.id 
         };
 
-        $scope.receita.ingredientes = ['Ingrediente 1'];
-        $scope.receita.modo_preparos = ['Modo de Preparo 1'];
+        var config = {
+            params: parameters
+        };
 
-        $scope.maisIngrediente = function() {
-            $scope.receita.ingredientes.push('Ingrediente ' + ($scope.receita.ingredientes.length + 1));
-        }
+        $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+        $http.get('http://www.vegood.com.br/api/v1/vegood/list_categories.json', config)
+        .success(function(data, status, headers, config) {
+            if(data.client_logged.flag){
+                $scope.list_categories = data.list_categories;
+                $ionicLoading.hide();
+            }else{
+                $window.localStorage.removeItem('client');
+                $ionicLoading.hide();
+                $state.go('login');
+            }
+        });
+        
+        
 
-        $scope.maisModoPreparo = function() {
-            $scope.receita.modo_preparos.push('Modo de Preparo ' + ($scope.receita.modo_preparos.length + 1));
-        }
 
-        $scope.enviarReceita = function() {
+        $scope.sendRecive = function(){
+            
+            var categories   = new Array();
+            for(i=0;i<$scope.list_categories.length;i++){
+                if($scope.list_categories[i].checked){
+                    categories.push($scope.list_categories[i].id);
+                }
+            }
+            
+            var parameters = {
+                token_client:client.token,
+                client_id:client.id,
+                name:$scope.recipe.name,
+                category_ids:categories.toString(),
+                image:$scope.imgURI,
+                ingredients:$scope.recipe.ingredients,
+                preparations:$scope.recipe.preparations,
+                portion:$scope.recipe.portion,
+                preparation_time:$scope.recipe.preparation_time
+            };
 
-            data = JSON.stringify($scope.receita);
-            console.log(data);
+            //console.log(parameters);
 
-            $http.post('https://vegood.filiperaiz.com.br/api/v1/home/tab/enviarReceita.json', data)
-                .success(function(data, status, headers, config) {
-                    console.log(data);
-                })
-                .error(function(data, status, header, config) {
+            var config = {
+                params: parameters
+            };
+
+            $http.get('http://www.vegood.com.br/api/v1/vegood/list_categories.json', config)
+            .success(function(data, status, headers, config) {
+                if(data.client_logged.flag){
+                    $scope.list_categories = data.list_categories;
+                    $ionicLoading.hide();
+                }else{
+                    $window.localStorage.removeItem('client');
+                    $ionicLoading.hide();
                     $state.go('login');
-                });
+                }
+            });
+
+            
+        }
+        
+        $scope.moreIngredient = function() {
+            $scope.recipe.element_ingredient.push('Ingrediente ' + ($scope.recipe.element_ingredient.length + 1));
+        }
+
+        $scope.morePreparation = function() {
+            $scope.recipe.element_preparation.push('Modo de preparo ' + ($scope.recipe.element_preparation.length + 1));
         }
 
 
@@ -917,16 +956,73 @@ angular.module('starter.controllers', [])
             };
 
             $cordovaCamera.getPicture(options).then(function(imageData) {
-                $scope.imgURI = "data:image/jpeg;base64," + imageData;
+                $scope.recipe.image = "data:image/jpeg;base64," + imageData;
             }, function(err) {
                 // An error occured. Show a message to the user
             });
         }
 
-    } else {
+
+    }else{
+        $window.localStorage.removeItem('client');
+        $ionicLoading.hide();
         $state.go('login');
     }
+
+
+
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

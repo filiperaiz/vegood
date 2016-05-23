@@ -218,8 +218,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         url: '/send-recipe',
         views: {
             'tab-send-recipe': {
-                templateUrl: 'templates/tab-send-recipe.html',
-                controller: 'SendRecipeCtrl'
+                templateUrl: 'templates/tab-send-recipe.html'
             }
         }
     })
