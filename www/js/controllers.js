@@ -904,7 +904,7 @@ angular.module('starter.controllers', [])
                 client_id:client.id,
                 name:$scope.recipe.name,
                 category_ids:categories.toString(),
-                image:$scope.imgURI,
+                image:$scope.recipe.image,
                 ingredients:$scope.recipe.ingredients,
                 preparations:$scope.recipe.preparations,
                 portion:$scope.recipe.portion,
@@ -917,11 +917,11 @@ angular.module('starter.controllers', [])
                 params: parameters
             };
 
-            $http.get('http://www.vegood.com.br/api/v1/vegood/list_categories.json', config)
+
+            $http.post('http://www.vegood.com.br/api/v1/vegood/send_recive.json', config)
             .success(function(data, status, headers, config) {
-                if(data.client_logged.flag){
-                    $scope.list_categories = data.list_categories;
-                    $ionicLoading.hide();
+                if(data.flag_save){
+                    $state.go('timeline');
                 }else{
                     $window.localStorage.removeItem('client');
                     $ionicLoading.hide();
