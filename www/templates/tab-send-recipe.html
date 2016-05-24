@@ -45,6 +45,11 @@
                 </label>
 
                 <label class="item item-input item-stacked-label">
+                    <span class="input-label">Tempo de Cozimento</span>
+                    <input type="number" ng-model="recipe.cooking_time" placeholder="em minutos">
+                </label>
+
+                <label class="item item-input item-stacked-label">
                     <span class="input-label">Rendimento</span>
                     <input type="number" ng-model="recipe.portion" placeholder="Quantidade de porções">
                 </label>
@@ -78,7 +83,7 @@
             </div>
             <hr>
 
-            <button class="button button-positive" ng-click="sendRecive()">Enviar</button>
+            <a class="button button-positive" ng-click="sendRecipe()">Enviar</a>
         </form>
     </ion-content>
 </ion-view>
