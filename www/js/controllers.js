@@ -2,8 +2,8 @@ angular.module('starter.controllers', [])
 
 
 // LOGIN CONTROLLER
-.controller('loginCtrl', function($scope, $state, $stateParams, $ionicModal, Auth, $window, $ionicLoading, $http, $ionicPopup, Util) {
-    
+.controller('loginCtrl', function($scope, $cordovaCamera, $state, $stateParams, $ionicModal, Auth, $window, $ionicLoading, $http, $ionicPopup, Util) {
+
     var client = $window.localStorage['client'];
     if (!Util.emptyVal(client)) {
         $state.go('tab.timeline');
@@ -12,7 +12,7 @@ angular.module('starter.controllers', [])
 
 
     $scope.client = {};
-    
+
     // MODAL CRIAÇÃO DE CONTA
     $ionicModal.fromTemplateUrl('templates/create-account.html', {
         scope: $scope,
@@ -162,6 +162,46 @@ angular.module('starter.controllers', [])
         $state.go('forgot-password');
     };
 
+    $scope.takePhoto = function() {
+        var options = {
+            quality: 75,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 500,
+            targetHeight: 500,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+       $cordovaCamera.getPicture(options).then(function(imageData) {
+           $scope.recipe.image = "data:image/jpeg;base64," + imageData;
+       }, function(err) {
+           // An error occured. Show a message to the user
+       });
+    }
+
+    $scope.choosePhoto = function() {
+        var options = {
+            quality: 75,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 500,
+            targetHeight: 500,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            $scope.recipe.image = "data:image/jpeg;base64," + imageData;
+        }, function(err) {
+            // An error occured. Show a message to the user
+        });
+    }
+
     /* CRIANO USUARIO PELO FACEBOOK
      $scope.signInFacebook = function() {
     //     $scope.modalCreateAccount.hide();
@@ -221,10 +261,10 @@ angular.module('starter.controllers', [])
         $scope.hasMoreData  = true;
         $scope.page         = 1;
         client              = JSON.parse(client);
-        
+
         var parameters = {
             token_client:client.token,
-            client_id:client.id, 
+            client_id:client.id,
             page:$scope.page
         };
 
@@ -248,10 +288,10 @@ angular.module('starter.controllers', [])
         $scope.loadMore = function() {
             //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
             $scope.page += 1;
-            
+
             var parameters = {
                 token_client:client.token,
-                client_id:client.id, 
+                client_id:client.id,
                 page:$scope.page
             };
 
@@ -289,7 +329,7 @@ angular.module('starter.controllers', [])
         $scope.like_func = function(recipe_id){
             var parameters = {
                 token_client:client.token,
-                client_id:client.id, 
+                client_id:client.id,
                 recipe_id:recipe_id
             };
 
@@ -315,7 +355,7 @@ angular.module('starter.controllers', [])
         $scope.favorite_func = function(recipe_id){
             var parameters = {
                 token_client:client.token,
-                client_id:client.id, 
+                client_id:client.id,
                 recipe_id:recipe_id
             };
 
@@ -344,7 +384,7 @@ angular.module('starter.controllers', [])
         $ionicLoading.hide();
         $state.go('login');
     }
-    
+
 })
 
 
@@ -354,10 +394,10 @@ angular.module('starter.controllers', [])
     $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
     if (!Util.emptyVal(client)) {
         client    = JSON.parse(client);
-        
+
         var parameters = {
             token_client:client.token,
-            client_id:client.id, 
+            client_id:client.id,
             recipe_id:$stateParams.recipeId
         };
 
@@ -384,7 +424,7 @@ angular.module('starter.controllers', [])
             alert(recipe_id)
             var parameters = {
                 token_client:client.token,
-                client_id:client.id, 
+                client_id:client.id,
                 recipe_id:recipe_id
             };
 
@@ -410,7 +450,7 @@ angular.module('starter.controllers', [])
         $scope.favorite_func = function(recipe_id){
             var parameters = {
                 token_client:client.token,
-                client_id:client.id, 
+                client_id:client.id,
                 recipe_id:recipe_id
             };
 
@@ -439,7 +479,7 @@ angular.module('starter.controllers', [])
         $ionicLoading.hide();
         $state.go('login');
     }
-    
+
 })
 
 
@@ -456,7 +496,7 @@ angular.module('starter.controllers', [])
 
         var parameters = {
             token_client:client.token,
-            client_id:client.id, 
+            client_id:client.id,
             perfil_id:$stateParams.clientId
         };
 
@@ -479,7 +519,7 @@ angular.module('starter.controllers', [])
 
         var parameters = {
             token_client:client.token,
-            client_id:client.id, 
+            client_id:client.id,
             page:$scope.page,
             perfil_id:$stateParams.clientId
         };
@@ -504,10 +544,10 @@ angular.module('starter.controllers', [])
         $scope.loadMore = function() {
             //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
             $scope.page += 1;
-            
+
             var parameters = {
                 token_client:client.token,
-                client_id:client.id, 
+                client_id:client.id,
                 page:$scope.page,
                 perfil_id:$stateParams.clientId
             };
@@ -546,7 +586,7 @@ angular.module('starter.controllers', [])
         $scope.like_func = function(recipe_id){
             var parameters = {
                 token_client:client.token,
-                client_id:client.id, 
+                client_id:client.id,
                 recipe_id:recipe_id
             };
 
@@ -572,7 +612,7 @@ angular.module('starter.controllers', [])
         $scope.favorite_func = function(recipe_id){
             var parameters = {
                 token_client:client.token,
-                client_id:client.id, 
+                client_id:client.id,
                 recipe_id:recipe_id
             };
 
@@ -605,7 +645,7 @@ angular.module('starter.controllers', [])
         $ionicLoading.hide();
         $state.go('login');
     }
-    
+
 })
 
 
@@ -627,7 +667,7 @@ angular.module('starter.controllers', [])
 
         var parameters = {
             token_client:client.token,
-            client_id:client.id, 
+            client_id:client.id,
             recipe_id:$scope.recipe_id
         };
 
@@ -651,10 +691,10 @@ angular.module('starter.controllers', [])
         $scope.loadMore = function() {
             //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
             $scope.page += 1;
-            
+
             var parameters = {
                 token_client:client.token,
-                client_id:client.id, 
+                client_id:client.id,
                 recipe_id:$stateParams.recipeId
             };
 
@@ -699,7 +739,7 @@ angular.module('starter.controllers', [])
             $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
             var parameters = {
                 token_client:client.token,
-                client_id:client.id, 
+                client_id:client.id,
                 recipe_id:$scope.recipe_id,
                 text:$scope.text_comment
             };
@@ -713,7 +753,7 @@ angular.module('starter.controllers', [])
                 if(data.client_logged.flag){
                     $scope.list_comments.unshift(data.comment);
                     $scope.text_comment = '';
-                    $ionicLoading.hide();    
+                    $ionicLoading.hide();
                 }else{
                     $window.localStorage.removeItem('client');
                     $ionicLoading.hide();
@@ -740,7 +780,7 @@ angular.module('starter.controllers', [])
 
         var parameters = {
             token_client:client.token,
-            client_id:client.id 
+            client_id:client.id
         };
 
         var config = {
@@ -776,11 +816,11 @@ angular.module('starter.controllers', [])
         $scope.category_id  = $stateParams.categoryId;
         $scope.page         = 1;
         client              = JSON.parse(client);
-        
+
         var parameters = {
             token_client:client.token,
             client_id:client.id,
-            category_id:$scope.category_id, 
+            category_id:$scope.category_id,
             page:$scope.page
         };
 
@@ -805,11 +845,11 @@ angular.module('starter.controllers', [])
         $scope.loadMore = function() {
             //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
             $scope.page += 1;
-            
+
             var parameters = {
                 token_client:client.token,
                 client_id:client.id,
-                category_id:$scope.category_id, 
+                category_id:$scope.category_id,
                 page:$scope.page
             };
 
@@ -861,13 +901,13 @@ angular.module('starter.controllers', [])
         $scope.recipe.element_preparation   = ['Modo de preparo 1'];
         $scope.recipe.ingredients           = new Array();
         $scope.recipe.preparations          = new Array();
-        
-    
+
+
         client              = JSON.parse(client);
 
         var parameters = {
             token_client:client.token,
-            client_id:client.id 
+            client_id:client.id
         };
 
         var config = {
@@ -881,18 +921,18 @@ angular.module('starter.controllers', [])
             //console.log($scope.list_categories)
         });
 
-        
-        $ionicLoading.hide($scope.list_categories);      
-        
+
+        $ionicLoading.hide($scope.list_categories);
+
         $scope.sendRecipe = function(){
-            
+
             var categories   = new Array();
             for(i=0;i<$scope.list_categories.length;i++){
                 if($scope.list_categories[i].checked){
                     categories.push($scope.list_categories[i].id);
                 }
             }
-            
+
             var parameters = $.param({
                 token_client:client.token,
                 client_id:client.id,
@@ -929,9 +969,9 @@ angular.module('starter.controllers', [])
                 }
             });
 
-            
+
         }
-        
+
         $scope.moreIngredient = function() {
             $scope.recipe.element_ingredient.push('Ingrediente ' + ($scope.recipe.element_ingredient.length + 1));
         }
@@ -941,16 +981,35 @@ angular.module('starter.controllers', [])
         }
 
 
-        $scope.takePicture = function() {
-
+        $scope.takePhoto = function() {
             var options = {
                 quality: 75,
                 destinationType: Camera.DestinationType.DATA_URL,
                 sourceType: Camera.PictureSourceType.CAMERA,
                 allowEdit: true,
                 encodingType: Camera.EncodingType.JPEG,
-                targetWidth: 300,
-                targetHeight: 300,
+                targetWidth: 500,
+                targetHeight: 500,
+                popoverOptions: CameraPopoverOptions,
+                saveToPhotoAlbum: false
+            };
+
+           $cordovaCamera.getPicture(options).then(function(imageData) {
+               $scope.recipe.image = "data:image/jpeg;base64," + imageData;
+           }, function(err) {
+               // An error occured. Show a message to the user
+           });
+        }
+
+        $scope.choosePhoto = function() {
+            var options = {
+                quality: 75,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                allowEdit: true,
+                encodingType: Camera.EncodingType.JPEG,
+                targetWidth: 500,
+                targetHeight: 500,
                 popoverOptions: CameraPopoverOptions,
                 saveToPhotoAlbum: false
             };

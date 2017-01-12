@@ -11,7 +11,9 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 */
 
-   $positive: #14cd16 !default;
+   // $positive: #14cd16 !default;
+   $positive: #9fcc3e !default;
+   $calm:     #ff8a00 !default;
    $balanced: #e8e8e8 !default;
    $dark: #444 !default;
    $light: #fff !default;
@@ -19,8 +21,12 @@ $royal:                           #886aea !default;
    $ionicons-font-path: "../lib/ionic/fonts" !default;
    // Include all of Ionic
    @import "www/lib/ionic/scss/ionic";
+    .bar-header{
+      border-bottom: 2px solid $positive !important;
+    }
+
    .tab-nav {
-       border-top: 1px solid #14cd16 !important;
+       border-top: 1px solid $positive !important;
        padding-top: 0px;
    }
 
@@ -33,8 +39,14 @@ $royal:                           #886aea !default;
        visibility: hidden;
    }
 
+   .bar{
+        .title{
+            font-size: 15px;
+        }
+   }
+
    .logo-title {
-       width: 82px;
+       width: 125px;
        margin-top: 5px;
    }
 
@@ -50,25 +62,33 @@ $royal:                           #886aea !default;
    }
 
    .item-recipe-big {
-       margin-top: 5px;
-       margin-bottom: 15px;
-       border-radius: 5px;
+       margin-bottom: 5px;
+       margin-left: 0;
+       margin-right: 0;
+       margin-top: 0;
+       padding: 0;
        display: block;
        text-decoration: none;
        position: relative;
+       box-shadow: none;
        .link-item {
            text-decoration: none;
            display: block;
        }
        .item-avatar {
            padding: 0px 90px 0px 50px;
-           min-height: 45px;
+           min-height: 40px;
            position: relative;
            .pic-user {
                top: 5px;
                left: 8px;
-               max-height: 35px;
-               max-width: 35px;
+               max-height: 30px;
+               max-width: 30px;
+               border-radius: 4px;
+               background-color: #cccccc;
+               border: 0;
+               outline: 0;
+               overflow: hidden;
            }
            .recipe-author {
                display: block;
@@ -78,7 +98,7 @@ $royal:                           #886aea !default;
                text-align: left;
                margin: 0;
                vertical-align: middle;
-               padding: 15px 0;
+               padding: 13px 0;
                font-weight: bold;
            }
        }
@@ -95,7 +115,7 @@ $royal:                           #886aea !default;
                line-height: 0;
                background: #fff;
                i {
-                   color: #14cd16;
+                   color: $positive;
                    font-size: 20px;
                    vertical-align: sub;
                    margin-right: 3px;
@@ -104,69 +124,73 @@ $royal:                           #886aea !default;
        }
        .item-image {
            position: relative;
+           min-height: 150px;
+           background-color: #ccc;
            .image-recipe {
                width: 100%;
                display: block;
            }
        }
-       .categoria {
-           position: absolute;
-           left: 0;
-           background-color: rgba(0, 0, 0, 0.5);
-           padding: 0px 10px;
-           font-weight: bold;
-           font-size: 12px;
-           color: #ffffff;
-           width: 100%;
-           top: 0;
-           span {
+       .info-title {
+           padding: 10px;
+           .recipe-name {
+               font-size: 13px;
+               white-space: normal;
+               text-transform: uppercase;
+               color: #757575;
+               text-align: center;
+               line-height: 19px;
+               margin: 0;
+               font-weight: bold;
+           }
+           .categoria {
+               padding: 0px 10px;
                font-size: 11px;
-               display: inline-block;
-               &:after {
-                   content: '/';
-                   margin: 0 3px;
-               }
-               &:last-child:after {
-                   content: '';
+               color: #666666;
+               text-align: center;
+               span {
+                   font-size: 11px;
+                   display: inline-block;
+                   text-align: center;
+                   &:after {
+                       content: '/';
+                       margin: 0 3px;
+                   }
+                   &:last-child:after {
+                       content: '';
+                   }
                }
            }
        }
-       .recipe-name {
-           font-size: 13px;
-           white-space: normal;
-           text-transform: uppercase;
-           color: #757575;
-           text-align: center;
-           line-height: 19px;
-       }
        .info-number {
-           background-color: #fafafa;
+           background-color: #f3f3f3;
            padding: 0;
            ul {
                margin: 0;
                .item-info-recipe {
                    display: block;
-                   width: 33.299999999999997%;
                    text-align: center;
                    border-right: 1px solid #e7e7e7;
                    float: left;
+                   width: 33.299999999999997%;
                    .action {
-                       padding: 15px 5px;
+                       padding: 5px;
                        display: block;
                    }
                    i {
                        color: $positive;
                        font-size: 20px;
-                       margin-right: 10px;
-                       ;
                        line-height: 20px;
                        vertical-align: sub;
+                       margin-right: 10px;
                    }
                    .valor {
                        color: #7c7c7c;
                        margin-bottom: 0;
                        font-size: 12px;
-                       ;
+                       .ion-ios-star, .ion-ios-star-outline {
+                           margin-right: 0;
+                       }
                    }
                    &:last-child {
                        border-right: none;
@@ -177,9 +201,12 @@ $royal:                           #886aea !default;
    }
 
    .item-recipe-small {
-       margin-top: 0;
-       margin-bottom: 5px;
-       border-radius: 5px;
+        margin-bottom: 2px;
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 0;
+        padding: 0;
+
        display: block;
        text-decoration: none;
        .item-content {
@@ -202,7 +229,7 @@ $royal:                           #886aea !default;
        }
        .categoria {
            left: 80px;
-           background-color: #14cd16;
+           background-color: $positive;
            padding: 2px 12px;
            font-weight: bold;
            font-size: 10px;
@@ -217,41 +244,41 @@ $royal:                           #886aea !default;
            text-align: left;
            margin-bottom: 5px;
            line-height: 17px;
+           font-weight: bold;
        }
        .recipe-author {
            display: block;
-           font-size: 11px;
+           font-size: 12px;
            text-transform: initial;
            font-style: italic;
            color: $positive;
-           margin-bottom: 5px;
+           margin-bottom: 0;
        }
    }
 
    .item-recipe-category {
        margin-top: 5px;
-       margin-bottom: 15px;
-       border-radius: 5px;
+       margin-bottom: 5px;
+       border-radius: 4px;
        display: block;
        text-decoration: none;
        .item-image {
            width: 100%;
            .image-recipe {
                display: block;
-               max-height: 100px;
+               max-height: 80px;
                width: 100%;
            }
        }
        .categoria {
            position: absolute;
            left: 0;
-           padding: 2px 12px;
+           padding: 0 10px;
            font-weight: bold;
-           font-size: 20px;
+           font-size: 17px;
            color: #ffffff;
            width: 100%;
-           top: 38%;
-           bottom: 0;
+           top: 36%;
            right: 0;
        }
    }
@@ -259,12 +286,11 @@ $royal:                           #886aea !default;
    .box-title {
        margin-bottom: 10px;
        background-color: #fff;
-       border-bottom: 2px solid #14cd16;
+       border-bottom: 2px solid $positive;
        padding: 5px;
        text-align: center;
-       border-radius: 5px;
        .title {
-           font-size: 14px;
+           font-size: 13px;
            color: $dark;
            margin: 0;
            .numero {
@@ -292,7 +318,7 @@ $royal:                           #886aea !default;
    }
 
    .item-radius {
-       border-radius: 5px;
+       border-radius: 4px;
    }
 
    .no-ws {
@@ -300,13 +326,19 @@ $royal:                           #886aea !default;
    }
 
    .info-recipe {
+       margin-bottom: 5px;
+       margin-left: 0;
+       margin-right: 0;
+       margin-top: 0;
+       padding: 0;
        background-color: #fff;
+       box-shadow: none;
        ul {
            margin: 0;
            .item-info-recipe {
                display: block;
-               ;
                width: 25%;
+               height: 70px;
                text-align: center;
                padding: 5px;
                float: left;
@@ -314,7 +346,7 @@ $royal:                           #886aea !default;
                i {
                    color: $positive;
                    display: block;
-                   font-size: 20px;
+                   font-size: 17px;
                }
                .titulo {
                    font-size: 11px;
@@ -322,9 +354,10 @@ $royal:                           #886aea !default;
                    color: #7c7c7c;
                }
                .valor {
-                   color: $positive;
+                   color: #7c7c7c;
                    margin-bottom: 0;
-                   font-size: 12px;
+                   font-size: 11px;
+                   font-weight: bold;
                }
                &:last-child {
                    border-left: none;
@@ -333,31 +366,45 @@ $royal:                           #886aea !default;
        }
    }
 
-   .lista-info-recipe {
-       margin: 0;
-       li {
-           margin-left: 20px;
-           font-size: 14px;
-           margin-bottom: 10px;
-           color: $positive;
+   .info-card-recipe {
+       margin-bottom: 5px;
+       margin-left: 0;
+       margin-right: 0;
+       margin-top: 0;
+       padding: 0;
+       box-shadow: none;
+       .item-divider {
+           font-size: 13px;
+           color: #7c7c7c;
        }
-       &.lista-ingredientes {
+       .lista-info-recipe {
+           margin: 0;
            li {
-               list-style: disc;
+               margin-left: 15px;
+               font-size: 13px;
+               margin-bottom: 5px;
+               color: $positive;
+           }
+           &.lista-ingredientes {
+               li {
+                   list-style: disc;
+               }
+           }
+           &.lista-preparo {
+               li {
+                   list-style: decimal;
+               }
            }
        }
-       &.lista-preparo {
-           li {
-               list-style: decimal;
-           }
+
+       &:last-child{
+         margin-bottom: 10px;
        }
    }
 
    // LOGIN PAGE
    .bg-login {
-       background-image: url("../img/bg.jpg");
-       background-repeat: no-repeat;
-       background-size: cover;
+       background-color: $positive;
        display: table;
        height: 100%;
        margin-bottom: 0;
@@ -374,11 +421,9 @@ $royal:                           #886aea !default;
    .big-logo {
        margin-bottom: 25px;
        text-align: center;
-       img {}
-   }
-
-   .big-logo img {
-       width: 210px;
+       img {
+        width: 150px;
+       }
    }
 
    .btn-login {
@@ -442,73 +487,124 @@ $royal:                           #886aea !default;
    }
 
    .form-app {
-       padding: 15px;
+       padding: 0;
        .input-form {
            position: relative;
            padding: 0;
            margin-bottom: 0;
            .item-input {
-               margin-bottom: 10px;
-               border-radius: 5px;
+               margin-bottom: 0;
+               border-radius: 4px;
                text-align: center;
-               padding: 5px 0px;
+               padding: 0 0 5px 0;
+
+               &.item-input-select{
+                padding-bottom: 0;
+               }
                .input-label {
                    margin-bottom: 5px;
                    display: block;
-                   text-align: center;
+                   text-align: left;
                    width: 100%;
                    max-width: 100%;
+                   padding: 0;
+                   font-weight: bold;
                }
                input {
-                   color: $positive;
+                   color: #666;
                    font-weight: normal;
                    opacity: 1;
-                   text-align: center;
+                   text-align: left;
                    font-size: 14px;
                    flex: none;
-                   border-radius: 5px;
+                   border-radius: 4px;
+                   padding: 5px 10px;
+                   margin-bottom: 10px;
                }
                input::-webkit-input-placeholder {
-                   color: $positive;
+                   color: #999;
                }
                input:focus::-webkit-input-placeholder {
-                   color: $positive;
+                   color: #999;
                }
                /* Firefox < 19 */
                input:-moz-placeholder {
-                   color: $positive;
+                   color: #999;
                }
                input:focus:-moz-placeholder {
-                   color: $positive;
+                   color: #999;
                }
                /* Firefox > 19 */
                input::-moz-placeholder {
-                   color: $positive;
+                   color: #999;
                }
                input:focus::-moz-placeholder {
-                   color: $positive;
+                   color: #999;
                }
                /* Internet Explorer 10 */
                input:-ms-input-placeholder {
-                   color: $positive;
+                   color: #999;
                }
                input:focus:-ms-input-placeholder {
-                   color: $positive;
+                   color: #999;
                }
                .input-label {
                    font-size: 13px;
                }
            }
+
+           .item-checkbox {
+               padding-left: 60px;
+               text-align: left;
+               font-size: 14px;
+               border-radius: 4px;
+               margin-bottom: 2px;
+               padding-top: 10px;
+               padding-bottom: 10px;
+           }
+
+           .item-select{
+              border: 0;
+              border-radius: 4px;
+              width: 100%;
+              max-width: 100%;
+              margin: 0;
+              display: block;
+              height: 34px;
+              background: #fff;
+           }
+
+           .item-textarea{
+              padding: 5px;
+              border-radius: 4px;
+              margin-bottom: 10px;
+           }
+
+           .block-input{
+              padding: 0;
+
+              .col{
+                &:first-child{
+                  padding-left: 0;
+                }
+
+                &:last-child{
+                  padding-right: 0;
+                }
+              }
+           }
+
+
        }
        .button {
            margin-bottom: 0;
            width: 100%;
-           border-radius: 5px;
-           margin-top: 20px;
+           border-radius: 4px;
+           margin-top: 0;
        }
        hr {
            position: relative;
-           margin: 30px 0;
+           margin: 5px 0;
        }
    }
 
@@ -539,8 +635,14 @@ $royal:                           #886aea !default;
        text-align: center;
        .button {
            width: 40px;
-           font-size: 34px;
+           font-size: 20px;
            margin: auto;
+           min-height: 35px;
+           height: 35px;
+           line-height: 33px;
+           font-weight: bold;
+           min-width: 35px;
+           padding: 0;
        }
    }
 
@@ -548,17 +650,17 @@ $royal:                           #886aea !default;
        text-align: center;
        .img-view {
            width: 100%;
-           border: 2px dashed #14CD16;
-           border-radius: 5px;
-           margin-bottom: 20px;
+           border: 2px dashed $positive;
            background-color: #fff;
+           display: block;
+           min-height: 150px;
        }
        .img-view-result {
            width: 100%;
-           border: 2px solid #14CD16;
-           border-radius: 5px;
-           margin-bottom: 20px;
+           border: 2px solid $positive;
            background-color: #fff;
+           display: block;
+           min-height: 150px;
        }
    }
 
@@ -713,3 +815,6 @@ $royal:                           #886aea !default;
            }
        }
    }
+
+
+

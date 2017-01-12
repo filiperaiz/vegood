@@ -1,35 +1,38 @@
 <ion-view view-title="TimeLine" ng-controller="timeLineCtrl">
     <ion-nav-title>
-        <img class="logo-title" src="img/icon/logo-vegood-plate.png">
+        <img class="logo-title" src="img/icon/logo-vegood.svg">
     </ion-nav-title>
-    
-    <ion-nav-buttons side="right">
+
+    <!-- <ion-nav-buttons side="right">
         <button class="button button-icon button-clear ion-ios-search-strong" ng-click="openPesquisa()"></button>
-    </ion-nav-buttons>
-    
-    <ion-content class="bg-gray padding">
-    
+    </ion-nav-buttons> -->
+
+    <ion-content class="bg-gray">
+
         <ion-refresher pulling-text="Atualizando..." on-refresh="doRefresh()"></ion-refresher>
 
         <div class="item-recipe-big card" ng-repeat="recipe in list_recipes">
             <a class="link-item" ng-href="#/tab/timeline/profile/{{recipe.client.id}}">
                 <div class="item item-avatar">
-                    <img class="pic-user" src="{{recipe.client.image}}">
+                    <!-- <img class="pic-user" src="{{recipe.client.image}}"> -->
+                    <img class="pic-user" src="https://pbs.twimg.com/profile_images/816377659722604545/2n4E1E0o.jpg">
                     <h2 class="recipe-author">{{recipe.client.name}}</h2>
                 </div>
             </a>
 
             <a class="link-item" ng-href="#/tab/timeline/recipe/{{recipe.id}}">
-                <div class="item item-image">
+                <div class="item-image item">
                     <img class="image-recipe" ng-src="{{recipe.image}}">
-                    <span class="categoria">
-                        <span ng-repeat=" category in recipe.categories">{{category.name}}</span>
-                    </span>
                 </div>
-                <div class="item">
+
+                <div class="info-title item">
                     <h2 class="recipe-name">{{recipe.title}}</h2>
+                    <div class="categoria">
+                        <span ng-repeat=" category in recipe.categories">{{category.name}}</span>
+                    </div>
                 </div>
             </a>
+
             <div class="info-number item">
                 <ul>
                     <li class="item-info-recipe">
@@ -41,18 +44,18 @@
                         </a>
                     </li>
                     <li class="item-info-recipe">
-                        <a id="favorite-{{recipe.id}}" class="action" ng-click="favorite_func({{recipe.id}})">
+                        <a ng-href="#/tab/timeline/comments/{{recipe.id}}" class="action">
                             <p class="valor">
-                                <i class="ion-ios-star{{recipe.class_favorite}}"></i>
-                                <t>{{recipe.size_favorites}}</t>
+                                <i class="ion-ios-chatbubble{{recipe.class_comment}}"></i>
+                                {{recipe.size_comments}}
                             </p>
                         </a>
                     </li>
                     <li class="item-info-recipe">
-                        <a ng-href="#/tab/timeline/comments/{{recipe.id}}" class="action">
-                            <p class="valor">
-                                <i class="ion-ios-chatbubble{{recipe.class_comment}}"></i> 
-                                {{recipe.size_comments}}
+                        <a id="favorite-{{recipe.id}}" class="action" ng-click="favorite_func({{recipe.id}})">
+                            <p class="valor icon-star">
+                                <i class="ion-ios-star{{recipe.class_favorite}}"></i>
+                                <!-- <t>{{recipe.size_favorites}}</t> -->
                             </p>
                         </a>
                     </li>
@@ -65,23 +68,5 @@
             on-infinite="loadMore()"
             distance="10%">
         </ion-infinite-scroll>
-
-        <script id="templates/popover.html" type="text/ng-template">
-            <ion-popover-view>
-                <ion-content>
-                    <div class="list">
-                        <a class="item" href="">
-                      Principais receitas
-                    </a>
-                        <a class="item" href="">
-                      Mais Recentes
-                    </a>
-                        <a class="item" href="">
-                      Amigos
-                    </a>
-                    </div>
-                </ion-content>
-            </ion-popover-view>
-        </script>
     </ion-content>
 </ion-view>

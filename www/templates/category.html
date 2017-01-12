@@ -1,18 +1,18 @@
 <ion-view view-title="" ng-controller="CategoryItemsCtrl">
   <ion-nav-title>
-      <img class="logo-title" src="img/icon/logo-vegood-plate.png">
+      <h1 class="title">
+        <span class="numero">{{size_recipe.quant}}</span>
+        receitas encontradas
+    </h1>
   </ion-nav-title>
-  <ion-content class="bg-gray padding">
-      <div class="box-title">
-          <h1 class="title"><span class="numero">{{size_recipe.quant}}</span>receitas encontradas</h1>
-      </div>
+  <ion-content class="bg-gray">
       <ion-list>
 
           <ion-item class="item-avatar item-icon-right item-recipe-small" ng-repeat="recipe in list_recipes" type="item-text-wrap" href="#/tab/category/recipe/{{recipe.id}}">
             <img class="image-recipe" ng-src="{{recipe.image}}">
-            <h2 class="recipe-name">{{recipe.title}}</h2>
+            <h2 class="recipe-name no-ws">{{recipe.title}}</h2>
             <h5 class="recipe-author">Por: {{recipe.client.name}}</h5>
-            <span class="categoria" ng-repeat="cat in recipe.categories">{{cat.name}}</span>
+            <!-- <span class="categoria" ng-repeat="cat in recipe.categories">{{cat.name}}</span> -->
             <i class="icon ion-chevron-right icon-accessory"></i>
           </ion-item>
 

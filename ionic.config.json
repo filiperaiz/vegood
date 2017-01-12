@@ -1,0 +1,12 @@
+{
+  "name": "vegood",
+  "app_id": "0b658174",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}

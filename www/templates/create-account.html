@@ -1,10 +1,32 @@
 <ion-modal-view>
-    <ion-header-bar class="bar bar-header bar-positive">
+    <ion-header-bar class="bar bar-header bar-light">
         <h1 class="title">Novo usuário</h1>
         <button class="button button-clear  button-icon ion-ios-close-empty" ng-click="closeCreateAccount()"></button>
     </ion-header-bar>
     <ion-content class=" bg-gray padding">
         <form action="" class="form-app">
+            <div class="list input-form box-add-item">
+
+                <div class="take-pic padding">
+                    <img ng-show="imgURI !== undefined" class="img-view-result" ng-click="takePhoto()" ng-src="{{imgURI}}">
+                    <img ng-show="imgURI === undefined" class="img-view" ng-click="takePhoto()" ng-src="{{recipe.image}}">
+                    <!-- <div class="row">
+                        <div class="col">
+                            <a class="button button-block button-positive" ng-click="takePhoto()">
+                                <i class="ion-camera"></i>Tirar
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a class="button button-block button-dark" ng-click="choosePhoto()">
+                                <i class="ion-image"></i>Selecionar
+                            </a>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+
+             <hr>
+
             <div class="list input-form">
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Nome</span>
