@@ -9733,6 +9733,8 @@ a.button {
 .tab-nav {
   border-top: 1px solid #9fcc3e !important;
   padding-top: 0px; }
+  .tab-nav .tab-item {
+    padding-top: 5px; }
 
 a {
   text-decoration: none !important; }
@@ -9750,7 +9752,7 @@ a {
 
 .tab-item .icon {
   font-size: 25px;
-  height: 32px; }
+  height: 25px; }
 
 .bg-gray,
 .pane,
@@ -9758,7 +9760,7 @@ a {
   background-color: #dbdfe1; }
 
 .item-recipe-big {
-  margin-bottom: 5px;
+  margin-bottom: 3px;
   margin-left: 0;
   margin-right: 0;
   margin-top: 0;
@@ -9779,7 +9781,7 @@ a {
       left: 8px;
       max-height: 30px;
       max-width: 30px;
-      border-radius: 4px;
+      border-radius: 5px;
       background-color: #cccccc;
       border: 0;
       outline: 0;
@@ -9814,7 +9816,8 @@ a {
   .item-recipe-big .item-image {
     position: relative;
     min-height: 150px;
-    background-color: #ccc; }
+    background-color: #ccc;
+    border-radius: 0 !important; }
     .item-recipe-big .item-image .image-recipe {
       width: 100%;
       display: block; }
@@ -9867,19 +9870,21 @@ a {
           color: #7c7c7c;
           margin-bottom: 0;
           font-size: 12px; }
-          .item-recipe-big .info-number ul .item-info-recipe .valor .ion-ios-star, .item-recipe-big .info-number ul .item-info-recipe .valor .ion-ios-star-outline {
+          .item-recipe-big .info-number ul .item-info-recipe .valor .ion-ios-star,
+          .item-recipe-big .info-number ul .item-info-recipe .valor .ion-ios-star-outline {
             margin-right: 0; }
         .item-recipe-big .info-number ul .item-info-recipe:last-child {
           border-right: none; }
 
 .item-recipe-small {
-  margin-bottom: 2px;
+  margin-bottom: 0px;
   margin-left: 0;
   margin-right: 0;
   margin-top: 0;
   padding: 0;
   display: block;
-  text-decoration: none; }
+  text-decoration: none;
+  border-bottom: 1px; }
   .item-recipe-small .item-content {
     position: relative;
     z-index: 2;
@@ -9895,7 +9900,9 @@ a {
     max-height: 62px !important;
     width: 100% !important;
     height: 100% !important;
-    border-radius: 5px !important; }
+    border-radius: 5px !important;
+    background-color: #ccc;
+    overflow: hidden; }
   .item-recipe-small .categoria {
     left: 80px;
     background-color: #9fcc3e;
@@ -9924,7 +9931,7 @@ a {
 .item-recipe-category {
   margin-top: 5px;
   margin-bottom: 5px;
-  border-radius: 4px;
+  border-radius: 5px;
   display: block;
   text-decoration: none; }
   .item-recipe-category .item-image {
@@ -9966,9 +9973,6 @@ a {
   margin-right: 10px; }
   .left-buttons .button-icon:before {
     font-size: 28px !important; }
-
-.item-radius {
-  border-radius: 4px; }
 
 .no-ws {
   white-space: normal !important; }
@@ -10107,7 +10111,7 @@ a {
     margin-bottom: 0; }
     .form-app .input-form .item-input {
       margin-bottom: 0;
-      border-radius: 4px;
+      border-radius: 5px;
       text-align: center;
       padding: 0 0 5px 0;
       /* Firefox < 19 */
@@ -10130,7 +10134,7 @@ a {
         text-align: left;
         font-size: 14px;
         flex: none;
-        border-radius: 4px;
+        border-radius: 5px;
         padding: 5px 10px;
         margin-bottom: 10px; }
       .form-app .input-form .item-input input::-webkit-input-placeholder {
@@ -10155,13 +10159,13 @@ a {
       padding-left: 60px;
       text-align: left;
       font-size: 14px;
-      border-radius: 4px;
+      border-radius: 5px;
       margin-bottom: 2px;
       padding-top: 10px;
       padding-bottom: 10px; }
     .form-app .input-form .item-select {
       border: 0;
-      border-radius: 4px;
+      border-radius: 5px;
       width: 100%;
       max-width: 100%;
       margin: 0;
@@ -10170,7 +10174,7 @@ a {
       background: #fff; }
     .form-app .input-form .item-textarea {
       padding: 5px;
-      border-radius: 4px;
+      border-radius: 5px;
       margin-bottom: 10px; }
     .form-app .input-form .block-input {
       padding: 0; }
@@ -10181,7 +10185,7 @@ a {
   .form-app .button {
     margin-bottom: 0;
     width: 100%;
-    border-radius: 4px;
+    border-radius: 5px;
     margin-top: 0; }
   .form-app hr {
     position: relative;
@@ -10284,25 +10288,42 @@ a {
       border-left: 0; }
 
 .info-user {
-  margin-bottom: 0;
-  padding: 10px 0 10px;
+  margin: 0;
   background: #fff;
-  margin-top: 0;
-  border-radius: 0;
-  margin-left: 0;
-  margin-right: 0; }
+  border-radius: 0; }
+  .info-user .box {
+    position: relative; }
   .info-user .pic {
     position: relative;
-    width: 100%; }
+    width: 80px;
+    height: 80px;
+    float: left;
+    display: block; }
     .info-user .pic .img {
       overflow: hidden;
-      width: 62px;
-      border-radius: 100px;
-      border: 2px solid #9fcc3e;
-      max-height: 62px; }
+      width: 80px;
+      border-radius: 5px;
+      border: 1px solid #9fcc3e;
+      height: 80px;
+      background-color: #ccc; }
       .info-user .pic .img img {
         width: 100%;
         display: block; }
+  .info-user .infos-user {
+    float: left;
+    position: absolute;
+    padding-left: 75px;
+    right: 0;
+    bottom: -2px; }
+  .info-user .btn-actions {
+    text-align: right; }
+    .info-user .btn-actions .button {
+      margin-right: 0;
+      margin-left: 5px;
+      min-height: 30px;
+      line-height: 30px;
+      padding: 0px 1px;
+      min-width: 45px; }
   .info-user .info-number {
     position: relative;
     text-align: center; }
@@ -10313,7 +10334,8 @@ a {
       margin-left: -4px;
       text-align: center; }
       .info-user .info-number .item-profile:last-child {
-        border-right: 0 !important; }
+        border-right: 0 !important;
+        padding-right: 3px; }
     .info-user .info-number strong {
       width: 100%;
       display: block;
@@ -10328,31 +10350,17 @@ a {
       color: #666;
       text-align: center;
       display: block; }
-  .info-user .edit-perfil {
-    background-color: #cfcfcf;
-    font-size: 11px;
-    padding: 2px 10px;
-    margin: auto;
-    border-radius: 5px;
-    line-height: 17px;
-    font-weight: bold;
-    height: 23px;
-    min-height: 23px;
-    margin-top: 10px;
-    width: 100%;
-    color: #fff; }
-  .info-user .dados {
-    padding-left: 10px;
-    padding-right: 10px; }
-    .info-user .dados .nome {
-      font-size: 13px;
+  .info-user .info-dates {
+    padding: 10px 0 0;
+    border-top: 1px solid #e7e7e7;
+    margin-top: 10px; }
+    .info-user .info-dates .nome {
+      font-size: 14px;
       color: #9fcc3e;
       text-align: left;
-      margin: 0px 0 0; }
-      .info-user .dados .nome .cidade {
-        text-align: right;
-        float: right;
-        font-size: 11px; }
-    .info-user .dados p {
+      margin: 0; }
+    .info-user .info-dates p {
       font-size: 12px;
-      margin: 5px 0 0; }
+      margin: 8px 0 0;
+      line-height: 1;
+      color: #7c7c7c; }

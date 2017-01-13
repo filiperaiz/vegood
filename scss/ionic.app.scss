@@ -13,21 +13,26 @@ $royal:                           #886aea !default;
 
    // $positive: #14cd16 !default;
    $positive: #9fcc3e !default;
-   $calm:     #ff8a00 !default;
+   $calm: #ff8a00 !default;
    $balanced: #e8e8e8 !default;
    $dark: #444 !default;
    $light: #fff !default;
+   $radius: 5px;
    // The path for our ionicons font files, relative to the built CSS in www/css
    $ionicons-font-path: "../lib/ionic/fonts" !default;
    // Include all of Ionic
    @import "www/lib/ionic/scss/ionic";
-    .bar-header{
-      border-bottom: 2px solid $positive !important;
-    }
+   .bar-header {
+       border-bottom: 2px solid $positive !important;
+   }
 
    .tab-nav {
        border-top: 1px solid $positive !important;
        padding-top: 0px;
+
+       .tab-item{
+        padding-top: 5px;
+       }
    }
 
    a {
@@ -39,10 +44,10 @@ $royal:                           #886aea !default;
        visibility: hidden;
    }
 
-   .bar{
-        .title{
-            font-size: 15px;
-        }
+   .bar {
+       .title {
+           font-size: 15px;
+       }
    }
 
    .logo-title {
@@ -52,7 +57,7 @@ $royal:                           #886aea !default;
 
    .tab-item .icon {
        font-size: 25px;
-       height: 32px;
+       height: 25px;
    }
 
    .bg-gray,
@@ -62,7 +67,7 @@ $royal:                           #886aea !default;
    }
 
    .item-recipe-big {
-       margin-bottom: 5px;
+       margin-bottom: 3px;
        margin-left: 0;
        margin-right: 0;
        margin-top: 0;
@@ -84,7 +89,7 @@ $royal:                           #886aea !default;
                left: 8px;
                max-height: 30px;
                max-width: 30px;
-               border-radius: 4px;
+               border-radius: $radius;
                background-color: #cccccc;
                border: 0;
                outline: 0;
@@ -111,7 +116,7 @@ $royal:                           #886aea !default;
                font-size: 11px;
                border: 1px solid #e7e7e7;
                padding: 2px 10px;
-               border-radius: 5px;
+               border-radius: $radius;
                line-height: 0;
                background: #fff;
                i {
@@ -126,6 +131,7 @@ $royal:                           #886aea !default;
            position: relative;
            min-height: 150px;
            background-color: #ccc;
+           border-radius: 0 !important;
            .image-recipe {
                width: 100%;
                display: block;
@@ -188,7 +194,8 @@ $royal:                           #886aea !default;
                        color: #7c7c7c;
                        margin-bottom: 0;
                        font-size: 12px;
-                       .ion-ios-star, .ion-ios-star-outline {
+                       .ion-ios-star,
+                       .ion-ios-star-outline {
                            margin-right: 0;
                        }
                    }
@@ -201,14 +208,14 @@ $royal:                           #886aea !default;
    }
 
    .item-recipe-small {
-        margin-bottom: 2px;
-        margin-left: 0;
-        margin-right: 0;
-        margin-top: 0;
-        padding: 0;
-
+       margin-bottom: 0px;
+       margin-left: 0;
+       margin-right: 0;
+       margin-top: 0;
+       padding: 0;
        display: block;
        text-decoration: none;
+       border-bottom: 1px;
        .item-content {
            position: relative;
            z-index: 2;
@@ -225,7 +232,9 @@ $royal:                           #886aea !default;
            max-height: 62px !important;
            width: 100% !important;
            height: 100% !important;
-           border-radius: 5px !important;
+           border-radius: $radius !important;
+           background-color: #ccc;
+           overflow: hidden;
        }
        .categoria {
            left: 80px;
@@ -235,7 +244,7 @@ $royal:                           #886aea !default;
            font-size: 10px;
            color: #ffffff;
            bottom: 5px;
-           border-radius: 5px;
+           border-radius: $radius;
        }
        .recipe-name {
            font-size: 12px;
@@ -259,7 +268,7 @@ $royal:                           #886aea !default;
    .item-recipe-category {
        margin-top: 5px;
        margin-bottom: 5px;
-       border-radius: 4px;
+       border-radius: $radius;
        display: block;
        text-decoration: none;
        .item-image {
@@ -315,10 +324,6 @@ $royal:                           #886aea !default;
                font-size: 28px !important;
            }
        }
-   }
-
-   .item-radius {
-       border-radius: 4px;
    }
 
    .no-ws {
@@ -396,9 +401,8 @@ $royal:                           #886aea !default;
                }
            }
        }
-
-       &:last-child{
-         margin-bottom: 10px;
+       &:last-child {
+           margin-bottom: 10px;
        }
    }
 
@@ -422,7 +426,7 @@ $royal:                           #886aea !default;
        margin-bottom: 25px;
        text-align: center;
        img {
-        width: 150px;
+           width: 150px;
        }
    }
 
@@ -432,7 +436,7 @@ $royal:                           #886aea !default;
            font-size: 13px;
            font-weight: bold;
            width: 100%;
-           border-radius: 5px;
+           border-radius: $radius;
            &.button-facebook {
                background-color: #3b5998;
                color: #fff;
@@ -450,7 +454,7 @@ $royal:                           #886aea !default;
            font-size: 13px;
            font-weight: bold;
            width: 100%;
-           border-radius: 5px;
+           border-radius: $radius;
            &.button-register {
                background-color: transparent;
                color: #fff;
@@ -494,12 +498,11 @@ $royal:                           #886aea !default;
            margin-bottom: 0;
            .item-input {
                margin-bottom: 0;
-               border-radius: 4px;
+               border-radius: $radius;
                text-align: center;
                padding: 0 0 5px 0;
-
-               &.item-input-select{
-                padding-bottom: 0;
+               &.item-input-select {
+                   padding-bottom: 0;
                }
                .input-label {
                    margin-bottom: 5px;
@@ -517,7 +520,7 @@ $royal:                           #886aea !default;
                    text-align: left;
                    font-size: 14px;
                    flex: none;
-                   border-radius: 4px;
+                   border-radius: $radius;
                    padding: 5px 10px;
                    margin-bottom: 10px;
                }
@@ -552,54 +555,46 @@ $royal:                           #886aea !default;
                    font-size: 13px;
                }
            }
-
            .item-checkbox {
                padding-left: 60px;
                text-align: left;
                font-size: 14px;
-               border-radius: 4px;
+               border-radius: $radius;
                margin-bottom: 2px;
                padding-top: 10px;
                padding-bottom: 10px;
            }
-
-           .item-select{
-              border: 0;
-              border-radius: 4px;
-              width: 100%;
-              max-width: 100%;
-              margin: 0;
-              display: block;
-              height: 34px;
-              background: #fff;
+           .item-select {
+               border: 0;
+               border-radius: $radius;
+               width: 100%;
+               max-width: 100%;
+               margin: 0;
+               display: block;
+               height: 34px;
+               background: #fff;
            }
-
-           .item-textarea{
-              padding: 5px;
-              border-radius: 4px;
-              margin-bottom: 10px;
+           .item-textarea {
+               padding: 5px;
+               border-radius: $radius;
+               margin-bottom: 10px;
            }
-
-           .block-input{
-              padding: 0;
-
-              .col{
-                &:first-child{
-                  padding-left: 0;
-                }
-
-                &:last-child{
-                  padding-right: 0;
-                }
-              }
+           .block-input {
+               padding: 0;
+               .col {
+                   &:first-child {
+                       padding-left: 0;
+                   }
+                   &:last-child {
+                       padding-right: 0;
+                   }
+               }
            }
-
-
        }
        .button {
            margin-bottom: 0;
            width: 100%;
-           border-radius: 4px;
+           border-radius: $radius;
            margin-top: 0;
        }
        hr {
@@ -728,26 +723,47 @@ $royal:                           #886aea !default;
    }
 
    .info-user {
-       margin-bottom: 0;
-       padding: 10px 0 10px;
+       margin: 0;
        background: #fff;
-       margin-top: 0;
        border-radius: 0;
-       margin-left: 0;
-       margin-right: 0;
+       .box {
+           position: relative;
+       }
        .pic {
            position: relative;
-           width: 100%;
+           width: 80px;
+           height: 80px;
+           float: left;
+           display: block;
            .img {
                overflow: hidden;
-               width: 62px;
-               border-radius: 100px;
-               border: 2px solid $positive;
-               max-height: 62px;
+               width: 80px;
+               border-radius: $radius;
+               border: 1px solid #9fcc3e;
+               height: 80px;
+               background-color: #ccc;
                img {
                    width: 100%;
                    display: block;
                }
+           }
+       }
+       .infos-user {
+           float: left;
+           position: absolute;
+           padding-left: 75px;
+           right: 0;
+           bottom: -2px;
+       }
+       .btn-actions {
+           text-align: right;
+           .button {
+               margin-right: 0;
+               margin-left: 5px;
+               min-height: 30px;
+               line-height: 30px;
+               padding: 0px 1px;
+               min-width: 45px;
            }
        }
        .info-number {
@@ -761,6 +777,7 @@ $royal:                           #886aea !default;
                text-align: center;
                &:last-child {
                    border-right: 0!important;
+                   padding-right: 3px;
                }
            }
            strong {
@@ -780,41 +797,21 @@ $royal:                           #886aea !default;
                display: block;
            }
        }
-       .edit-perfil {
-           background-color: #cfcfcf;
-           font-size: 11px;
-           padding: 2px 10px;
-           margin: auto;
-           border-radius: 5px;
-           line-height: 17px;
-           ;
-           font-weight: bold;
-           height: 23px;
-           min-height: 23px;
+       .info-dates {
+           padding: 10px 0 0;
+           border-top: 1px solid #e7e7e7;
            margin-top: 10px;
-           width: 100%;
-           color: #fff;
-       }
-       .dados {
-           padding-left: 10px;
-           padding-right: 10px;
            .nome {
-               font-size: 13px;
+               font-size: 14px;
                color: $positive;
                text-align: left;
-               margin: 0px 0 0;
-               .cidade {
-                   text-align: right;
-                   float: right;
-                   font-size: 11px
-               }
+               margin: 0;
            }
            p {
                font-size: 12px;
-               margin: 5px 0 0;
+               margin: 8px 0 0;
+               line-height: 1;
+               color: #7c7c7c;
            }
        }
    }
-
-
-

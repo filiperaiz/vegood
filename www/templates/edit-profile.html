@@ -1,41 +1,66 @@
-<ion-view view-title="Enviar Receita">
-    <ion-content class="padding bg-gray">
+<ion-view view-title="Editar perfil">
+    <ion-content class=" bg-gray">
+
         <form action="" class="form-app">
             <div class="list input-form box-add-item">
-                <div class="box-title">
-                    <h1 class="title">Trocar foto</h1>
-                </div>
 
-                <div class="take-pic">
-                  <img ng-show="imgURI !== undefined" class="img-view-result" ng-src="{{imgURI}}">
-                  <img ng-show="imgURI === undefined" class="img-view" ng-src="img/icon/icon-camera-upload.svg">
-                  <button class="button button-positive" ng-click="takePicture()">
-                      <i class="ion-ios-camera"></i>
-                  </button>
-
+                <div class="take-pic padding">
+                    <img ng-show="imgURI !== undefined" class="img-view-result" ng-click="takePhoto()" ng-src="{{imgURI}}">
+                    <img ng-show="imgURI === undefined" class="img-view" ng-click="takePhoto()" ng-src="{{recipe.image}}">
+                    <!-- <div class="row">
+                        <div class="col">
+                            <a class="button button-block button-positive" ng-click="takePhoto()">
+                                <i class="ion-camera"></i>Tirar
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a class="button button-block button-dark" ng-click="choosePhoto()">
+                                <i class="ion-image"></i>Selecionar
+                            </a>
+                        </div>
+                    </div> -->
                 </div>
             </div>
-            <hr>
-            <div class="list input-form">
-                <div class="box-title">
-                    <h1 class="title">Dados basicos</h1>
+
+             <hr>
+
+            <div class="list input-form box-add-item">
+                <div class="padding">
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">Nome</span>
+                        <input type="text" ng-model="client.name" placeholder="Nome">
+                    </label>
+
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">Email</span>
+                        <input type="email" ng-model="client.email" placeholder="Email">
+                    </label>
+
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">Descrição</span>
+                        <textarea class="item-textarea" name="" id="" ng-model="" cols="30" rows="3" placeholder=""></textarea>
+                    </label>
+
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">Senha</span>
+                        <input type="password" ng-model="client.password" placeholder="Senha">
+                    </label>
+                    <label class="item item-input item-stacked-label">
+                        <span class="input-label">Confirmar senha</span>
+                        <input type="password" ng-model="client.password_confirmation" placeholder="Confirmação de Senha">
+                    </label>
                 </div>
-                <label class="item item-input item-stacked-label">
-                    <span class="input-label">Nome</span>
-                    <input type="text" ng-model="receita.nome" placeholder="">
-                </label>
+            </div>
 
-                <label class="item item-input item-stacked-label">
-                    <span class="input-label">Senha</span>
-                    <input type="password" ng-model="receita.tempo_preparo" placeholder="senha atual">
-                </label>
+            <hr>
 
-                <label class="item item-input item-stacked-label">
-                    <span class="input-label">Nova senha</span>
-                    <input type="password" ng-model="receita.tempo_preparo" placeholder="digite sua nova senha">
-                </label>
-
-            <button type="button" class="button button-positive" ng-click="enviarReceita()">Salvar</button>
+            <div class="padding">
+                <a class="button button-positive" ng-click="startNewUser()">Salvar</a>
+            </div>
         </form>
+
     </ion-content>
+
 </ion-view>
+
+

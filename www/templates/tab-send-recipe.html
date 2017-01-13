@@ -90,7 +90,9 @@
                 <div class="padding">
                     <label class="item item-input item-stacked-label" >
                         <span class="input-label">Ingredientes</span>
-                        <input type="text" ng-repeat="ingredient in recipe.element_ingredient" ng-model="recipe.ingredients[$index]" placeholder="{{ingredient}}">
+                        <div ng-repeat="ingredient in recipe.element_ingredient">
+                            <input type="text"  ng-model="recipe.ingredients[$index]" placeholder="{{ingredient}}">
+                        </div>
                     </label>
                     <a class="button button-stable" ng-click="moreIngredient()">
                         <i class="ion-plus-round"></i>
@@ -104,7 +106,9 @@
                 <div class="padding">
                     <label class="item item-input item-stacked-label">
                         <span class="input-label">Modo de preparo</span>
-                        <textarea class="item-textarea" name="" id="" ng-repeat="preparation in recipe.element_preparation" ng-model="recipe.preparations[$index]" cols="30" rows="3" placeholder="{{preparation}}"></textarea>
+                        <div ng-repeat="preparation in recipe.element_preparation">
+                            <textarea class="item-textarea" name="" id="" ng-model="recipe.preparations[$index]" cols="30" rows="3" placeholder="{{preparation}}"></textarea>
+                        </div>
                     </label>
                     <a class="button button-stable" ng-click="morePreparation()">
                         <i class="ion-plus-round"></i>

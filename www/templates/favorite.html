@@ -1,24 +1,21 @@
 <ion-view view-title="Favoritos">
-    <ion-content class="bg-gray padding top-tab" ng-controller="RecipeFavoritoCtrl">
-        <!-- <div class="box-title">
-            <h1 class="title"><span class="numero">4</span>receitas favoritadas</h1>
-        </div> -->
+    <ion-nav-title>
+        <h1 class="title">
+          <span class="numero">{{size_recipe.quant}}</span>
+          receitas favoritadas
+      </h1>
+    </ion-nav-title>
+
+    <ion-content class="bg-gray">
         <ion-list>
-            
             <ion-item class="item-avatar item-icon-right item-recipe-small" ng-repeat="recipe in recipes" type="item-text-wrap" href="#/tab/favorito/{{recipe.id}}">
                 <img class="image-recipe" ng-src="{{recipe.recipe_image}}">
                 <h2 class="recipe-name">{{recipe.recipe_name}}</h2>
                 <h5 class="recipe-author">Por: {{recipe.recipe_user.author}}</h5>
-                <span class="categoria" ng-repeat="cat in recipe.recipe_category">{{cat.item}}</span>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </ion-item>
-
-            <ion-infinite-scroll
-            immediate-check="false"
-          on-infinite="loadMore()"
-          distance="10%">
-        </ion-infinite-scroll>
-
+            <ion-infinite-scroll immediate-check="false" on-infinite="loadMore()" distance="10%">
+            </ion-infinite-scroll>
         </ion-list>
     </ion-content>
 </ion-view>

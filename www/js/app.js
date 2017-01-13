@@ -229,11 +229,72 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     // =============  TAB PROFILE =============== //
 
     // perfil
+
     .state('tab.profile', {
-        url: '/profile/:userId',
+        url: '/profile',
         views: {
             'tab-profile': {
-                templateUrl: 'templates/profile.html',
+                templateUrl: 'templates/tab-profile.html',
+                controller: 'ProfileCtrl'
+            }
+        }
+    })
+
+    // .state('tab.profile', {
+    //     url: '/profile/:userId',
+    //     views: {
+    //         'tab-profile': {
+    //             templateUrl: 'templates/profile.html',
+    //             controller: 'ProfileCtrl'
+    //         }
+    //     }
+    // })
+
+    .state('tab.profile-settings', {
+        url: '/settings',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/settings.html',
+                controller: 'ProfileCtrl'
+            }
+        }
+    })
+
+    .state('tab.profile-favorite', {
+        url: '/favorite',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/favorite.html',
+                controller: 'ProfileCtrl'
+            }
+        }
+    })
+
+    .state('tab.profile-edit', {
+        url: '/edit-profile',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/edit-profile.html',
+                controller: 'ProfileCtrl'
+            }
+        }
+    })
+
+    .state('tab.about', {
+        url: '/about',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/about.html',
+                controller: 'ProfileCtrl'
+            }
+        }
+    })
+
+    .state('tab.term', {
+        url: '/term',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/term.html',
                 controller: 'ProfileCtrl'
             }
         }
