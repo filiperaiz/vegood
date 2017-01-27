@@ -87,6 +87,145 @@ angular.module('starter.controllers', [])
         });
     };
 
+
+    $scope.userLoginFacebook = function(result){
+
+        alert(result.name)
+        alert(result.email)
+
+        $ionicLoading.show({template: 'Aguarde...'});
+        var data = $.param({
+            token_face: 'AaLKh%GAFSDUJ7734QAG8js9G$!$',
+            name:result.name,
+            email:result.email,
+            picture:"https://graph.facebook.com/" + result.id + "/picture?type=large"
+        });
+
+        var config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            }
+        }
+
+
+
+
+        var parameters = {
+            token_face: 'AaLKh%GAFSDUJ7734QAG8js9G$!$',
+            name:result.name,
+            email:result.email,
+            picture:"https://graph.facebook.com/" + result.id + "/picture?type=large"
+        };
+
+        var config = {
+            params: parameters
+        };
+
+        $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes.json', config)
+        .success(function(data, status, headers, config) {
+            if(data.client_logged.flag){
+                if(data.list_recipes.length==0){
+                    $scope.hasMoreData  = false;
+                }
+                for (i = 0; i < data.list_recipes.length; i++) {
+                    $scope.list_recipes.push(data.list_recipes[i]);
+                }
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+            }else{
+                $window.localStorage.removeItem('client');
+                $ionicLoading.hide();
+                $state.go('login');
+            }
+            //$ionicLoading.hide();
+        })
+
+
+
+
+
+
+
+
+
+
+
+        $http.post('http://www.vegood.com.br/api/v1/vegood/login_facebook.json', data, config)
+        .success(function(data, status, headers) {
+            if ((typeof data.errors_user == "undefined") && data.flag_save_user.flag) { // DADOS PEGA
+                $window.localStorage['user_token'] = JSON.stringify(data.user);
+                $ionicLoading.hide();
+                $state.go('app.person');
+            } else if(!data.flag_save_user.flag) {
+                var er = '';
+                for (i = 0; i < data.errors_user.length; i++) {
+                    er += data.errors_user[i].message + '<br>';
+                }
+                $ionicPopup.alert({
+                    title: '',
+                    template: er,
+                    buttons: [{
+                            text: 'ok',
+                            type: 'button-calm',
+                        }]
+                });
+                $ionicLoading.hide();
+            }
+        })
+        .error(function(data, status, header, config) {
+            $ionicPopup.alert({
+                title: '',
+                template: 'Tente mais tarde!!!',
+                buttons: [{
+                    text: 'ok',
+                    type: 'button-calm',
+                }]
+            });
+            $ionicLoading.hide();
+        });
+
+
+
+
+    }
+
+
+    $scope.UserFacebook = function(user_id){
+        facebookConnectPlugin.api(user_id+"/?fields=id,name,email", ["email"],
+        function (result) {
+            userLoginFacebook(result);
+        },
+        function (error) {
+            $ionicPopup.alert({
+                title: '',
+                template: 'Tente mais tarde!!!',
+                buttons: [{
+                    text: 'ok',
+                    type: 'button-calm',
+                }]
+            });
+            $ionicLoading.hide();
+        });
+    }
+
+    // LOGIN COM FACEBOOK
+    $scope.signInFacebook = function(){
+        if (ionic.Platform.isIOS() || ionic.Platform.isAndroid()) {
+            facebookConnectPlugin.login(['public_profile', 'email'], function(result) {
+                UserFacebook(result.authResponse.userID)
+            }, function(error) {
+                $ionicPopup.alert({
+                    title: '',
+                    template: 'Tente mais tarde!!!',
+                    buttons: [{
+                            text: 'ok',
+                            type: 'button-calm',
+                        }]
+                });
+                $ionicLoading.hide();
+            });
+        }
+    };
+
     //CRIANO USUARIO
     $scope.startNewUser = function() {
 
@@ -421,7 +560,7 @@ angular.module('starter.controllers', [])
         /*                  FUNCTIONS                   */
         /************************************************/
         $scope.like_func = function(recipe_id){
-            alert(recipe_id)
+            //alert(recipe_id)
             var parameters = {
                 token_client:client.token,
                 client_id:client.id,
@@ -692,10 +831,12 @@ angular.module('starter.controllers', [])
             //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
             $scope.page += 1;
 
+
             var parameters = {
                 token_client:client.token,
                 client_id:client.id,
-                recipe_id:$stateParams.recipeId
+                recipe_id:$stateParams.recipeId,
+                page:$scope.page
             };
 
             var config = {
@@ -705,6 +846,7 @@ angular.module('starter.controllers', [])
             $http.get('http://www.vegood.com.br/api/v1/vegood/list_comments.json', config)
             .success(function(data, status, headers, config) {
                 if(data.client_logged.flag){
+
                     if(data.list_comments.length==0){
                         $scope.hasMoreData  = false;
                     }
