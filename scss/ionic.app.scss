@@ -32,7 +32,8 @@ a {
 
 .bar {
     .title {
-        font-size: 15px;
+        font-size: 15px !important;
+        color:#7c7c7c !important;
     }
 }
 
@@ -71,7 +72,7 @@ a {
         min-height: 40px;
         position: relative;
         .pic-user {
-            top: 5px;
+            top: 7px;
             left: 8px;
             max-height: 30px;
             max-width: 30px;
@@ -89,30 +90,11 @@ a {
             text-align: left;
             margin: 0;
             vertical-align: middle;
-            padding: 13px 0;
+            padding: 15px 0;
             font-weight: bold;
         }
     }
-    .add-user {
-        position: absolute;
-        top: 10px;
-        right: 8px;
-        z-index: 100;
-        .item-add {
-            font-size: 11px;
-            border: 1px solid #e7e7e7;
-            padding: 2px 10px;
-            border-radius: $radius;
-            line-height: 0;
-            background: #fff;
-            i {
-                color: $positive;
-                font-size: 20px;
-                vertical-align: sub;
-                margin-right: 3px;
-            }
-        }
-    }
+
     .item-image {
         position: relative;
         min-height: 150px;
@@ -257,11 +239,12 @@ a {
     border-radius: $radius;
     display: block;
     text-decoration: none;
+    height: 70px;
     .item-image {
         width: 100%;
         .image-recipe {
             display: block;
-            max-height: 80px;
+            max-height: 70px;
             width: 100%;
         }
     }
@@ -301,6 +284,11 @@ a {
             font-size: 28px !important;
         }
     }
+
+    .button{
+      font-size: 28px;
+      color:#7c7c7c;
+    }
 }
 
 .left-buttons {
@@ -309,6 +297,11 @@ a {
         &:before {
             font-size: 28px !important;
         }
+    }
+
+    .button{
+      font-size: 28px;
+      color:#7c7c7c;
     }
 }
 
@@ -320,7 +313,7 @@ a {
     margin-bottom: 5px;
     margin-left: 0;
     margin-right: 0;
-    margin-top: 0;
+    margin-top: 5px;
     padding: 0;
     background-color: #fff;
     box-shadow: none;
@@ -614,7 +607,7 @@ a {
 
 .box-add-item {
     text-align: center;
-    .button {
+    .btn-more {
         width: 40px;
         font-size: 20px;
         margin: auto;
@@ -625,6 +618,27 @@ a {
         min-width: 35px;
         padding: 0;
     }
+
+    .btn-choose-pic{
+      margin: 12px 0 0 0;
+      width: auto;
+      padding: 1px 15px;
+      i{
+        margin-right: 5px;
+      }
+    }
+
+    .title-label{
+      font-size: 13px;
+      margin-bottom: 5px;
+      display: block;
+      text-align: left;
+      width: 100%;
+      max-width: 100%;
+      padding: 0;
+      font-weight: bold;
+      color: #444;
+    }
 }
 
 .take-pic {
@@ -634,52 +648,87 @@ a {
         border: 2px dashed $positive;
         background-color: #fff;
         display: block;
-        min-height: 150px;
+        min-height: 100px;
     }
     .img-view-result {
         width: 100%;
         border: 2px solid $positive;
         background-color: #fff;
         display: block;
-        min-height: 150px;
+        min-height: 100px;
     }
 }
 
-.tab-enviar-receita {
-    background-color: $positive;
-    color: #fff;
-    .icon {
-        color: #fff !important;
-    }
-}
+
 
 .popover {
     min-height: 170px;
     height: auto;
 }
 
-.box-coments {
-    margin-bottom: 42px
+.box-comments{
+  background-color: #fff !important;
 }
 
 .list-comentarios {
     overflow: hidden;
-    height: 300;
+}
+
+.item-comment {
+    margin-bottom: 0px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    padding: 0;
+    display: block;
+    text-decoration: none;
+    border-bottom: 1px;
+    .item-content {
+        position: relative;
+        z-index: 2;
+        padding: 5px 40px 5px 80px !important;
+        border: none;
+        background-color: #fff;
+    }
+    .image-comment {
+        display: block;
+        position: absolute !important;
+        top: 5px !important;
+        left: 5px !important;
+        max-width: 62px !important;
+        max-height: 62px !important;
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: $radius !important;
+        background-color: #ccc;
+        overflow: hidden;
+    }
+
+    .comment-name {
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #757575;
+        text-align: left;
+        margin-bottom: 5px;
+        line-height: 17px;
+        font-weight: bold;
+    }
+    .comment-text {
+        display: block;
+        font-size: 12px;
+        text-transform: initial;
+        margin-bottom: 0;
+    }
 }
 
 .send-coments {
     background: #dbdfe1;
-    position: absolute;
-    bottom: 49px;
-    left: 0;
-    width: 100%;
-    right: 0;
-    .item {
-        background: #e8e8e8;
-        padding: 5px 10px;
-        label {
-            background-color: #fff;
-        }
+
+    .item-input-wrapper {
+
+        padding: 0px 3px;
+        background-color: #fff;
+
         input[type="text"] {
             color: #ccc;
             background: #fff!important;
@@ -737,19 +786,30 @@ a {
     .infos-user {
         float: left;
         position: absolute;
-        padding-left: 75px;
+        padding-left: 10px;
         right: 0;
-        bottom: -2px;
+        top: 0;
     }
     .btn-actions {
         text-align: right;
+        float: left;
+        position: absolute;
+        padding-left: 10px;
+        right: 0;
+        bottom: 0px;
         .button {
             margin-right: 0;
             margin-left: 5px;
             min-height: 30px;
             line-height: 30px;
-            padding: 0px 1px;
+            padding: 0px 5px;
             min-width: 45px;
+            font-size: 13px;
+
+            i{
+              font-size: 16px;
+              margin-right: 5px;
+            }
         }
     }
     .info-number {
@@ -800,4 +860,23 @@ a {
             color: #7c7c7c;
         }
     }
+}
+
+.item-follow{
+  position: relative;
+  min-height: 55px;;
+
+  .item-content{
+    min-height: 55px;
+
+    h2{
+      margin: 0;
+      line-height: 20px;
+      color: #7d7d7d;
+      font-size: 15px;
+    }
+    img{
+      top: 7px !important;
+    }
+  }
 }

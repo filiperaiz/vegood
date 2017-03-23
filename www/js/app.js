@@ -6,7 +6,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(false);
             cordova.plugins.Keyboard.disableScroll(true);
 
         }
@@ -18,6 +18,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 })
 
 
+
+
 .config(function($stateProvider, $urlRouterProvider, AuthProvider, AuthInterceptProvider, $httpProvider, $ionicConfigProvider, $cordovaFacebookProvider) {
 
     var appID = 1726794000890259;
@@ -25,6 +27,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     // $cordovaFacebookProvider.browserInit(appID, version);
 
     $ionicConfigProvider.tabs.position('bottom');
+    $ionicConfigProvider.navBar.alignTitle('center');
+    $ionicConfigProvider.tabs.style('standard');
     $httpProvider.defaults.withCredentials = true;
 
 
@@ -300,6 +304,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         }
     })
 
+    .state('tab.myths', {
+        url: '/myths',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/myths.html',
+                controller: 'ProfileCtrl'
+            }
+        }
+    })
+
+    .state('tab.tips', {
+        url: '/tips',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/tips.html',
+                controller: 'ProfileCtrl'
+            }
+        }
+    })
+
     // perfis > destalhe receita
     .state('tab.profile-recipe-detail', {
         url: '/profile/recipe/:recipeId',
@@ -324,22 +348,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
     // perfis > item receita > seguindo
     .state('tab.profile-following', {
-        url: '/profile/following/:userId',
+        // url: '/profile/following/:userId',
+        url: '/profile/following',
         views: {
             'tab-profile': {
                 templateUrl: 'templates/following.html',
-                controller: 'ProfileFollowingCtrl'
+                controller: 'ProfileCtrl'
             }
         }
     })
 
     // perfis > item receita > seguidores
     .state('tab.profile-followers', {
-        url: '/profile/followers/:userId',
+        // url: '/profile/followers/:userId',
+        url: '/profile/followers',
         views: {
-            'tab-perfis': {
+            'tab-profile': {
                 templateUrl: 'templates/followers.html',
-                controller: 'ProfileFollowersCtrl'
+                controller: 'ProfileCtrl'
             }
         }
     })

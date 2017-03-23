@@ -13,6 +13,7 @@
                 <h2 class="recipe-name">{{recipe.recipe_name}}</h2>
                 <h5 class="recipe-author">Por: {{recipe.recipe_user.author}}</h5>
                 <i class="icon ion-chevron-right icon-accessory"></i>
+                <ion-option-button class="button-assertive ion-ios-trash" ng-click=""></ion-option-button>
             </ion-item>
             <ion-infinite-scroll immediate-check="false" on-infinite="loadMore()" distance="10%">
             </ion-infinite-scroll>

@@ -1,34 +1,29 @@
 <ion-view view-title="Comentários" ng-controller="RecipeCommentsCtrl">
-    <ion-content class="bg-gray box-coments">
-
-      <div class="list list-comentarios">
-          
-        <div class="item item-avatar" ng-repeat="comment in list_comments">
-            <img src="{{comment.client.image}}">
-            <h2>{{comment.client.name}}</h2>
-            <p class="no-ws">{{comment.text}}</p>
-        </div>
-
-      </div>
+    <ion-content class="bg-gray box-comments">
 
 
-      <ion-infinite-scroll
-          ng-if="hasMoreData"
-          on-infinite="loadMore()"
-          distance="10%">
-        </ion-infinite-scroll>
+        <ion-list class="list-comentarios">
+            <ion-item class="item-avatar item-comment" ng-repeat="comment in list_comments" type="item-text-wrap">
+                <img class="image-comment" ng-src="{{comment.client.image}}" alt="{{comment.client.name}}">
+                <h2 class="comment-name no-ws">{{comment.client.name}}</h2>
+                <h5 class="comment-text no-ws">{{comment.text}}</h5>
+            </ion-item>
+
+            <ion-infinite-scroll ng-if="hasMoreData" on-infinite="loadMore()" distance="10%">
+            </ion-infinite-scroll>
+        </ion-list>
 
 
     </ion-content>
 
-    <form action="" class="send-coments">
-        <div class="item item-input-inset">
-            <label class="item-input-wrapper">
-                <input type="text" placeholder="Adicione um comentário..." ng-model="text_comment" ng-focus="enabledButton()" ng-blur="disableButton()">
-            </label>
-            <button type="button" class="button button-small button-positive" ng-click="sendComment()" ng-disabled="flagButton">
-                Enviar
-            </button>
-        </div>
-    </form>
+    <ion-footer-bar keyboard-attach class="item-input-inset send-coments">
+
+      <label class="item-input-wrapper">
+          <input type="text" placeholder="Adicione um comentário..." ng-model="text_comment" ng-focus="enabledButton()" ng-blur="disableButton()" on-return="closeKeyboard()"on-focus="inputUp()" on-blur="inputDown()">
+      </label>
+
+      <button type="button" class="button button-small button-positive" ng-click="sendComment()" ng-disabled="flagButton">
+          Enviar
+      </button>
+    </ion-footer-bar>
 </ion-view>

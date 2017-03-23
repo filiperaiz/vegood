@@ -182,10 +182,6 @@ angular.module('starter.controllers', [])
             });
             $ionicLoading.hide();
         });
-
-
-
-
     }
 
 
@@ -679,7 +675,6 @@ angular.module('starter.controllers', [])
             }
         });
 
-
         $scope.loadMore = function() {
             //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
             $scope.page += 1;
@@ -867,6 +862,22 @@ angular.module('starter.controllers', [])
             $scope.loadMore();
         });
 
+        $scope.inputUp = function() {
+            if (isIOS) $scope.data.keyboardHeight = 216;
+            $timeout(function() {
+              $ionicScrollDelegate.scrollBottom(true);
+            }, 300);
+
+          };
+
+          $scope.inputDown = function() {
+            if (isIOS) $scope.data.keyboardHeight = 0;
+            $ionicScrollDelegate.resize();
+          };
+
+          $scope.closeKeyboard = function() {
+            // cordova.plugins.Keyboard.close();
+          };
 
 
         $scope.flagButton = true;
@@ -1038,7 +1049,7 @@ angular.module('starter.controllers', [])
     if (!Util.emptyVal(client)) {
 
         $scope.recipe                       = {};
-        $scope.recipe.image                 = 'img/icon/icon-camera-upload.svg';
+        $scope.recipe.image                 = 'img/icon-camera-upload.png';
         $scope.recipe.element_ingredient    = ['Ingrediente 1'];
         $scope.recipe.element_preparation   = ['Modo de preparo 1'];
         $scope.recipe.ingredients           = new Array();
@@ -1173,58 +1184,6 @@ angular.module('starter.controllers', [])
 
 
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

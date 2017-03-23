@@ -1,12 +1,16 @@
 <ion-view view-title="Categorias" ng-controller="CategoryCtrl">
   <ion-content class="bg-gray">
+      <a class="item item-icon-right" type="item-text-wrap" ng-href="#/tab/category/{{category.id}}" ng-repeat="category in list_categories">
+          <h2>{{category.name}}</h2>
+          <i class="icon ion-chevron-right icon-accessory"></i>
+      </a>
 
-      <a class="item-recipe-category card"  ng-href="#/tab/category/{{category.id}}" ng-repeat="category in list_categories">
+     <!--  <a class="item-recipe-category card"  ng-href="#/tab/category/{{category.id}}" ng-repeat="category in list_categories">
           <div class="item item-image">
-              <img class="image-recipe" ng-src="img/uploads/bg-lanche.jpg">
+              <img class="image-recipe" ng-src="img/bg-cafe.jpg">
               <span class="categoria">{{category.name}}</span>
           </div>
-      </a>
+      </a> -->
 
   </ion-content>
 </ion-view>
