@@ -12,6 +12,7 @@ angular.module('starter.controllers', [])
 
 
     $scope.client = {};
+    $scope.client.image                 = 'img/icon/icon-camera-upload.svg';
 
     // MODAL CRIAÇÃO DE CONTA
     $ionicModal.fromTemplateUrl('templates/create-account.html', {
@@ -1169,9 +1170,6 @@ angular.module('starter.controllers', [])
         $ionicLoading.hide();
         $state.go('login');
     }
-
-
-
 })
 
 
