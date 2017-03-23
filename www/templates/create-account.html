@@ -6,11 +6,14 @@
     <ion-content class=" bg-gray">
         <form action="" class="form-app">
             <div class="list input-form box-add-item">
+              <div class="take-pic padding">
+                  <img ng-show="imgURI !== undefined" class="img-view-result" ng-click="takePhoto()" ng-src="{{imgURI}}">
+                  <img ng-show="imgURI === undefined" class="img-view" ng-click="takePhoto()" ng-src="{{client.image}}">
 
-                <div class="take-pic padding">
-                    <img ng-show="imgURI !== undefined" class="img-view-result" ng-click="takePhoto()" ng-src="{{imgURI}}">
-                    <img ng-show="imgURI === undefined" class="img-view" ng-click="takePhoto()" ng-src="{{client.image}}">
-                </div>
+                  <a class="button button-small btn-choose-pic" ng-click="choosePhoto()">
+                      <i class="ion-image"></i>Selecionar foto de album
+                  </a>
+              </div>
             </div>
 
              <hr>
@@ -25,11 +28,6 @@
                     <label class="item item-input item-stacked-label">
                         <span class="input-label">Email</span>
                         <input type="email" ng-model="client.email" placeholder="Email">
-                    </label>
-
-                    <label class="item item-input item-stacked-label">
-                        <span class="input-label">Descrição</span>
-                        <textarea class="item-textarea" name="" id="" ng-model="" cols="30" rows="3" placeholder=""></textarea>
                     </label>
 
                     <label class="item item-input item-stacked-label">

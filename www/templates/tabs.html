@@ -1,21 +1,21 @@
-<ion-tabs class="tabs-icon-top  tabs-color-active-positive tabs-background-light">
+<ion-tabs class="tabs-icon-top  tabs-color-active-positive tabs-background-light" ng-controller="MenuFooterCtrl">
     <!-- Timeline Tab -->
-    <ion-tab title="Início" icon="ion-ios-home" href="#/tab/timeline">
+    <ion-tab title="Início" icon="ion-ios-home" ng-click="timeline()">
         <ion-nav-view name="tab-timeline"></ion-nav-view>
     </ion-tab>
 
     <!-- Categorias Tab -->
-    <ion-tab title="Categorias" icon="ion-navicon-round" href="#/tab/category">
+    <ion-tab title="Categorias" icon="ion-navicon-round" ng-click="category()">
         <ion-nav-view name="tab-category"></ion-nav-view>
     </ion-tab>
 
     <!-- Adicionar Receita Tab -->
-    <ion-tab title="Enviar Receita" icon="ion-android-restaurant" href="#/tab/send-recipe">
+    <ion-tab title="Enviar Receita" icon="ion-android-restaurant" ng-click="sendRecipe()">
         <ion-nav-view name="tab-send-recipe"></ion-nav-view>
     </ion-tab>
 
     <!-- Perfil Tab -->
-    <ion-tab title="Conta" icon="ion-person" href="#/tab/profile">
+    <ion-tab title="Conta" icon="ion-person" ng-click="profile()">
         <ion-nav-view name="tab-profile"></ion-nav-view>
     </ion-tab>
 </ion-tabs>

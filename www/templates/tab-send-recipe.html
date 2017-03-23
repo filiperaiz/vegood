@@ -7,6 +7,15 @@
                 <div class="take-pic padding">
                     <img ng-show="imgURI !== undefined" class="img-view-result" ng-click="takePhoto()" ng-src="{{imgURI}}">
                     <img ng-show="imgURI === undefined" class="img-view" ng-click="takePhoto()" ng-src="{{recipe.image}}">
+<<<<<<< HEAD
+=======
+
+
+                    <a class="button button-small btn-choose-pic" ng-click="choosePhoto()">
+                        <i class="ion-image"></i>Selecionar foto de álbum
+                    </a>
+
+>>>>>>> b8a5f583cb7dc0ed555d0ed090b015fc25fd3e67
                 </div>
             </div>
 
@@ -76,15 +85,13 @@
 
             <div class="list input-form box-add-item">
                 <div class="padding">
-                    <label class="item item-input item-stacked-label" >
-                        <span class="input-label">Ingredientes</span>
-                        <div ng-repeat="ingredient in recipe.element_ingredient">
-                            <input type="text"  ng-model="recipe.ingredients[$index]" placeholder="{{ingredient}}">
-                        </div>
+                    <span class="title-label">Ingredientes</span>
+
+                    <label class="item item-input item-stacked-label" ng-repeat="ingredient in recipe.element_ingredient">
+                        <input type="text"  ng-model="recipe.ingredients[$index]" placeholder="{{ingredient}}">
                     </label>
-                    <a class="button button-stable" ng-click="moreIngredient()">
-                        <i class="ion-plus-round"></i>
-                    </a>
+
+                    <a class="button button-stable btn-more" ng-click="moreIngredient()"><i class="ion-plus-round"></i></a>
                 </div>
             </div>
 
@@ -92,15 +99,13 @@
 
             <div class="list input-form box-add-item">
                 <div class="padding">
-                    <label class="item item-input item-stacked-label">
-                        <span class="input-label">Modo de preparo</span>
-                        <div ng-repeat="preparation in recipe.element_preparation">
-                            <textarea class="item-textarea" name="" id="" ng-model="recipe.preparations[$index]" cols="30" rows="3" placeholder="{{preparation}}"></textarea>
-                        </div>
+                    <span class="title-label">Modo de preparo</span>
+
+                    <label class="item item-input item-stacked-label" ng-repeat="preparation in recipe.element_preparation">
+                        <textarea class="item-textarea" name="" id="" ng-model="recipe.preparations[$index]" cols="30" rows="3" placeholder="{{preparation}}"></textarea>
                     </label>
-                    <a class="button button-stable" ng-click="morePreparation()">
-                        <i class="ion-plus-round"></i>
-                    </a>
+
+                    <a class="button button-stable btn-more" ng-click="morePreparation()"><i class="ion-plus-round"></i></a>
                 </div>
             </div>
 

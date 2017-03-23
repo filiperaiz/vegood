@@ -1,12 +1,13 @@
 <ion-view view-title="Seguidores">
     <ion-content class="bg-gray">
         <ion-list>
-            <div class="item item-avatar item-icon-right" ng-repeat="perfil in perfis">
-                <img src="{{perfil.recipe_user.imagem}}">
-                <h2>{{perfil.recipe_user.author}}</h2>
-                <p class="no-ws">{{perfil.descricao}}</p>
+             <!-- <ion-item class="item item-avatar item-icon-right" ng-repeat="perfil in perfis" type="item-text-wrap" href="#/tab/profile> -->
+            <ion-item class="item item-avatar item-icon-right item-follow" type="item-text-wrap" href="#/tab/profile">
+                <!-- <img src="{{perfil.recipe_user.imagem}}"> -->
+                <img ng-src="https://pbs.twimg.com/profile_images/816377659722604545/2n4E1E0o.jpg" alt="Filipe Raiz">
+                <h2>Filipe Raiz{{perfil.recipe_user.author}}</h2>
                 <i class="icon ion-chevron-right icon-accessory"></i>
-            </div>
+            </ion-item>
 
             <ion-infinite-scroll
             immediate-check="false"

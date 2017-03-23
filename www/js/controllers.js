@@ -12,7 +12,7 @@ angular.module('starter.controllers', [])
 
 
     $scope.client = {};
-    $scope.client.image                 = 'img/icon/icon-camera-upload.svg';
+    $scope.client.image                 = 'img/icon-camera-upload.png';
 
     // MODAL CRIAÇÃO DE CONTA
     $ionicModal.fromTemplateUrl('templates/create-account.html', {
@@ -183,10 +183,6 @@ angular.module('starter.controllers', [])
             });
             $ionicLoading.hide();
         });
-
-
-
-
     }
 
 
@@ -680,7 +676,6 @@ angular.module('starter.controllers', [])
             }
         });
 
-
         $scope.loadMore = function() {
             //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
             $scope.page += 1;
@@ -868,6 +863,22 @@ angular.module('starter.controllers', [])
             $scope.loadMore();
         });
 
+        $scope.inputUp = function() {
+            if (isIOS) $scope.data.keyboardHeight = 216;
+            $timeout(function() {
+              $ionicScrollDelegate.scrollBottom(true);
+            }, 300);
+
+          };
+
+          $scope.inputDown = function() {
+            if (isIOS) $scope.data.keyboardHeight = 0;
+            $ionicScrollDelegate.resize();
+          };
+
+          $scope.closeKeyboard = function() {
+            // cordova.plugins.Keyboard.close();
+          };
 
 
         $scope.flagButton = true;
@@ -1039,7 +1050,7 @@ angular.module('starter.controllers', [])
     if (!Util.emptyVal(client)) {
 
         $scope.recipe                       = {};
-        $scope.recipe.image                 = 'img/icon/icon-camera-upload.svg';
+        $scope.recipe.image                 = 'img/icon-camera-upload.png';
         $scope.recipe.element_ingredient    = ['Ingrediente 1'];
         $scope.recipe.element_preparation   = ['Modo de preparo 1'];
         $scope.recipe.ingredients           = new Array();
@@ -1173,60 +1184,6 @@ angular.module('starter.controllers', [])
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // PROFILE FOLLOWING CONTROLLER
 .controller('ProfileFollowingCtrl', function($scope, $stateParams, Recipes, $http, Ultil, $state, $window, $rootScope) {
     $scope.perfis = [];
@@ -1315,7 +1272,20 @@ angular.module('starter.controllers', [])
 })
 
 
-
+.controller('MenuFooterCtrl', function($scope, $state) {
+    $scope.profile = function(){
+        $state.go('tab.profile');
+    }
+    $scope.sendRecipe = function(){
+        $state.go('tab.send-recipe');
+    }
+    $scope.category = function(){
+        $state.go('tab.category');
+    }
+    $scope.timeline = function(){
+        $state.go('tab.timeline');
+    }    
+})
 // .controller('RecipeFavoritoCtrl', function($scope, $stateParams, Recipes, $timeout, $cordovaSocialSharing, $http, Ultil) {
 //     $scope.recipes = [];
 //     $scope.pageRecipe = 0;

@@ -1,16 +1,11 @@
 <ion-view view-title="Receita" ng-controller="RecipeDetailCtrl">
-    <!-- nav header button
-    <ion-nav-buttons side="right">
-        <a class="button button-icon button-clear ion-ios-upload-outline" ng-click="shareRecipe()"></a>
-    </ion-nav-buttons>
-     nav header button -->
+
     <ion-content class="bg-gray">
 
         <div class="item-recipe-big card">
             <a class="link-item" ng-href="#/tab/timeline/profile/{{recipe.client.id}}">
                 <div class="item item-avatar">
-                    <!-- <img class="pic-user" src="{{recipe.client.image}}"> -->
-                    <img class="pic-user" src="https://pbs.twimg.com/profile_images/816377659722604545/2n4E1E0o.jpg">
+                    <img class="pic-user" src="{{recipe.client.image}}" alt="{{recipe.client.name}}">
                     <h2 class="recipe-author">{{recipe.client.name}}</h2>
                 </div>
             </a>

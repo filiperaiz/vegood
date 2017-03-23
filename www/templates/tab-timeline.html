@@ -1,6 +1,6 @@
-<ion-view view-title="TimeLine" ng-controller="timeLineCtrl">
+<ion-view view-title="Timeline" ng-controller="timeLineCtrl">
     <ion-nav-title>
-        <img class="logo-title" src="img/icon/logo-vegood.svg">
+        <img class="logo-title" src="img/logo-vegood.svg">
     </ion-nav-title>
 
     <!-- <ion-nav-buttons side="right">
@@ -14,8 +14,7 @@
         <div class="item-recipe-big card" ng-repeat="recipe in list_recipes">
             <a class="link-item" ng-href="#/tab/timeline/profile/{{recipe.client.id}}">
                 <div class="item item-avatar">
-                    <!-- <img class="pic-user" src="{{recipe.client.image}}"> -->
-                    <img class="pic-user" src="https://pbs.twimg.com/profile_images/816377659722604545/2n4E1E0o.jpg">
+                    <img class="pic-user" src="{{recipe.client.image}}" alt="{{recipe.client.name}}">
                     <h2 class="recipe-author">{{recipe.client.name}}</h2>
                 </div>
             </a>
