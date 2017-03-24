@@ -2,7 +2,6 @@
     <ion-nav-title>
         <h1 class="title">
             {{perfil.name}}
-            Filipe Raiz
         </h1>
     </ion-nav-title>
     <ion-content class="bg-gray">
@@ -10,8 +9,7 @@
             <div class="box clearfix">
                 <div class="pic">
                     <div class="img">
-                        <!-- <img ng-src="{{perfil.image}}" alt="{{perfil.name}}"> -->
-                        <img ng-src="https://pbs.twimg.com/profile_images/816377659722604545/2n4E1E0o.jpg" alt="Filipe Raiz">
+                        <img ng-src="{{perfil.avatar}}" alt="{{perfil.name}}">
                     </div>
                 </div>
                 <div class="btn-actions">
@@ -28,16 +26,15 @@
                 <div class="infos-user">
                     <div class="info-number">
                         <div class="item-profile produtos">
-                            <strong>100{{perfil.size_recipe}}</strong>
+                            <strong>{{perfil.size_recipe}}</strong>
                             <span>receitas</span>
                         </div>
                         <a class="item-profile seguindo" href="#/tab/profile/following">
-                            <strong>100{{perfil.size_followers}}</strong>
+                            <strong>{{perfil.size_followers}}</strong>
                             <span>seguindo</span>
                         </a>
                         <a class="item-profile seguidores" href="#/tab/profile/followers">
-                            <strong>100{{perfil.size_following}}</strong>
-                            <span>seguidores</span>
+                            <strong>{{perfil.size_following}}</strong>
                             <span ng-if="perfil.size_following>1">seguidores</span>
                             <span ng-if="perfil.size_following<=1">seguidor</span>
                         </a>
@@ -45,8 +42,8 @@
                 </div>
             </div>
             <div class="info-dates">
-                <h2 class="nome">Filipe Raiz{{perfil.name}}</h2>
-                <p class="email">filiperaiz@gmail.com{{perfil.email}}</p>
+                <h2 class="nome">{{perfil.name}}</h2>
+                <p class="email">{{perfil.email}}</p>
             </div>
         </div>
 
@@ -55,7 +52,7 @@
         ">
                 <img class="image-recipe" ng-src="{{recipe.image}}">
                 <h2 class="recipe-name no-ws">{{recipe.title}}</h2>
-                <h5 class="recipe-author">Por: {{recipe.client.name}}</h5>
+                <!--<h5 class="recipe-author">Por: {{recipe.client.name}}</h5>-->
                 <i class="icon ion-chevron-right icon-accessory"></i>
                 <ion-option-button class="button-assertive ion-ios-trash" ng-click=""></ion-option-button>
             </ion-item>

@@ -623,6 +623,8 @@ angular.module('starter.controllers', [])
 .controller('ProfileCtrl', function($scope, $stateParams, $http, Util, $window, $state, $ionicLoading) {
     var client = $window.localStorage['client'];
 
+    $scope.list_recipes = {};
+
     //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
     if (!Util.emptyVal(client)) {
         $scope.hasMoreData  = true;
@@ -630,11 +632,21 @@ angular.module('starter.controllers', [])
 
         client    = JSON.parse(client);
 
-        var parameters = {
-            token_client:client.token,
-            client_id:client.id,
-            perfil_id:$stateParams.clientId
-        };
+        if (typeof $stateParams.clientId !== "undefined"){ // perfl de outro usuario
+            var parameters = {
+                token_client:client.token,
+                client_id:client.id,
+                page:$scope.page,
+                perfil_id:$stateParams.clientId
+            };
+        }else{ // perfil do proprio usuario
+            var parameters = {
+                token_client:client.token,
+                client_id:client.id,
+                page:$scope.page
+            };
+        }
+
 
         var config = {
             params: parameters
@@ -643,30 +655,7 @@ angular.module('starter.controllers', [])
         $http.get('http://www.vegood.com.br/api/v1/vegood/get_perfil.json', config)
         .success(function(data, status, headers, config) {
             if(data.client_logged.flag){
-                $scope.perfil = data.perfil;
-            }else{
-                $window.localStorage.removeItem('client');
-                //$ionicLoading.hide();
-                $state.go('login');
-            }
-        });
-
-
-
-        var parameters = {
-            token_client:client.token,
-            client_id:client.id,
-            page:$scope.page,
-            perfil_id:$stateParams.clientId
-        };
-
-        var config = {
-            params: parameters
-        };
-
-        $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes.json', config)
-        .success(function(data, status, headers, config) {
-            if(data.client_logged.flag){
+                $scope.perfil       = data.perfil;
                 $scope.list_recipes = data.list_recipes;
                 $ionicLoading.hide();
             }else{
@@ -680,18 +669,26 @@ angular.module('starter.controllers', [])
             //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
             $scope.page += 1;
 
-            var parameters = {
-                token_client:client.token,
-                client_id:client.id,
-                page:$scope.page,
-                perfil_id:$stateParams.clientId
-            };
+            if (typeof $stateParams.clientId !== "undefined"){ // perfl de outro usuario
+                var parameters = {
+                    token_client:client.token,
+                    client_id:client.id,
+                    page:$scope.page,
+                    perfil_id:$stateParams.clientId
+                };
+            }else{ // perfil do proprio usuario
+                var parameters = {
+                    token_client:client.token,
+                    client_id:client.id,
+                    page:$scope.page
+                };
+            }
 
             var config = {
                 params: parameters
             };
 
-            $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes.json', config)
+            $http.get('http://www.vegood.com.br/api/v1/vegood/get_perfil.json', config)
             .success(function(data, status, headers, config) {
                 if(data.client_logged.flag){
                     if(data.list_recipes.length==0){
