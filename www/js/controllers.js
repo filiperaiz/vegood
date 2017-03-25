@@ -56,43 +56,38 @@ angular.module('starter.controllers', [])
             template: 'Aguarde...'
         });
 
-        var credentials = {
+        var parameters = $.param({
             email: $scope.client.email,
             password: $scope.client.password
-        };
+        });
 
         var config = {
-            headers: {
-                'X-HTTP-Method-Override': 'POST'
+            headers : {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
             }
-        };
+        }
 
-        Auth.login(credentials, config).then(function(user) {}, function(error) {
-            console.log(error);
-            $ionicPopup.alert({
-                title: 'Erro!!!',
-                template: 'Erro de Autenticação!'
-            });
-            $ionicLoading.hide();
-        });
-
-        $scope.$on('devise:login', function(event, currentUser) {
-            // after a login, a hard refresh, a new tab
-        });
-
-        $scope.$on('devise:new-session', function(event, currentUser) {
-            $window.localStorage['client'] = JSON.stringify(currentUser);
-            $scope.modalEnterEmail.hide();
-            $ionicLoading.hide();
-            $state.go('tab.timeline');
+        $http.post('http://www.vegood.com.br/api/v1/vegood/login_client.json', parameters, config)
+        .success(function(data, status, headers, config) {
+            console.log(data)
+            if(typeof data.errors_client == "undefined"){
+                $window.localStorage['client'] = JSON.stringify(data.client);
+                $scope.modalEnterEmail.hide();
+                $ionicLoading.hide();
+                $state.go('tab.timeline');
+            }else{
+                $ionicPopup.alert({
+                    title: 'Erro!!!',
+                    template: 'Erro de Autenticação!'
+                });
+                $ionicLoading.hide();
+            }
         });
     };
 
 
     $scope.userLoginFacebook = function(result){
 
-        alert(result.name)
-        alert(result.email)
 
         $ionicLoading.show({template: 'Aguarde...'});
         var data = $.param({
@@ -139,15 +134,6 @@ angular.module('starter.controllers', [])
             }
             //$ionicLoading.hide();
         })
-
-
-
-
-
-
-
-
-
 
 
         $http.post('http://www.vegood.com.br/api/v1/vegood/login_facebook.json', data, config)
@@ -230,66 +216,41 @@ angular.module('starter.controllers', [])
             template: 'Aguarde...'
         });
 
-        var credentials = {
+        var parameters = $.param({
             name: $scope.client.name,
             email: $scope.client.email,
             statu_id: 1,
             password: $scope.client.password,
             password_confirmation: $scope.client.password_confirmation
-        };
-
-        console.log(credentials)
-
-        var config = {
-            headers: {
-                'X-HTTP-Method-Override': 'POST'
-            }
-        };
-
-        Auth.register(credentials, config).then(function(registeredUser) {}, function(error) {
-            console.log(error);
-            message = '';
-            if (typeof error.data.errors.name != 'undefined') {
-                message += '<li>Email: ' + error.data.errors.name + '</li>'
-            }
-            if (typeof error.data.errors.email != 'undefined') {
-                message += '<li>Email: ' + error.data.errors.email + '</li>'
-            }
-            if (typeof error.data.errors.password != 'undefined') {
-                message += '<li>Senha: ' + error.data.errors.password + '</li>'
-            }
-            $ionicPopup.alert({
-                title: 'Erro!!',
-                template: message
-            });
-            $ionicLoading.hide();
         });
 
-        $scope.$on('devise:new-registration', function(event, user) {
-            $scope.modalEnterEmail.hide();
-            $ionicLoading.hide();
-            $scope.modalCreateAccount.hide();
-            $scope.client = {};
-            $ionicPopup.alert({
-                title: 'Cadastro',
-                template: 'Cadastro Realizado. Faça seu Login!!'
-            });
+        var config = {
+            headers : {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            }
+        }
 
-
-            var config = {
-                headers: {
-                    'X-HTTP-Method-Override': 'DELETE'
+        $http.post('http://www.vegood.com.br/api/v1/vegood/create_client.json', parameters, config)
+        .success(function(data, status, headers, config) {
+            if(typeof data.errors_client == "undefined"){
+                $scope.modalEnterEmail.hide();
+                $ionicLoading.hide();
+                $scope.modalCreateAccount.hide();
+                $scope.client = {};
+                $ionicPopup.alert({
+                    title: 'Cadastro',
+                    template: 'Cadastro Realizado. Faça seu Login!!'
+                });
+            }else{
+                var er = '';
+                for(i=0; i<data.errors_client.length;i++){
+                    er+= data.errors_client[i].message+'<br>';
                 }
-            };
-            Auth.logout(config).then(function(oldUser) {
-                // alert(oldUser.name + "you're signed out now.");
-            }, function(error) {
-                // An error occurred logging out.
-            });
-            $scope.$on('devise:logout', function(event, oldCurrentUser) {
-                // ...
-            });
-
+                $ionicPopup.alert({
+                 title: 'Erro!!!',
+                 template: er
+               });
+            }
         });
     };
 
@@ -338,54 +299,6 @@ angular.module('starter.controllers', [])
         });
     }
 
-    /* CRIANO USUARIO PELO FACEBOOK
-     $scope.signInFacebook = function() {
-    //     $scope.modalCreateAccount.hide();
-
-    //     $cordovaFacebook.login(["public_profile", "email", "user_friends"])
-    //     .then(function(success) {
-    //       console.log("========>")
-    //       console.log(success);
-    //     }, function (error) {
-    //       // error
-    //     });
-
-    //     Facebook.login(function(response) {
-    //         if (response.status === 'connected') {
-    //             $scope.user_cadastro = {};
-    //             Facebook.api('/me?fields=name,email', function(response) {
-
-    //                 $scope.user_cadastro.nome  = response.name;
-    //                 $scope.user_cadastro.email = response.email;
-
-    //                 Facebook.api('/me/picture?type=normal', function(response) {
-    //                     $scope.user_cadastro.avatar = response.data;
-    //                     var credentials = {
-    //                         nome: $scope.user_cadastro.nome,
-    //                         email: $scope.user_cadastro.email,
-    //                         avatar: $scope.user_cadastro.avatar.url
-    //                     };
-    //                     credentials = JSON.stringify(credentials);
-    //                     $http.post('https://vegood.filiperaiz.com.br/api/v1/home/tab/user/new.json', credentials)
-    //                         .success(function(data, status, headers, config) {
-    //                             if (data.user !== null && data.user !== undefined && data.user !== 'undefined' && data.user !== '') {
-    //                                 $window.localStorage['token_user'] = JSON.stringify(data.user);
-    //                                 $state.go('inicio');
-    //                             } else {
-    //                                  $state.go('login');
-    //                             }
-    //                     })
-    //                     .error(function(data, status, header, config) {
-    //                         $state.go('login');
-    //                     });
-    //                 });
-    //             });
-    //         }
-    //     },{ scope: 'email' });
-
-
-    //     $state.go('tab.home');
-     }*/
 })
 
 
@@ -397,6 +310,7 @@ angular.module('starter.controllers', [])
         $scope.hasMoreData  = true;
         $scope.page         = 1;
         client              = JSON.parse(client);
+        $scope.list_recipes = {};
 
         var parameters = {
             token_client:client.token,
@@ -927,6 +841,7 @@ angular.module('starter.controllers', [])
     $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
     if (!Util.emptyVal(client)) {
 
+        $scope.list_categories = {};
         client    = JSON.parse(client);
 
         var parameters = {
@@ -967,6 +882,7 @@ angular.module('starter.controllers', [])
         $scope.category_id  = $stateParams.categoryId;
         $scope.page         = 1;
         client              = JSON.parse(client);
+        $scope.list_recipes = {};
 
         var parameters = {
             token_client:client.token,

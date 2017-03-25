@@ -97,6 +97,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     // timeline > perfil
     .state('tab.timeline-profile', {
         url: '/timeline/profile/:clientId',
+        cache: false,
         views: {
             'tab-timeline': {
                 templateUrl: 'templates/profile.html'
