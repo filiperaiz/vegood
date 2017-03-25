@@ -141,15 +141,6 @@ angular.module('starter.controllers', [])
         })
 
 
-
-
-
-
-
-
-
-
-
         $http.post('http://www.vegood.com.br/api/v1/vegood/login_facebook.json', data, config)
         .success(function(data, status, headers) {
             if ((typeof data.errors_user == "undefined") && data.flag_save_user.flag) { // DADOS PEGA
@@ -623,6 +614,9 @@ angular.module('starter.controllers', [])
 .controller('ProfileCtrl', function($scope, $stateParams, $http, Util, $window, $state, $ionicLoading) {
     var client = $window.localStorage['client'];
 
+    $scope.client = {};
+    $scope.client.image                 = 'img/icon-camera-upload.png';
+
     $scope.list_recipes = {};
 
     //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
@@ -780,7 +774,6 @@ angular.module('starter.controllers', [])
 
 })
 
-
 // RECIPE COMMENTS CONTROLLER
 .controller('RecipeCommentsCtrl', function($scope, $stateParams, $http, Util, $state, $window, $ionicLoading) {
     var client = $window.localStorage['client'];
@@ -920,7 +913,6 @@ angular.module('starter.controllers', [])
     }
 })
 
-
 // CATEGORY CONTROLLER
 .controller('CategoryCtrl', function($scope, $stateParams, $http, Util, $state, $window, $ionicLoading) {
     var client = $window.localStorage['client'];
@@ -955,7 +947,6 @@ angular.module('starter.controllers', [])
         $state.go('login');
     }
 })
-
 
 // CATEGORY ITEMS CONTROLLER
 .controller('CategoryItemsCtrl', function($scope, $stateParams, $http, Util, $state, $window, $ionicLoading) {
@@ -1039,7 +1030,6 @@ angular.module('starter.controllers', [])
         $state.go('login');
     }
 })
-
 
 // SEND RECIPE CONTROLLER
 .controller('SendRecipeCtrl', function($scope, $cordovaCamera, $window, $http, $state, Util, $ionicLoading, $ionicPopup) {
@@ -1180,7 +1170,6 @@ angular.module('starter.controllers', [])
     }
 })
 
-
 // PROFILE FOLLOWING CONTROLLER
 .controller('ProfileFollowingCtrl', function($scope, $stateParams, Recipes, $http, Ultil, $state, $window, $rootScope) {
     $scope.perfis = [];
@@ -1223,7 +1212,6 @@ angular.module('starter.controllers', [])
         $state.go('login');
     }
 })
-
 
 // PROFILE FOLLOWERS CONTROLLER
 .controller('ProfileFollowersCtrl', function($scope, $stateParams, Recipes, $http, Ultil, $state, $window, $rootScope) {
@@ -1268,7 +1256,6 @@ angular.module('starter.controllers', [])
     }
 })
 
-
 .controller('MenuFooterCtrl', function($scope, $state) {
     $scope.profile = function(){
         $state.go('tab.profile');
@@ -1281,8 +1268,11 @@ angular.module('starter.controllers', [])
     }
     $scope.timeline = function(){
         $state.go('tab.timeline');
-    }    
+    }
 })
+
+
+
 // .controller('RecipeFavoritoCtrl', function($scope, $stateParams, Recipes, $timeout, $cordovaSocialSharing, $http, Ultil) {
 //     $scope.recipes = [];
 //     $scope.pageRecipe = 0;

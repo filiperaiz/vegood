@@ -3,7 +3,7 @@
 
 
         <ion-list class="list-comentarios">
-            <ion-item class="item-avatar item-comment" ng-repeat="comment in list_comments" type="item-text-wrap">
+            <ion-item class="item-avatar item-comment" ng-href ng-repeat="comment in list_comments" type="item-text-wrap">
                 <img class="image-comment" ng-src="{{comment.client.image}}" alt="{{comment.client.name}}">
                 <h2 class="comment-name no-ws">{{comment.client.name}}</h2>
                 <h5 class="comment-text no-ws">{{comment.text}}</h5>
