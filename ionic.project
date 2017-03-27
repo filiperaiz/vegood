@@ -1,6 +1,6 @@
 {
   "name": "vegood",
-  "app_id": "0b658174",
+  "app_id": "7334e5ca",
   "gulpStartupTasks": [
     "sass",
     "watch"
