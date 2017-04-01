@@ -88,24 +88,7 @@ angular.module('starter.controllers', [])
 
     $scope.userLoginFacebook = function(result){
 
-
         $ionicLoading.show({template: 'Aguarde...'});
-        var data = $.param({
-            token_face: 'AaLKh%GAFSDUJ7734QAG8js9G$!$',
-            name:result.name,
-            email:result.email,
-            picture:"https://graph.facebook.com/" + result.id + "/picture?type=large"
-        });
-
-        var config = {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-            }
-        }
-
-
-
-
         var parameters = {
             token_face: 'AaLKh%GAFSDUJ7734QAG8js9G$!$',
             name:result.name,
@@ -116,25 +99,6 @@ angular.module('starter.controllers', [])
         var config = {
             params: parameters
         };
-
-        $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes.json', config)
-        .success(function(data, status, headers, config) {
-            if(data.client_logged.flag){
-                if(data.list_recipes.length==0){
-                    $scope.hasMoreData  = false;
-                }
-                for (i = 0; i < data.list_recipes.length; i++) {
-                    $scope.list_recipes.push(data.list_recipes[i]);
-                }
-                $scope.$broadcast('scroll.infiniteScrollComplete');
-            }else{
-                $window.localStorage.removeItem('client');
-                $ionicLoading.hide();
-                $state.go('login');
-            }
-            //$ionicLoading.hide();
-        })
-
 
         $http.post('http://www.vegood.com.br/api/v1/vegood/login_facebook.json', data, config)
         .success(function(data, status, headers) {
