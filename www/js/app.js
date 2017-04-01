@@ -250,6 +250,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
     .state('tab.profile-favorite', {
         url: '/favorite',
+        cache: false,
         views: {
             'tab-profile': {
                 templateUrl: 'templates/favorite.html'
