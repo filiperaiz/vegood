@@ -243,21 +243,31 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         cache: false,
         views: {
             'tab-profile': {
-                templateUrl: 'templates/tab-profile.html',
-                controller: 'ProfileCtrl'
+                templateUrl: 'templates/tab-profile.html'
             }
         }
     })
 
-    // .state('tab.profile', {
-    //     url: '/profile/:userId',
-    //     views: {
-    //         'tab-profile': {
-    //             templateUrl: 'templates/profile.html',
-    //             controller: 'ProfileCtrl'
-    //         }
-    //     }
-    // })
+    .state('tab.profile-favorite', {
+        url: '/favorite',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/favorite.html'
+            }
+        }
+    })
+
+    .state('tab.profile-favorite-recipe-detail', {
+        url: '/favorite/:recipeId',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/recipe-detail.html'
+            }
+        }
+    })
+
+    
+
 
     .state('tab.profile-settings', {
         url: '/settings',
@@ -269,15 +279,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         }
     })
 
-    .state('tab.profile-favorite', {
-        url: '/favorite',
-        views: {
-            'tab-profile': {
-                templateUrl: 'templates/favorite.html',
-                controller: 'ProfileCtrl'
-            }
-        }
-    })
 
     .state('tab.profile-edit', {
         url: '/edit-profile',

@@ -262,9 +262,7 @@ angular.module('starter.controllers', [])
             // An error occured. Show a message to the user
         });
     }
-
 })
-
 
 // TIMELINE CONTROLLER
 .controller('timeLineCtrl', function($state, $scope, $ionicModal, $http, $window, $ionicLoading, Util) {
@@ -298,7 +296,6 @@ angular.module('starter.controllers', [])
             }
         });
 
-
         $scope.loadMore = function() {
             //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
             $scope.page += 1;
@@ -331,10 +328,6 @@ angular.module('starter.controllers', [])
                 //$ionicLoading.hide();
             })
         };
-
-        $scope.$on('$stateChangeSuccess', function() {
-            $scope.loadMore();
-        });
 
 
         /************************************************/
@@ -393,14 +386,27 @@ angular.module('starter.controllers', [])
             .success(function(data, status, headers, config) {});
         }
 
+        $scope.doRefresh = function(){
+            $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes.json', config)
+            .success(function(data, status, headers, config) {
+                if(data.client_logged.flag){
+                    $scope.list_recipes = data.list_recipes;
+                    $scope.$broadcast('scroll.refreshComplete');
+                    //$ionicLoading.hide();
+                }else{
+                    $window.localStorage.removeItem('client');
+                    $ionicLoading.hide();
+                    $state.go('login');
+                }
+            });
+        }
+
     }else{
         $window.localStorage.removeItem('client');
         $ionicLoading.hide();
         $state.go('login');
     }
-
 })
-
 
 // RECIPE DETAIL CONTROLLER
 .controller('RecipeDetailCtrl', function($state, $scope, $stateParams, $http, Util, $window, $ionicLoading) {
@@ -493,9 +499,7 @@ angular.module('starter.controllers', [])
         $ionicLoading.hide();
         $state.go('login');
     }
-
 })
-
 
 // PROFILE CONTROLLER
 .controller('ProfileCtrl', function($scope, $stateParams, $http, Util, $window, $state, $ionicLoading) {
@@ -658,7 +662,6 @@ angular.module('starter.controllers', [])
         $ionicLoading.hide();
         $state.go('login');
     }
-
 })
 
 // RECIPE COMMENTS CONTROLLER
@@ -1060,44 +1063,73 @@ angular.module('starter.controllers', [])
 })
 
 // PROFILE FOLLOWING CONTROLLER
-.controller('ProfileFollowingCtrl', function($scope, $stateParams, Recipes, $http, Ultil, $state, $window, $rootScope) {
-    $scope.perfis = [];
-    $scope.pagePerfil = 1;
+.controller('ProfileFollowingCtrl', function($scope, $stateParams, $http, Util, $state, $window) {
+    var client = $window.localStorage['client'];
+    //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+    if (!Util.emptyVal(client)) {
+        $scope.hasMoreData  = true;
+        $scope.page         = 1;
+        client              = JSON.parse(client);
+        $scope.list_recipes = {};
 
-    var user = $window.localStorage['token_user'];
-    if (user != null && user != undefined && user != 'undefined' && user != '') {
-        $window.localStorage['token_user'] = JSON.stringify(data.user);
-
-        //DADOS USUARIO LOGADO
-        user = JSON.parse(user);
-        $rootScope.usuario_logado_id = user.id
-
-
-        $http.get('http://vegood.filiperaiz.com.br/api/v1/home/tab/perfil/seguindo/' + $stateParams.userId + '/pg/' + $scope.pagePerfil + '.json').success(function(response) {
-            for (i = 0; i < response.lista_perfil_seguindo.length; i++) {
-                $scope.perfis.push(response.lista_perfil_seguindo[i]);
-            }
-            $scope.perfis = Ultil.emptyDataAvatarUser($scope.perfis);
-        })
-
-        $scope.loadMore = function() {
-            $scope.pagePerfil += 1;
-            $http.get('http://vegood.filiperaiz.com.br/api/v1/home/tab/perfil/seguindo/' + $stateParams.userId + '/pg/' + $scope.pagePerfil + '.json').success(function(response) {
-                    for (i = 0; i < response.lista_perfil_seguindo.length; i++) {
-                        $scope.perfis.push(response.lista_perfil_seguindo[i]);
-                    }
-                    $scope.perfis = Ultil.emptyDataAvatarUser($scope.perfis);
-                })
-                .finally(function() {
-                    $scope.$broadcast('scroll.infiniteScrollComplete');
-                });
+        var parameters = {
+            token_client:client.token,
+            client_id:client.id,
+            page:$scope.page
         };
 
-        $scope.$on('$stateChangeSuccess', function() {
-            $scope.loadMore();
+        var config = {
+            params: parameters
+        };
+
+        $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes_favorites.json', config)
+        .success(function(data, status, headers, config) {
+            if(data.client_logged.flag){
+                $scope.list_recipes = data.list_recipes;
+                //$ionicLoading.hide();
+            }else{
+                $window.localStorage.removeItem('client');
+                $ionicLoading.hide();
+                $state.go('login');
+            }
         });
 
-    } else {
+        $scope.loadMore = function() {
+            //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+            $scope.page += 1;
+
+            var parameters = {
+                token_client:client.token,
+                client_id:client.id,
+                page:$scope.page
+            };
+
+            var config = {
+                params: parameters
+            };
+
+            $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes_favorites.json', config)
+            .success(function(data, status, headers, config) {
+                if(data.client_logged.flag){
+                    if(data.list_recipes.length==0){
+                        $scope.hasMoreData  = false;
+                    }
+                    for (i = 0; i < data.list_recipes.length; i++) {
+                        $scope.list_recipes.push(data.list_recipes[i]);
+                    }
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                }else{
+                    $window.localStorage.removeItem('client');
+                    $ionicLoading.hide();
+                    $state.go('login');
+                }
+                //$ionicLoading.hide();
+            })
+        };
+
+    }else{
+        $window.localStorage.removeItem('client');
+        $ionicLoading.hide();
         $state.go('login');
     }
 })
