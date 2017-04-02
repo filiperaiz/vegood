@@ -652,12 +652,23 @@ angular.module('starter.controllers', [])
         $scope.follow_func = function(perfil_id){
             if($scope.perfil.flag_seguindo){
                 $scope.perfil.flag_seguindo = false;
-                if($scope.perfil.size_following>0){
-                    $scope.perfil.size_following=$scope.perfil.size_following-1;
+
+                if (typeof $stateParams.clientId !== "undefined"){
+                    if($scope.perfil.size_followers>0){
+                        $scope.perfil.size_followers=$scope.perfil.size_followers-1;
+                    }
+                }else{
+                    if($scope.perfil.size_following>0){
+                        $scope.perfil.size_following=$scope.perfil.size_following-1;
+                    }
                 }
             }else{
                 $scope.perfil.flag_seguindo = true;
-                 $scope.perfil.size_following=$scope.perfil.size_following+1;
+                if (typeof $stateParams.clientId !== "undefined"){
+                    $scope.perfil.size_followers=$scope.perfil.size_followers+1;
+                }else{
+                    $scope.perfil.size_following=$scope.perfil.size_following+1;
+                }
             }
             var parameters = {
                 token_client:client.token,
@@ -676,8 +687,22 @@ angular.module('starter.controllers', [])
             .error(function(data, status, header, config) {
                 if($scope.perfil.flag_seguindo){
                     $scope.perfil.flag_seguindo = true;
+                    if (typeof $stateParams.clientId !== "undefined"){
+                        $scope.perfil.size_followers=$scope.perfil.size_followers+1;
+                    }else{
+                        $scope.perfil.size_following=$scope.perfil.size_following+1;
+                    }
                 }else{
                     $scope.perfil.flag_seguindo = false;
+                    if (typeof $stateParams.clientId !== "undefined"){
+                        if($scope.perfil.size_followers>0){
+                            $scope.perfil.size_followers=$scope.perfil.size_followers-1;
+                        }
+                    }else{
+                        if($scope.perfil.size_following>0){
+                            $scope.perfil.size_following=$scope.perfil.size_following-1;
+                        }
+                    }
                 }
             });
         }
