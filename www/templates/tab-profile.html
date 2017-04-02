@@ -24,14 +24,14 @@
                             <strong>{{perfil.size_recipe}}</strong>
                             <span>receitas</span>
                         </div>
-                        <a class="item-profile seguidores" href="#/tab/profile/followers">
+                        <a class="item-profile seguindo" href="#/tab/profile/following">
                             <strong>{{perfil.size_following}}</strong>
+                            <span>seguindo</span>
+                        </a>
+                        <a class="item-profile seguidores" href="#/tab/profile/followers">
+                            <strong>{{perfil.size_followers}}</strong>
                             <span ng-if="perfil.size_following>1">seguidores</span>
                             <span ng-if="perfil.size_following<=1">seguidor</span>
-                        </a>
-                        <a class="item-profile seguindo" href="#/tab/profile/following">
-                            <strong>{{perfil.size_followers}}</strong>
-                            <span>seguindo</span>
                         </a>
                     </div>
                 </div>

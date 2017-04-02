@@ -117,22 +117,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
     // timeline > item receita > seguindo
     .state('tab.timeline-following', {
-        url: '/timeline/following/:userId',
+        url: '/timeline/following/:clientId',
         views: {
             'tab-timeline': {
-                templateUrl: 'templates/following.html',
-                controller: 'ProfileFollowingCtrl'
+                templateUrl: 'templates/following.html'
             }
         }
     })
 
     // timeline > item receita > seguidores
     .state('tab.timeline-followers', {
-        url: '/timeline/followers/:userId',
+        url: '/timeline/followers/:clientId',
         views: {
             'tab-timeline': {
-                templateUrl: 'templates/followers.html',
-                controller: 'ProfileFollowersCtrl'
+                templateUrl: 'templates/followers.html'
             }
         }
     })
@@ -267,26 +265,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         }
     })
 
-    
-
-
     .state('tab.profile-settings', {
         url: '/settings',
+        cache: false,
         views: {
             'tab-profile': {
-                templateUrl: 'templates/settings.html',
-                controller: 'ProfileCtrl'
-            }
-        }
-    })
-
-
-    .state('tab.profile-edit', {
-        url: '/edit-profile',
-        views: {
-            'tab-profile': {
-                templateUrl: 'templates/edit-profile.html',
-                controller: 'ProfileCtrl'
+                templateUrl: 'templates/settings.html'
             }
         }
     })
@@ -295,8 +279,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         url: '/about',
         views: {
             'tab-profile': {
-                templateUrl: 'templates/about.html',
-                controller: 'ProfileCtrl'
+                templateUrl: 'templates/about.html'
             }
         }
     })
@@ -305,11 +288,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         url: '/term',
         views: {
             'tab-profile': {
-                templateUrl: 'templates/term.html',
-                controller: 'ProfileCtrl'
+                templateUrl: 'templates/term.html'
             }
         }
     })
+
+    .state('tab.profile-edit', {
+        url: '/edit-profile',
+        views: {
+            'tab-profile': {
+                templateUrl: 'templates/edit-profile.html'
+            }
+        }
+    })
+
+
+
+
+
 
     .state('tab.myths', {
         url: '/myths',

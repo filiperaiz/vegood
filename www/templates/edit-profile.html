@@ -1,4 +1,4 @@
-<ion-view view-title="Editar perfil">
+<ion-view view-title="Editar perfil" ng-controller="EditProfileCtrl">
     <ion-content class=" bg-gray">
 
         <form action="" class="form-app">
@@ -6,7 +6,7 @@
 
                 <div class="take-pic padding">
                     <img ng-show="imgURI !== undefined" class="img-view-result" ng-click="takePhoto()" ng-src="{{imgURI}}">
-                    <img ng-show="imgURI === undefined" class="img-view" ng-click="takePhoto()" ng-src="{{client.image}}">
+                    <img ng-show="imgURI === undefined" class="img-view" ng-click="takePhoto()" ng-src="{{perfil.image}}">
 
                     <a class="button button-small btn-choose-pic" ng-click="choosePhoto()">
                         <i class="ion-image"></i>Selecionar foto de album
@@ -20,21 +20,21 @@
                 <div class="padding">
                     <label class="item item-input item-stacked-label">
                         <span class="input-label">Nome</span>
-                        <input type="text" ng-model="client.name" placeholder="Nome">
+                        <input type="text" ng-model="perfil.name" placeholder="Nome">
                     </label>
 
                     <label class="item item-input item-stacked-label">
                         <span class="input-label">Email</span>
-                        <input type="email" ng-model="client.email" placeholder="Email">
+                        <input type="email" ng-model="perfil.email" placeholder="Email">
                     </label>
 
                     <label class="item item-input item-stacked-label">
                         <span class="input-label">Senha</span>
-                        <input type="password" ng-model="client.password" placeholder="Senha">
+                        <input type="password" ng-model="perfil.password" placeholder="Senha">
                     </label>
                     <label class="item item-input item-stacked-label">
                         <span class="input-label">Confirmar senha</span>
-                        <input type="password" ng-model="client.password_confirmation" placeholder="Confirmação de Senha">
+                        <input type="password" ng-model="perfil.password_confirmation" placeholder="Confirmação de Senha">
                     </label>
                 </div>
             </div>
@@ -42,7 +42,7 @@
             <hr>
 
             <div class="padding">
-                <a class="button button-positive" ng-click="startNewUser()">Salvar</a>
+                <a class="button button-positive" ng-click="updateClient()">Salvar</a>
             </div>
         </form>
 

@@ -69,7 +69,6 @@ angular.module('starter.controllers', [])
 
         $http.post('http://www.vegood.com.br/api/v1/vegood/login_client.json', parameters, config)
         .success(function(data, status, headers, config) {
-            console.log(data)
             if(typeof data.errors_client == "undefined"){
                 $window.localStorage['client'] = JSON.stringify(data.client);
                 $scope.modalEnterEmail.hide();
@@ -411,6 +410,7 @@ angular.module('starter.controllers', [])
 // RECIPE DETAIL CONTROLLER
 .controller('RecipeDetailCtrl', function($state, $scope, $stateParams, $http, Util, $window, $ionicLoading) {
     var client = $window.localStorage['client'];
+
     $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
     if (!Util.emptyVal(client)) {
         client    = JSON.parse(client);
@@ -441,7 +441,7 @@ angular.module('starter.controllers', [])
         /*                  FUNCTIONS                   */
         /************************************************/
         $scope.like_func = function(recipe_id){
-            //alert(recipe_id)
+            
             var parameters = {
                 token_client:client.token,
                 client_id:client.id,
@@ -507,10 +507,10 @@ angular.module('starter.controllers', [])
 
     $scope.client = {};
     $scope.client.image                 = 'img/icon-camera-upload.png';
-
+    $scope.perfil = {};
     $scope.list_recipes = {};
 
-    //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+    $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
     if (!Util.emptyVal(client)) {
         $scope.hasMoreData  = true;
         $scope.page = 1;
@@ -545,7 +545,7 @@ angular.module('starter.controllers', [])
                 $ionicLoading.hide();
             }else{
                 $window.localStorage.removeItem('client');
-                //$ionicLoading.hide();
+                $ionicLoading.hide();
                 $state.go('login');
             }
         });
@@ -588,13 +588,9 @@ angular.module('starter.controllers', [])
                     //$ionicLoading.hide();
                     $state.go('login');
                 }
-                //$ionicLoading.hide();
+                $ionicLoading.hide();
             })
         };
-
-        $scope.$on('$stateChangeSuccess', function() {
-            $scope.loadMore();
-        });
 
 
         /************************************************/
@@ -653,14 +649,165 @@ angular.module('starter.controllers', [])
             .success(function(data, status, headers, config) {});
         }
 
-        $scope.follow_func = function(recipe_id){
-        }
+        $scope.follow_func = function(perfil_id){
+            if($scope.perfil.flag_seguindo){
+                $scope.perfil.flag_seguindo = false;
+            }else{
+                $scope.perfil.flag_seguindo = true;
+            }
+            var parameters = {
+                token_client:client.token,
+                client_id:client.id,
+                perfil_id:$stateParams.clientId
+            };
 
+            var config = {
+                params: parameters
+            };
+
+            $http.get('http://www.vegood.com.br/api/v1/vegood/following_create.json', config)
+            .success(function(data, status, headers, config) {
+                $scope.perfil.flag_seguindo = data.option_following.flag;
+            })
+            .error(function(data, status, header, config) {
+                if($scope.perfil.flag_seguindo){
+                    $scope.perfil.flag_seguindo = true;
+                }else{
+                    $scope.perfil.flag_seguindo = false;
+                }
+            });
+        }
 
     }else{
         $window.localStorage.removeItem('client');
         $ionicLoading.hide();
         $state.go('login');
+    }
+})
+
+// EDITAR PROFILE
+.controller('EditProfileCtrl', function($scope, $cordovaCamera, $stateParams, $http, Util, $window, $state, $ionicLoading, $ionicPopup) {
+    var client = $window.localStorage['client'];
+
+    $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+    if (!Util.emptyVal(client)) {
+
+        client    = JSON.parse(client);
+        $scope.perfil = {};
+        $scope.perfil.image                 = 'img/icon-camera-upload.png';
+        
+        var parameters = {
+            token_client:client.token,
+            action: 'edit-profile',
+            client_id:client.id
+        };
+
+        var config = {
+            params: parameters
+        };
+
+
+        $http.get('http://www.vegood.com.br/api/v1/vegood/get_perfil.json', config)
+        .success(function(data, status, headers, config) {
+            if(data.client_logged.flag){
+                $scope.perfil       = data.perfil;
+                $ionicLoading.hide();
+            }else{
+                $window.localStorage.removeItem('client');
+                $ionicLoading.hide();
+                $state.go('login');
+            }
+        });
+
+    }else{
+        $window.localStorage.removeItem('client');
+        $ionicLoading.hide();
+        $state.go('login');
+    }
+
+
+    $scope.updateClient = function(){
+        $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+        var parameters = $.param({
+            token_client:client.token,
+            client_id:client.id,
+            name:$scope.perfil.name,
+            image: $scope.perfil.image,
+            password: $scope.perfil.password,
+            password_confirmation: $scope.perfil.password_confirmation
+        });
+
+        var config = {
+            headers : {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            }
+        }
+
+        $http.post('http://www.vegood.com.br/api/v1/vegood/update_client.json', parameters, config)
+        .success(function(data, status, headers, config) {
+            if(data.client_logged.flag){
+                $window.localStorage['client'] = JSON.stringify(data.client);
+                $ionicLoading.hide();
+                
+                if(typeof data.errors_client == "undefined"){
+                    $state.go('tab.profile');
+                }else{
+                    var er = '';
+                    for(i=0; i<data.errors_client.length;i++){
+                        er+= data.errors_client[i].message+'<br>';
+                    }
+                    $ionicPopup.alert({
+                     title: 'Erro!!!',
+                     template: er
+                   });
+                }
+
+            }else{
+                $window.localStorage.removeItem('client');
+                $ionicLoading.hide();
+                $state.go('login');
+            }
+        })
+    }
+
+    $scope.takePhoto = function() {
+        var options = {
+            quality: 75,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 500,
+            targetHeight: 500,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+       $cordovaCamera.getPicture(options).then(function(imageData) {
+           $scope.perfil.image = "data:image/jpeg;base64," + imageData;
+       }, function(err) {
+           // An error occured. Show a message to the user
+       });
+    }
+
+    $scope.choosePhoto = function() {
+        var options = {
+            quality: 75,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 500,
+            targetHeight: 500,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            $scope.perfil.image = "data:image/jpeg;base64," + imageData;
+        }, function(err) {
+            // An error occured. Show a message to the user
+        });
     }
 })
 
@@ -988,7 +1135,7 @@ angular.module('starter.controllers', [])
 
             $http.post('http://www.vegood.com.br/api/v1/vegood/send_recipe.json', parameters, config)
             .success(function(data, status, headers, config) {
-                if(typeof data.errors_medication == "undefined"){
+                if(typeof data.errors_recipe == "undefined"){
                     $state.go('timeline');
                 }else{
                     var er = '';
@@ -1063,30 +1210,39 @@ angular.module('starter.controllers', [])
 })
 
 // PROFILE FOLLOWING CONTROLLER
-.controller('ProfileFollowingCtrl', function($scope, $stateParams, $http, Util, $state, $window) {
+.controller('ProfileFollowerCtrl', function($scope, $ionicLoading, $stateParams, $http, Util, $state, $window) {
     var client = $window.localStorage['client'];
-    //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+    $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
     if (!Util.emptyVal(client)) {
         $scope.hasMoreData  = true;
         $scope.page         = 1;
         client              = JSON.parse(client);
-        $scope.list_recipes = {};
+        $scope.list_followers = {};
 
-        var parameters = {
-            token_client:client.token,
-            client_id:client.id,
-            page:$scope.page
-        };
+        if (typeof $stateParams.clientId !== "undefined"){ // perfl de outro usuario
+            var parameters = {
+                token_client:client.token,
+                client_id:client.id,
+                page:$scope.page,
+                perfil_id:$stateParams.clientId
+            };
+        }else{ // perfil do proprio usuario
+            var parameters = {
+                token_client:client.token,
+                client_id:client.id,
+                page:$scope.page
+            };
+        }
 
         var config = {
             params: parameters
         };
 
-        $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes_favorites.json', config)
+        $http.get('http://www.vegood.com.br/api/v1/vegood/profile_followers.json', config)
         .success(function(data, status, headers, config) {
             if(data.client_logged.flag){
-                $scope.list_recipes = data.list_recipes;
-                //$ionicLoading.hide();
+                $scope.list_followers = data.list_followers;
+                $ionicLoading.hide();
             }else{
                 $window.localStorage.removeItem('client');
                 $ionicLoading.hide();
@@ -1108,14 +1264,14 @@ angular.module('starter.controllers', [])
                 params: parameters
             };
 
-            $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes_favorites.json', config)
+            $http.get('http://www.vegood.com.br/api/v1/vegood/profile_followers.json', config)
             .success(function(data, status, headers, config) {
                 if(data.client_logged.flag){
-                    if(data.list_recipes.length==0){
+                    if(data.list_followers.length==0){
                         $scope.hasMoreData  = false;
                     }
-                    for (i = 0; i < data.list_recipes.length; i++) {
-                        $scope.list_recipes.push(data.list_recipes[i]);
+                    for (i = 0; i < data.list_followers.length; i++) {
+                        $scope.list_followers.push(data.list_followers[i]);
                     }
                     $scope.$broadcast('scroll.infiniteScrollComplete');
                 }else{
@@ -1134,45 +1290,161 @@ angular.module('starter.controllers', [])
     }
 })
 
-// PROFILE FOLLOWERS CONTROLLER
-.controller('ProfileFollowersCtrl', function($scope, $stateParams, Recipes, $http, Ultil, $state, $window, $rootScope) {
-    $scope.perfis = [];
-    $scope.pagePerfil = 1;
-
-    var user = $window.localStorage['token_user'];
-    if (user != null && user != undefined && user != 'undefined' && user != '') {
-
-        //DADOS USUARIO LOGADO
-        user = JSON.parse(user);
-        $rootScope.usuario_logado_id = user.id
+// PROFILE FOLLOWING CONTROLLER
+.controller('ProfileFollowingCtrl', function($scope, $ionicLoading, $stateParams, $http, Util, $state, $window) {
+    var client = $window.localStorage['client'];
+    $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+    if (!Util.emptyVal(client)) {
+        $scope.hasMoreData  = true;
+        $scope.page         = 1;
+        client              = JSON.parse(client);
+        $scope.list_followings = {};
 
 
-        $http.get('http://vegood.filiperaiz.com.br/api/v1/home/tab/perfil/seguidores/' + $stateParams.userId + '/pg/' + $scope.pagePerfil + '.json').success(function(response) {
-            for (i = 0; i < response.lista_perfil_seguidores.length; i++) {
-                $scope.perfis.push(response.lista_perfil_seguidores[i]);
-            }
+        if (typeof $stateParams.clientId !== "undefined"){ // perfl de outro usuario
+            var parameters = {
+                token_client:client.token,
+                client_id:client.id,
+                page:$scope.page,
+                perfil_id:$stateParams.clientId
+            };
+        }else{ // perfil do proprio usuario
+            var parameters = {
+                token_client:client.token,
+                client_id:client.id,
+                page:$scope.page
+            };
+        }
 
-            $scope.perfis = Ultil.emptyDataAvatarUser($scope.perfis);
-        })
-
-        $scope.loadMore = function() {
-            $scope.pagePerfil += 1;
-            $http.get('http://vegood.filiperaiz.com.br/api/v1/home/tab/perfil/seguidores/' + $stateParams.userId + '/pg/' + $scope.pagePerfil + '.json').success(function(response) {
-                    for (i = 0; i < response.lista_perfil_seguidores.length; i++) {
-                        $scope.perfis.push(response.lista_perfil_seguidores[i]);
-                    }
-                    $scope.perfis = Ultil.emptyDataAvatarUser($scope.perfis);
-                })
-                .finally(function() {
-                    $scope.$broadcast('scroll.infiniteScrollComplete');
-                });
+        var config = {
+            params: parameters
         };
 
-        $scope.$on('$stateChangeSuccess', function() {
-            $scope.loadMore();
+
+        $http.get('http://www.vegood.com.br/api/v1/vegood/profile_followings.json', config)
+        .success(function(data, status, headers, config) {
+            if(data.client_logged.flag){
+                $scope.list_followings = data.list_followings;
+                $ionicLoading.hide();
+            }else{
+                $window.localStorage.removeItem('client');
+                $ionicLoading.hide();
+                $state.go('login');
+            }
         });
 
-    } else {
+        $scope.loadMore = function() {
+            //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+            $scope.page += 1;
+
+            var parameters = {
+                token_client:client.token,
+                client_id:client.id,
+                page:$scope.page
+            };
+
+            var config = {
+                params: parameters
+            };
+
+            $http.get('http://www.vegood.com.br/api/v1/vegood/profile_followings.json', config)
+            .success(function(data, status, headers, config) {
+                if(data.client_logged.flag){
+                    if(data.list_followings.length==0){
+                        $scope.hasMoreData  = false;
+                    }
+                    for (i = 0; i < data.list_followings.length; i++) {
+                        $scope.list_followings.push(data.list_followings[i]);
+                    }
+                    $scope.$broadcast('scroll.infiniteScrollComplete');
+                }else{
+                    $window.localStorage.removeItem('client');
+                    $ionicLoading.hide();
+                    $state.go('login');
+                }
+                //$ionicLoading.hide();
+            })
+        };
+
+    }else{
+        $window.localStorage.removeItem('client');
+        $ionicLoading.hide();
+        $state.go('login');
+    }
+})
+
+.controller('SettingsCtrl', function($scope, $state, $window, Util){
+    var client = $window.localStorage['client'];
+    if (Util.emptyVal(client)) {
+        $window.localStorage.removeItem('client');
+        $ionicLoading.hide();
+        $state.go('login');
+    }
+})
+
+.controller('AboutCtrl', function($state, $scope, $ionicModal, $http, $window, $ionicLoading, Util){
+    var client = $window.localStorage['client'];
+    //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+    if (!Util.emptyVal(client)) {
+
+        client    = JSON.parse(client);
+
+        var parameters = {
+            token_client:client.token,
+            client_id:client.id
+        };
+
+        var config = {
+            params: parameters
+        };
+
+
+        $http.get('http://www.vegood.com.br/api/v1/vegood/about.json', config)
+        .success(function(data, status, headers, config) {
+            if(data.client_logged.flag){
+                $("#about").html(data.about.text);
+            }else{
+                //$window.localStorage.removeItem('client');
+                //$ionicLoading.hide();
+                $state.go('login');
+            }
+        });
+    }else{
+        $window.localStorage.removeItem('client');
+        $ionicLoading.hide();
+        $state.go('login');
+    }
+})
+
+.controller('TermUseCtrl', function($state, $scope, $ionicModal, $http, $window, $ionicLoading, Util){
+    var client = $window.localStorage['client'];
+    //$ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
+    if (!Util.emptyVal(client)) {
+
+        client    = JSON.parse(client);
+
+        var parameters = {
+            token_client:client.token,
+            client_id:client.id
+        };
+
+        var config = {
+            params: parameters
+        };
+
+        $http.get('http://www.vegood.com.br/api/v1/vegood/termuse.json', config)
+        .success(function(data, status, headers, config) {
+            if(data.client_logged.flag){
+                $("#termuse").html(data.termuse.text);
+            }else{
+                //$window.localStorage.removeItem('client');
+                //$ionicLoading.hide();
+                $state.go('login');
+            }
+        });
+    }else{
+        $window.localStorage.removeItem('client');
+        $ionicLoading.hide();
         $state.go('login');
     }
 })
@@ -1191,27 +1463,3 @@ angular.module('starter.controllers', [])
         $state.go('tab.timeline');
     }
 })
-
-
-
-// .controller('RecipeFavoritoCtrl', function($scope, $stateParams, Recipes, $timeout, $cordovaSocialSharing, $http, Ultil) {
-//     $scope.recipes = [];
-//     $scope.pageRecipe = 0;
-
-//     $scope.loadMore = function() {
-//         $scope.pageRecipe += 1;
-//         $http.get('http://vegood.filiperaiz.com.br/api/v1/home/tab/receita/favoritos/' + $stateParams.userId + '/pg/' + $scope.pageRecipe + '.json').success(function(response) {
-//                 for (i = 0; i < response.lista_receita_favoritas.length; i++) {
-//                     $scope.recipes.push(response.lista_receita_favoritas[i]);
-//                 }
-//                 $scope.recipes = Ultil.emptyDataAvatarUser($scope.recipes);
-//             })
-//             .finally(function() {
-//                 $scope.$broadcast('scroll.infiniteScrollComplete');
-//             });
-//     };
-
-//     $scope.$on('$stateChangeSuccess', function() {
-//         $scope.loadMore();
-//     });
-// })

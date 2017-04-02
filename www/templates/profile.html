@@ -13,28 +13,24 @@
                     </div>
                 </div>
                 <div class="btn-actions">
-                    <a class="button btn-follow button-outline button-positive" ng-href="" ng-click="">
-                        <span><i class="ion-person-add"></i>Seguir</span>
-                        <!-- <span><i class="ion-person"></i>Seguindo</span> -->
+                    <a class="button button-outline button-positive" ng-click="follow_func(perfil.id)">
+                        <span ng-if="!perfil.flag_seguindo"><i class="ion-person-add"></i>Seguir</span>
+                        <span ng-if="perfil.flag_seguindo"><i class="ion-person-add"></i>Seguindo</span>
                     </a>
-
-                   <!--  <a class="button button-outline button-positive" ng-href="follow_func()" ng-click="">
-                        <span ng-if="flag_seguindo"><i class="ion-person-add"></i>Seguir</span>
-                        <span ng-if="flag_seguindo"><i class="ion-person-add"></i>Seguindo</span>
-                    </a> -->
                 </div>
+
                 <div class="infos-user">
                     <div class="info-number">
                         <div class="item-profile produtos">
                             <strong>{{perfil.size_recipe}}</strong>
                             <span>receitas</span>
                         </div>
-                        <a class="item-profile seguindo" href="#/tab/profile/following">
-                            <strong>{{perfil.size_followers}}</strong>
+                        <a class="item-profile seguindo" href="#/tab/timeline/following/{{perfil.id}}">
+                            <strong>{{perfil.size_following}}</strong>
                             <span>seguindo</span>
                         </a>
-                        <a class="item-profile seguidores" href="#/tab/profile/followers">
-                            <strong>{{perfil.size_following}}</strong>
+                        <a class="item-profile seguidores" href="#/tab/timeline/followers/{{perfil.id}}">
+                            <strong>{{perfil.size_followers}}</strong>
                             <span ng-if="perfil.size_following>1">seguidores</span>
                             <span ng-if="perfil.size_following<=1">seguidor</span>
                         </a>
