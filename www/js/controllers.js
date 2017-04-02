@@ -1198,14 +1198,13 @@ angular.module('starter.controllers', [])
         $http.get('http://www.vegood.com.br/api/v1/vegood/list_categories.json', config)
         .success(function(data, status, headers, config) {
             $scope.list_categories = data.list_categories;
-            //console.log($scope.list_categories)
         });
 
 
         $ionicLoading.hide($scope.list_categories);
 
         $scope.sendRecipe = function(){
-
+            $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
             var categories   = new Array();
             for(i=0;i<$scope.list_categories.length;i++){
                 if($scope.list_categories[i].checked){
@@ -1227,29 +1226,43 @@ angular.module('starter.controllers', [])
                 cooking_time:$scope.recipe.cooking_time
             });
 
+            console.log(parameters)
+
             var config = {
                 headers : {
                     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
                 }
             }
-
+            
             $http.post('http://www.vegood.com.br/api/v1/vegood/send_recipe.json', parameters, config)
             .success(function(data, status, headers, config) {
-                if(typeof data.errors_recipe == "undefined"){
-                    $state.go('timeline');
+                if(typeof data.errors_recipe === "undefined"){
+                    $state.go('tab.timeline');
+                    $ionicLoading.hide();
                 }else{
                     var er = '';
                     for(i=0; i<data.errors_recipe.length;i++){
                         er+= data.errors_recipe[i].message+'<br>';
                     }
                     $ionicPopup.alert({
-                     title: 'Erro!!!',
-                     template: er
-                   });
+                        title: 'Erro!!!',
+                        template: er
+                    });
+                    $ionicLoading.hide();
                 }
+            })
+            .error(function(data, status, header, config) {
+                $ionicPopup.alert({
+                    title: '',
+                    template: 'Tente mais tarde!!!',
+                    buttons: [{
+                        text: 'ok',
+                        type: 'button-calm',
+                    }]
+                });
+                $ionicLoading.hide();
             });
-
-
+            
         }
 
         $scope.moreIngredient = function() {
