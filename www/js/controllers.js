@@ -652,8 +652,12 @@ angular.module('starter.controllers', [])
         $scope.follow_func = function(perfil_id){
             if($scope.perfil.flag_seguindo){
                 $scope.perfil.flag_seguindo = false;
+                if($scope.perfil.size_following>0){
+                    $scope.perfil.size_following=$scope.perfil.size_following-1;
+                }
             }else{
                 $scope.perfil.flag_seguindo = true;
+                 $scope.perfil.size_following=$scope.perfil.size_following+1;
             }
             var parameters = {
                 token_client:client.token,
