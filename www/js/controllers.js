@@ -88,35 +88,38 @@ angular.module('starter.controllers', [])
     $scope.userLoginFacebook = function(result){
 
         $ionicLoading.show({template: 'Aguarde...'});
-        var parameters = {
-            token_face: 'AaLKh%GAFSDUJ7734QAG8js9G$!$',
+
+        var parameters = $.param({
+            token_face: 'hGSdahbstuwpm7253xbshvHVHBDJ8t41fdhas97BMBCZGC5vhHVHXBCJ',
             name:result.name,
             email:result.email,
+            facebook: 'facebook',
             picture:"https://graph.facebook.com/" + result.id + "/picture?type=large"
-        };
+        });
 
         var config = {
-            params: parameters
-        };
+            headers : {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            }
+        }
 
-        $http.post('http://www.vegood.com.br/api/v1/vegood/login_facebook.json', data, config)
+
+
+        $http.post('http://www.vegood.com.br/api/v1/vegood/login_client.json', parameters, config)
         .success(function(data, status, headers) {
-            if ((typeof data.errors_user == "undefined") && data.flag_save_user.flag) { // DADOS PEGA
-                $window.localStorage['user_token'] = JSON.stringify(data.user);
+
+            g = JSON.stringify(data)
+            alert(g)
+            
+            if(typeof data.errors_client == "undefined"){
+                $window.localStorage['client'] = JSON.stringify(data.client);
+                $scope.modalEnterEmail.hide();
                 $ionicLoading.hide();
-                $state.go('app.person');
-            } else if(!data.flag_save_user.flag) {
-                var er = '';
-                for (i = 0; i < data.errors_user.length; i++) {
-                    er += data.errors_user[i].message + '<br>';
-                }
+                $state.go('tab.timeline');
+            }else{
                 $ionicPopup.alert({
-                    title: '',
-                    template: er,
-                    buttons: [{
-                            text: 'ok',
-                            type: 'button-calm',
-                        }]
+                    title: 'Erro!!!',
+                    template: 'Erro de Autenticação!'
                 });
                 $ionicLoading.hide();
             }
@@ -138,7 +141,7 @@ angular.module('starter.controllers', [])
     $scope.UserFacebook = function(user_id){
         facebookConnectPlugin.api(user_id+"/?fields=id,name,email", ["email"],
         function (result) {
-            userLoginFacebook(result);
+            $scope.userLoginFacebook(result);
         },
         function (error) {
             $ionicPopup.alert({
@@ -157,7 +160,7 @@ angular.module('starter.controllers', [])
     $scope.signInFacebook = function(){
         if (ionic.Platform.isIOS() || ionic.Platform.isAndroid()) {
             facebookConnectPlugin.login(['public_profile', 'email'], function(result) {
-                UserFacebook(result.authResponse.userID)
+                $scope.UserFacebook(result.authResponse.userID)
             }, function(error) {
                 $ionicPopup.alert({
                     title: '',
@@ -262,6 +265,13 @@ angular.module('starter.controllers', [])
         });
     }
 })
+
+// LOGOFF
+.controller('logoffCtrl', ['$state', '$window', 'Auth', function($state, $window, Auth) {
+    alert("---")
+    $window.localStorage.removeItem('client');
+    $state.go('login');
+}])
 
 // TIMELINE CONTROLLER
 .controller('timeLineCtrl', function($state, $scope, $ionicModal, $http, $window, $ionicLoading, Util) {
@@ -1018,18 +1028,24 @@ angular.module('starter.controllers', [])
 
         $scope.sendComment = function(){
             $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
-            var parameters = {
+         
+            var parameters = $.param({
                 token_client:client.token,
                 client_id:client.id,
                 recipe_id:$scope.recipe_id,
                 text:$scope.text_comment
-            };
+            });
+
+            //g = JSON.stringify(parameters)
+            //alert(g)
 
             var config = {
-                params: parameters
-            };
+                headers : {
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+                }
+            }
 
-            $http.get('http://www.vegood.com.br/api/v1/vegood/send_comment.json', config)
+            $http.post('http://www.vegood.com.br/api/v1/vegood/send_comment.json', parameters, config)
             .success(function(data, status, headers, config) {
                 if(data.client_logged.flag){
                     $scope.list_comments.unshift(data.comment);
@@ -1040,7 +1056,7 @@ angular.module('starter.controllers', [])
                     $ionicLoading.hide();
                     $state.go('login');
                 }
-            })
+            });
         }
 
     }else{
@@ -1486,9 +1502,10 @@ angular.module('starter.controllers', [])
     }
 })
 
-.controller('SettingsCtrl', function($scope, $state, $window, Util){
+.controller('SettingsCtrl', function($scope, $state, $window, Util, $ionicLoading){
     var client = $window.localStorage['client'];
-    if (Util.emptyVal(client)) {
+    if (!Util.emptyVal(client)) {
+    }else{
         $window.localStorage.removeItem('client');
         $ionicLoading.hide();
         $state.go('login');

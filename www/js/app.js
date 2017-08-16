@@ -59,6 +59,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         templateUrl: 'templates/login.html'
     })
 
+    .state('sign-out', {
+        url: '/logoff',
+        controller: 'logoffCtrl'
+    })
+
     .state('forgot-password', {
         url: '/forgot-password',
         templateUrl: 'templates/forgot-password.html'
