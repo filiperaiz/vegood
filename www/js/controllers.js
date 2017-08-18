@@ -67,7 +67,7 @@ angular.module('starter.controllers', [])
             }
         }
 
-        $http.post('http://www.vegood.com.br/api/v1/vegood/login_client.json', parameters, config)
+        $http.post('https://www.vegood.com.br/api/v1/vegood/login_client.json', parameters, config)
         .success(function(data, status, headers, config) {
             if(typeof data.errors_client == "undefined"){
                 $window.localStorage['client'] = JSON.stringify(data.client);
@@ -105,7 +105,7 @@ angular.module('starter.controllers', [])
 
 
 
-        $http.post('http://www.vegood.com.br/api/v1/vegood/login_client.json', parameters, config)
+        $http.post('https://www.vegood.com.br/api/v1/vegood/login_client.json', parameters, config)
         .success(function(data, status, headers) {
 
             g = JSON.stringify(data)
@@ -196,7 +196,7 @@ angular.module('starter.controllers', [])
             }
         }
 
-        $http.post('http://www.vegood.com.br/api/v1/vegood/create_client.json', parameters, config)
+        $http.post('https://www.vegood.com.br/api/v1/vegood/create_client.json', parameters, config)
         .success(function(data, status, headers, config) {
             if(typeof data.errors_client == "undefined"){
                 $scope.modalEnterEmail.hide();
@@ -293,7 +293,7 @@ angular.module('starter.controllers', [])
             params: parameters
         };
 
-        $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes.json', config)
+        $http.get('https://www.vegood.com.br/api/v1/vegood/list_recipes.json', config)
         .success(function(data, status, headers, config) {
             if(data.client_logged.flag){
                 $scope.list_recipes = data.list_recipes;
@@ -319,7 +319,7 @@ angular.module('starter.controllers', [])
                 params: parameters
             };
 
-            $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes.json', config)
+            $http.get('https://www.vegood.com.br/api/v1/vegood/list_recipes.json', config)
             .success(function(data, status, headers, config) {
                 if(data.client_logged.flag){
                     if(data.list_recipes.length==0){
@@ -364,7 +364,7 @@ angular.module('starter.controllers', [])
                 val = parseInt($('#like-'+recipe_id+ ' t').html());
                 $('#like-'+recipe_id+ ' t').html(val-1);
             }
-            $http.get('http://www.vegood.com.br/api/v1/vegood/like_recipe.json', config)
+            $http.get('https://www.vegood.com.br/api/v1/vegood/like_recipe.json', config)
             .success(function(data, status, headers, config) {});
         }
 
@@ -391,12 +391,12 @@ angular.module('starter.controllers', [])
                 $('#favorite-'+recipe_id+ ' t').html(val-1);
             }
 
-            $http.get('http://www.vegood.com.br/api/v1/vegood/favorite_recipe.json', config)
+            $http.get('https://www.vegood.com.br/api/v1/vegood/favorite_recipe.json', config)
             .success(function(data, status, headers, config) {});
         }
 
         $scope.doRefresh = function(){
-            $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes.json', config)
+            $http.get('https://www.vegood.com.br/api/v1/vegood/list_recipes.json', config)
             .success(function(data, status, headers, config) {
                 if(data.client_logged.flag){
                     $scope.list_recipes = data.list_recipes;
@@ -435,7 +435,7 @@ angular.module('starter.controllers', [])
             params: parameters
         };
 
-        $http.get('http://www.vegood.com.br/api/v1/vegood/recipe.json', config)
+        $http.get('https://www.vegood.com.br/api/v1/vegood/recipe.json', config)
         .success(function(data, status, headers, config) {
             if(data.client_logged.flag){
                 $scope.recipe = data.recipe;
@@ -472,7 +472,7 @@ angular.module('starter.controllers', [])
                 val = parseInt($('#like-'+recipe_id+ ' t').html());
                 $('#like-'+recipe_id+ ' t').html(val-1);
             }
-            $http.get('http://www.vegood.com.br/api/v1/vegood/like_recipe.json', config)
+            $http.get('https://www.vegood.com.br/api/v1/vegood/like_recipe.json', config)
             .success(function(data, status, headers, config) {});
         }
 
@@ -499,7 +499,7 @@ angular.module('starter.controllers', [])
                 $('#favorite-'+recipe_id+ ' t').html(val-1);
             }
 
-            $http.get('http://www.vegood.com.br/api/v1/vegood/favorite_recipe.json', config)
+            $http.get('https://www.vegood.com.br/api/v1/vegood/favorite_recipe.json', config)
             .success(function(data, status, headers, config) {});
         }
 
@@ -530,7 +530,7 @@ angular.module('starter.controllers', [])
             params: parameters
         };
 
-        $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes_favorites.json', config)
+        $http.get('https://www.vegood.com.br/api/v1/vegood/list_recipes_favorites.json', config)
         .success(function(data, status, headers, config) {
             if(data.client_logged.flag){
                 $scope.list_recipes = data.list_recipes;
@@ -556,7 +556,7 @@ angular.module('starter.controllers', [])
                 params: parameters
             };
 
-            $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes_favorites.json', config)
+            $http.get('https://www.vegood.com.br/api/v1/vegood/list_recipes_favorites.json', config)
             .success(function(data, status, headers, config) {
                 if(data.client_logged.flag){
                     if(data.list_recipes.length==0){
@@ -618,7 +618,7 @@ angular.module('starter.controllers', [])
             params: parameters
         };
 
-        $http.get('http://www.vegood.com.br/api/v1/vegood/get_perfil.json', config)
+        $http.get('https://www.vegood.com.br/api/v1/vegood/get_perfil.json', config)
         .success(function(data, status, headers, config) {
             if(data.client_logged.flag){
                 $scope.perfil       = data.perfil;
@@ -654,7 +654,7 @@ angular.module('starter.controllers', [])
                 params: parameters
             };
 
-            $http.get('http://www.vegood.com.br/api/v1/vegood/get_perfil.json', config)
+            $http.get('https://www.vegood.com.br/api/v1/vegood/get_perfil.json', config)
             .success(function(data, status, headers, config) {
                 if(data.client_logged.flag){
                     if(data.list_recipes.length==0){
@@ -699,7 +699,7 @@ angular.module('starter.controllers', [])
                 val = parseInt($('#like-'+recipe_id+ ' t').html());
                 $('#like-'+recipe_id+ ' t').html(val-1);
             }
-            $http.get('http://www.vegood.com.br/api/v1/vegood/like_recipe.json', config)
+            $http.get('https://www.vegood.com.br/api/v1/vegood/like_recipe.json', config)
             .success(function(data, status, headers, config) {});
         }
 
@@ -726,7 +726,7 @@ angular.module('starter.controllers', [])
                 $('#favorite-'+recipe_id+ ' t').html(val-1);
             }
 
-            $http.get('http://www.vegood.com.br/api/v1/vegood/favorite_recipe.json', config)
+            $http.get('https://www.vegood.com.br/api/v1/vegood/favorite_recipe.json', config)
             .success(function(data, status, headers, config) {});
         }
 
@@ -761,7 +761,7 @@ angular.module('starter.controllers', [])
                 params: parameters
             };
 
-            $http.get('http://www.vegood.com.br/api/v1/vegood/following_create.json', config)
+            $http.get('https://www.vegood.com.br/api/v1/vegood/following_create.json', config)
             .success(function(data, status, headers, config) {
                 $scope.perfil.flag_seguindo = data.option_following.flag;
             })
@@ -817,7 +817,7 @@ angular.module('starter.controllers', [])
         };
 
 
-        $http.get('http://www.vegood.com.br/api/v1/vegood/get_perfil.json', config)
+        $http.get('https://www.vegood.com.br/api/v1/vegood/get_perfil.json', config)
         .success(function(data, status, headers, config) {
             if(data.client_logged.flag){
                 $scope.perfil       = data.perfil;
@@ -853,7 +853,7 @@ angular.module('starter.controllers', [])
             }
         }
 
-        $http.post('http://www.vegood.com.br/api/v1/vegood/update_client.json', parameters, config)
+        $http.post('https://www.vegood.com.br/api/v1/vegood/update_client.json', parameters, config)
         .success(function(data, status, headers, config) {
             if(data.client_logged.flag){
                 $window.localStorage['client'] = JSON.stringify(data.client);
@@ -947,7 +947,7 @@ angular.module('starter.controllers', [])
             params: parameters
         };
 
-        $http.get('http://www.vegood.com.br/api/v1/vegood/list_comments.json', config)
+        $http.get('https://www.vegood.com.br/api/v1/vegood/list_comments.json', config)
         .success(function(data, status, headers, config) {
             if(data.client_logged.flag){
                 $scope.list_comments = data.list_comments;
@@ -976,7 +976,7 @@ angular.module('starter.controllers', [])
                 params: parameters
             };
 
-            $http.get('http://www.vegood.com.br/api/v1/vegood/list_comments.json', config)
+            $http.get('https://www.vegood.com.br/api/v1/vegood/list_comments.json', config)
             .success(function(data, status, headers, config) {
                 if(data.client_logged.flag){
 
@@ -1045,7 +1045,7 @@ angular.module('starter.controllers', [])
                 }
             }
 
-            $http.post('http://www.vegood.com.br/api/v1/vegood/send_comment.json', parameters, config)
+            $http.post('https://www.vegood.com.br/api/v1/vegood/send_comment.json', parameters, config)
             .success(function(data, status, headers, config) {
                 if(data.client_logged.flag){
                     $scope.list_comments.unshift(data.comment);
@@ -1084,7 +1084,7 @@ angular.module('starter.controllers', [])
             params: parameters
         };
 
-        $http.get('http://www.vegood.com.br/api/v1/vegood/list_categories.json', config)
+        $http.get('https://www.vegood.com.br/api/v1/vegood/list_categories.json', config)
         .success(function(data, status, headers, config) {
             if(data.client_logged.flag){
                 $scope.list_categories = data.list_categories;
@@ -1125,7 +1125,7 @@ angular.module('starter.controllers', [])
             params: parameters
         };
 
-        $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes_category.json', config)
+        $http.get('https://www.vegood.com.br/api/v1/vegood/list_recipes_category.json', config)
         .success(function(data, status, headers, config) {
             if(data.client_logged.flag){
                 $scope.list_recipes = data.list_recipes;
@@ -1154,7 +1154,7 @@ angular.module('starter.controllers', [])
                 params: parameters
             };
 
-            $http.get('http://www.vegood.com.br/api/v1/vegood/list_recipes_category.json', config)
+            $http.get('https://www.vegood.com.br/api/v1/vegood/list_recipes_category.json', config)
             .success(function(data, status, headers, config) {
                 if(data.client_logged.flag){
                     $scope.size_recipe = data.size_recipe;
@@ -1211,7 +1211,7 @@ angular.module('starter.controllers', [])
         };
 
         $ionicLoading.show({template: '<ion-spinner icon="spiral"></ion-spinner><br>Aguarde...'});
-        $http.get('http://www.vegood.com.br/api/v1/vegood/list_categories.json', config)
+        $http.get('https://www.vegood.com.br/api/v1/vegood/list_categories.json', config)
         .success(function(data, status, headers, config) {
             $scope.list_categories = data.list_categories;
         });
@@ -1250,7 +1250,7 @@ angular.module('starter.controllers', [])
                 }
             }
             
-            $http.post('http://www.vegood.com.br/api/v1/vegood/send_recipe.json', parameters, config)
+            $http.post('https://www.vegood.com.br/api/v1/vegood/send_recipe.json', parameters, config)
             .success(function(data, status, headers, config) {
                 if(typeof data.errors_recipe === "undefined"){
                     $state.go('tab.timeline');
@@ -1367,7 +1367,7 @@ angular.module('starter.controllers', [])
             params: parameters
         };
 
-        $http.get('http://www.vegood.com.br/api/v1/vegood/profile_followers.json', config)
+        $http.get('https://www.vegood.com.br/api/v1/vegood/profile_followers.json', config)
         .success(function(data, status, headers, config) {
             if(data.client_logged.flag){
                 $scope.list_followers = data.list_followers;
@@ -1393,7 +1393,7 @@ angular.module('starter.controllers', [])
                 params: parameters
             };
 
-            $http.get('http://www.vegood.com.br/api/v1/vegood/profile_followers.json', config)
+            $http.get('https://www.vegood.com.br/api/v1/vegood/profile_followers.json', config)
             .success(function(data, status, headers, config) {
                 if(data.client_logged.flag){
                     if(data.list_followers.length==0){
@@ -1450,7 +1450,7 @@ angular.module('starter.controllers', [])
         };
 
 
-        $http.get('http://www.vegood.com.br/api/v1/vegood/profile_followings.json', config)
+        $http.get('https://www.vegood.com.br/api/v1/vegood/profile_followings.json', config)
         .success(function(data, status, headers, config) {
             if(data.client_logged.flag){
                 $scope.list_followings = data.list_followings;
@@ -1476,7 +1476,7 @@ angular.module('starter.controllers', [])
                 params: parameters
             };
 
-            $http.get('http://www.vegood.com.br/api/v1/vegood/profile_followings.json', config)
+            $http.get('https://www.vegood.com.br/api/v1/vegood/profile_followings.json', config)
             .success(function(data, status, headers, config) {
                 if(data.client_logged.flag){
                     if(data.list_followings.length==0){
@@ -1529,7 +1529,7 @@ angular.module('starter.controllers', [])
         };
 
 
-        $http.get('http://www.vegood.com.br/api/v1/vegood/about.json', config)
+        $http.get('https://www.vegood.com.br/api/v1/vegood/about.json', config)
         .success(function(data, status, headers, config) {
             if(data.client_logged.flag){
                 $("#about").html(data.about.text);
@@ -1562,7 +1562,7 @@ angular.module('starter.controllers', [])
             params: parameters
         };
 
-        $http.get('http://www.vegood.com.br/api/v1/vegood/termuse.json', config)
+        $http.get('https://www.vegood.com.br/api/v1/vegood/termuse.json', config)
         .success(function(data, status, headers, config) {
             if(data.client_logged.flag){
                 $("#termuse").html(data.termuse.text);
