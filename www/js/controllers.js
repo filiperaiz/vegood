@@ -9,8 +9,6 @@ angular.module('starter.controllers', [])
         $state.go('tab.timeline');
     }
 
-
-
     $scope.client = {};
     $scope.client.image                 = 'img/icon-camera-upload.png';
 
@@ -185,6 +183,7 @@ angular.module('starter.controllers', [])
         var parameters = $.param({
             name: $scope.client.name,
             email: $scope.client.email,
+            avatar: $scope.client.image,
             statu_id: 1,
             password: $scope.client.password,
             password_confirmation: $scope.client.password_confirmation
@@ -239,7 +238,7 @@ angular.module('starter.controllers', [])
         };
 
        $cordovaCamera.getPicture(options).then(function(imageData) {
-           $scope.recipe.image = "data:image/jpeg;base64," + imageData;
+           $scope.client.image = "data:image/jpeg;base64," + imageData;
        }, function(err) {
            // An error occured. Show a message to the user
        });
@@ -259,7 +258,7 @@ angular.module('starter.controllers', [])
         };
 
         $cordovaCamera.getPicture(options).then(function(imageData) {
-            $scope.recipe.image = "data:image/jpeg;base64," + imageData;
+            $scope.client.image = "data:image/jpeg;base64," + imageData;
         }, function(err) {
             // An error occured. Show a message to the user
         });
@@ -268,7 +267,7 @@ angular.module('starter.controllers', [])
 
 // LOGOFF
 .controller('logoffCtrl', ['$state', '$window', 'Auth', function($state, $window, Auth) {
-    alert("---")
+    //alert("---")
     $window.localStorage.removeItem('client');
     $state.go('login');
 }])
