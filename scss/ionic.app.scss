@@ -9,6 +9,14 @@ $radius: 5px;
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+.cow {
+    text-align: center;
+    padding: 20px;
+    h2 {
+        font-size: 14px;
+    }
+}
+
 .bar-header {
     border-bottom: 2px solid $positive !important;
 }
@@ -33,7 +41,7 @@ a {
 .bar {
     .title {
         font-size: 15px !important;
-        color:#7c7c7c !important;
+        color: #7c7c7c !important;
     }
 }
 
@@ -94,7 +102,6 @@ a {
             font-weight: bold;
         }
     }
-
     .item-image {
         position: relative;
         min-height: 150px;
@@ -284,10 +291,9 @@ a {
             font-size: 28px !important;
         }
     }
-
-    .button{
-      font-size: 28px;
-      color:#7c7c7c;
+    .button {
+        font-size: 28px;
+        color: #7c7c7c;
     }
 }
 
@@ -298,10 +304,9 @@ a {
             font-size: 28px !important;
         }
     }
-
-    .button{
-      font-size: 28px;
-      color:#7c7c7c;
+    .button {
+        font-size: 28px;
+        color: #7c7c7c;
     }
 }
 
@@ -618,26 +623,24 @@ a {
         min-width: 35px;
         padding: 0;
     }
-
-    .btn-choose-pic{
-      margin: 12px 0 0 0;
-      width: auto;
-      padding: 1px 15px;
-      i{
-        margin-right: 5px;
-      }
+    .btn-choose-pic {
+        margin: 12px 0 0 0;
+        width: auto;
+        padding: 1px 15px;
+        i {
+            margin-right: 5px;
+        }
     }
-
-    .title-label{
-      font-size: 13px;
-      margin-bottom: 5px;
-      display: block;
-      text-align: left;
-      width: 100%;
-      max-width: 100%;
-      padding: 0;
-      font-weight: bold;
-      color: #444;
+    .title-label {
+        font-size: 13px;
+        margin-bottom: 5px;
+        display: block;
+        text-align: left;
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+        font-weight: bold;
+        color: #444;
     }
 }
 
@@ -659,15 +662,13 @@ a {
     }
 }
 
-
-
 .popover {
     min-height: 170px;
     height: auto;
 }
 
-.box-comments{
-  background-color: #fff !important;
+.box-comments {
+    background-color: #fff !important;
 }
 
 .list-comentarios {
@@ -703,7 +704,6 @@ a {
         background-color: #ccc;
         overflow: hidden;
     }
-
     .comment-name {
         font-size: 12px;
         text-transform: uppercase;
@@ -723,14 +723,11 @@ a {
 
 .send-coments {
     background: #dbdfe1;
-
     .item-input-wrapper {
-
         padding: 0px 3px;
         background-color: #fff;
-
         input[type="text"] {
-            color: #ccc;
+            color: #000;
             background: #fff!important;
             width: 100%;
         }
@@ -805,10 +802,9 @@ a {
             padding: 0px 5px;
             min-width: 45px;
             font-size: 13px;
-
-            i{
-              font-size: 16px;
-              margin-right: 5px;
+            i {
+                font-size: 16px;
+                margin-right: 5px;
             }
         }
     }
@@ -862,21 +858,22 @@ a {
     }
 }
 
-.item-follow{
-  position: relative;
-  min-height: 55px;;
-
-  .item-content{
+.item-follow {
+    position: relative;
     min-height: 55px;
-
-    h2{
-      margin: 0;
-      line-height: 20px;
-      color: #7d7d7d;
-      font-size: 15px;
+    ;
+    .item-content {
+        min-height: 55px;
+        h2 {
+            margin: 0;
+            line-height: 20px;
+            color: #7d7d7d;
+            font-size: 15px;
+        }
+        img {
+            top: 7px !important;
+            border-radius: 10% !important;
+            border: 1px solid $positive;
+        }
     }
-    img{
-      top: 7px !important;
-    }
-  }
 }

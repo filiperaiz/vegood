@@ -9715,6 +9715,12 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+.cow {
+  text-align: center;
+  padding: 20px; }
+  .cow h2 {
+    font-size: 14px; }
+
 .bar-header {
   border-bottom: 2px solid #9fcc3e !important; }
 
@@ -10292,7 +10298,7 @@ a {
     padding: 0px 3px;
     background-color: #fff; }
     .send-coments .item-input-wrapper input[type="text"] {
-      color: #ccc;
+      color: #000;
       background: #fff !important;
       width: 100%; }
 
@@ -10409,4 +10415,6 @@ a {
       color: #7d7d7d;
       font-size: 15px; }
     .item-follow .item-content img {
-      top: 7px !important; }
+      top: 7px !important;
+      border-radius: 10% !important;
+      border: 1px solid #9fcc3e; }

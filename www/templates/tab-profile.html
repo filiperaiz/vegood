@@ -51,9 +51,12 @@
             </div>
         </div>
 
-        <ion-list>
-            <ion-item class="item-avatar item-icon-right item-recipe-small" ng-repeat="recipe in list_recipes" type="item-text-wrap" href="#/tab/profile/recipe/{{recipe.id}}
-        ">
+        <div class="cow" ng-show="!list_recipes.length">
+            <h2>Você não publicou nenhuma receita</h2>
+            <img src="../img/cow.png" alt="">
+        </div>
+        <ion-list ng-show="list_recipes.length">
+            <ion-item class="item-avatar item-icon-right item-recipe-small" ng-repeat="recipe in list_recipes" type="item-text-wrap" href="#/tab/profile/recipe/{{recipe.id}}">
                 <img class="image-recipe" ng-src="{{recipe.image}}">
                 <h2 class="recipe-name no-ws">{{recipe.title}}</h2>
                 <h5 class="recipe-author">Por: {{perfil.name}}</h5>
